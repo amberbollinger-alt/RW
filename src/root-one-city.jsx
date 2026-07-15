@@ -383,6 +383,7 @@ export default function RootOneCity({ go }) {
     setActiveIndex(next);
     setVisited((current) => current.includes(rootOneDistricts[next].key) ? current : [...current, rootOneDistricts[next].key]);
     setNavOpen(false);
+    if (navOpen) menuButtonRef.current?.focus();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
