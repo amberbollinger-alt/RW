@@ -1,14 +1,12 @@
-# Deploy Sprint 002
+# Preview RootWise on Vercel
 
-1. Extract the ZIP.
-2. Open the extracted folder.
-3. Upload the contents into the existing RW GitHub repo.
-4. Commit changes.
-5. Vercel will deploy automatically.
+This feature branch is meant for review before production.
 
-If checking locally first:
-```powershell
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-npm install
-npm run dev
-```
+1. Push `feature/rootwise-city-experience` to GitHub only after local checks pass.
+2. Let Vercel create a branch preview.
+3. Confirm that the preview has the existing server-side `OPENAI_API_KEY` available.
+4. Review `/roots/one` on desktop and mobile.
+5. Verify that the Grove contains navigation only and no lesson content.
+6. Test Sage, all six districts, saved progress, and the return to the Grove.
+
+Do not promote the preview to production until the experience and approved artwork have been reviewed.
