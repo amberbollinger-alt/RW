@@ -1,11 +1,13 @@
-import React, { useMemo, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
-  ArrowRight, BookOpen, BriefcaseBusiness, Calculator, CheckCircle2, ChevronLeft,
-  GraduationCap, Heart, Leaf, Lock, Mail, Menu, PiggyBank,
-  ShieldCheck, Sparkles, Sprout, Target, TreePine, Trophy, User, Users, X,
-  CreditCard, Landmark, TrendingUp, HomeIcon, School, WalletCards
+  ArrowRight, BookOpen, BriefcaseBusiness, Calculator, ChevronLeft,
+  GraduationCap, Lock, Menu, Sparkles, Sprout, User, Users, X,
+  CreditCard, Landmark, TrendingUp, HomeIcon, School
 } from 'lucide-react';
+import { ApprovedArtwork } from './approved-artwork';
+import Grove from './grove';
+import RootOneCity from './root-one-city';
 import './styles.css';
 
 const STORAGE_KEY = 'rootwise_sprint_003_profile';
@@ -179,38 +181,75 @@ const navItems = [
 
 function saveProfile(data) { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
 function loadProfile() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null'); } catch { return null; } }
-function go(page) { window.scrollTo({ top: 0, behavior: 'smooth' }); window.history.replaceState(null, '', `#/${page}`); window.dispatchEvent(new HashChangeEvent('hashchange')); }
-function routeFromHash() { const raw = window.location.hash.replace('#/', ''); return raw || 'home'; }
+function routeFromLocation() {
+  const path = window.location.pathname.replace(/^\/+|\/+$/g, '');
+  if (path === 'roots/one') return 'roots/one';
+  const hashRoute = window.location.hash.replace(/^#\/?/, '');
+  return hashRoute || (path || 'home');
+}
+function go(page) {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  const destination = page === 'roots/one'
+    ? '/roots/one'
+    : page === 'home'
+      ? '/'
+      : `/#/${page}`;
+  window.history.pushState(null, '', destination);
+  window.dispatchEvent(new PopStateEvent('popstate'));
+}
 function normalize(value) { return Array.isArray(value) ? value : value ? [value] : []; }
 
 function App() {
-  const [route, setRoute] = useState(routeFromHash());
+  const [route, setRoute] = useState(routeFromLocation());
   const [profile, setProfile] = useState(loadProfile());
-  React.useEffect(() => { const onHash = () => setRoute(routeFromHash()); window.addEventListener('hashchange', onHash); return () => window.removeEventListener('hashchange', onHash); }, []);
+  React.useEffect(() => {
+    const onRoute = () => setRoute(routeFromLocation());
+    window.addEventListener('popstate', onRoute);
+    window.addEventListener('hashchange', onRoute);
+    return () => {
+      window.removeEventListener('popstate', onRoute);
+      window.removeEventListener('hashchange', onRoute);
+    };
+  }, []);
   const updateProfile = (next) => { const merged = { ...(profile || {}), ...next }; setProfile(merged); saveProfile(merged); };
   return (
     <>
-      {route === 'home' && <Home profile={profile} />}
-      {route === 'journey' && <Journey profile={profile} updateProfile={updateProfile} />}
+      {route === 'home' && <Home />}
+      {route === 'journey' && <Journey updateProfile={updateProfile} />}
       {route === 'signup' && <Signup profile={profile} updateProfile={updateProfile} />}
       {route === 'assessment' && <AssessmentFlow profile={profile} updateProfile={updateProfile} />}
       {route === 'dashboard' && <Dashboard profile={profile} />}
-      {route === 'learn' && <Learn profile={profile} />}
+      {route === 'learn' && <Learn />}
       {route === 'tools' && <Tools />}
       {route === 'schools' && <Schools />}
       {route === 'my-journey' && <MyJourney profile={profile} />}
-      <StickyNav />
+      {route === 'roots/one' && <RootOneCity go={go} />}
+      {route !== 'roots/one' && route !== 'dashboard' && <StickyNav />}
     </>
   );
 }
 
 function StickyNav() {
   const [open, setOpen] = useState(false);
+  const menuButtonRef = useRef(null);
+  const closeButtonRef = useRef(null);
+  React.useEffect(() => {
+    if (!open) return undefined;
+    closeButtonRef.current?.focus();
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape') {
+        setOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    };
+    window.addEventListener('keydown', closeOnEscape);
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, [open]);
   return (
     <>
-      <button className="mobile-menu" onClick={() => setOpen(true)}><Menu size={22}/></button>
-      <div className={`drawer ${open ? 'show' : ''}`}>
-        <button className="drawer-close" onClick={() => setOpen(false)}><X size={22}/></button>
+      <button ref={menuButtonRef} className="mobile-menu" onClick={() => setOpen(true)} aria-label="Open navigation" aria-expanded={open} aria-controls="rootwise-mobile-navigation"><Menu size={22}/></button>
+      <div id="rootwise-mobile-navigation" className={`drawer ${open ? 'show' : ''}`}>
+        <button ref={closeButtonRef} className="drawer-close" aria-label="Close navigation" onClick={() => { setOpen(false); menuButtonRef.current?.focus(); }}><X size={22}/></button>
         {navItems.map(([label, page]) => <button key={page} onClick={() => { setOpen(false); go(page === 'journey' ? 'my-journey' : page); }}>{label}</button>)}
         <button className="drawer-sign" onClick={() => { setOpen(false); go('signup'); }}><User size={18}/> Sign In</button>
       </div>
@@ -271,7 +310,7 @@ function PageShell({ kicker, title, lead, children, back = true }) {
 }
 
 function TopBar() {
-  return <header className="topbar"><button className="wordmark" onClick={() => go('home')}><TreePine size={25}/><span>Root$Wise</span></button><nav>{navItems.map(([label, page]) => <button key={page} onClick={() => go(page === 'journey' ? 'my-journey' : page)}>{label}</button>)}</nav><button className="signin" onClick={() => go('signup')}>Sign In</button></header>;
+  return <header className="topbar"><button className="wordmark" onClick={() => go('home')}><ApprovedArtwork variant="tree" className="topbar-approved-tree"/><span>Root$Wise</span></button><nav>{navItems.map(([label, page]) => <button key={page} onClick={() => go(page === 'journey' ? 'my-journey' : page)}>{label}</button>)}</nav><button className="signin" onClick={() => go('signup')}>Sign In</button></header>;
 }
 
 function Journey({ updateProfile }) {
@@ -284,7 +323,7 @@ function Journey({ updateProfile }) {
 function Signup({ profile, updateProfile }) {
   const [form, setForm] = useState({ firstName: profile?.firstName || '', email: profile?.email || '', password: '' });
   return <PageShell kicker="Create My Root System" title="Tell me a little about yourself." lead="Just enough to personalize the experience. Sage does not need your whole financial life on day one.">
-    <form className="signup-card" onSubmit={(e) => { e.preventDefault(); updateProfile(form); go('assessment'); }}>
+    <form className="signup-card" onSubmit={(e) => { e.preventDefault(); updateProfile({ firstName: form.firstName, email: form.email }); go('assessment'); }}>
       <label>First Name<input required value={form.firstName} onChange={e => setForm({ ...form, firstName: e.target.value })}/></label>
       <label>Email Address<input type="email" required value={form.email} onChange={e => setForm({ ...form, email: e.target.value })}/></label>
       <label>Password<input type="password" required value={form.password} onChange={e => setForm({ ...form, password: e.target.value })}/></label>
@@ -361,19 +400,7 @@ function inferRoots(answers, path) {
 }
 
 function Dashboard({ profile }) {
-  const name = profile?.firstName || 'Friend';
-  const score = profile?.rootScore || 62;
-  const suggested = profile?.suggestedRoots?.length ? profile.suggestedRoots : [profile?.path || 'literacy', 'credit', 'debt'];
-  const suggestedRoots = suggested.map((key) => roots.find((r) => r.key === key)).filter(Boolean);
-  return <PageShell kicker="My Root System" title={`Good to see you, ${name}.`} lead="This dashboard now reflects the seven-root curriculum architecture." back={false}>
-    <div className="dashboard-grid">
-      <div className="dash-card wide"><h3>Sage</h3><p>I listened for what you said and what your answers suggested. These are not instructions. They are starting points we can explore together.</p><div className="mood-row"><button>🙂 Confident</button><button>😐 Okay</button><button>😟 Stressed</button><button>😔 Overwhelmed</button></div></div>
-      <div className="dash-card score"><div className="score-ring"><span>{score}</span></div><h3>Root Score</h3><p>Starter preview</p></div>
-      <div className="dash-card wide"><h3>Your suggested roots</h3><div className="mini-root-list">{suggestedRoots.map((r) => <button key={r.key} onClick={() => go('learn')}><r.icon size={18}/>{r.title}</button>)}</div></div>
-      <div className="dash-card"><h3>Today’s Lesson</h3><p>Financial wisdom starts with understanding options, not obeying instructions.</p><button onClick={() => go('learn')}>Start Lesson</button></div>
-      <div className="dash-card"><h3>Today’s Action</h3><p>Write down the one money question you’ve been avoiding.</p><button>Mark Complete</button></div>
-    </div>
-  </PageShell>;
+  return <Grove profile={profile} go={go} />;
 }
 
 function Learn() {
@@ -391,7 +418,9 @@ function Learn() {
         <div className="topic-cloud">{root.topics.map((topic) => <span key={topic}>{topic}</span>)}</div>
         <h3>Free starter lessons</h3>
         <div className="free-lesson-row">{root.free.map((lesson) => <div key={lesson} className="free-lesson"><BookOpen size={18}/><span>{lesson}</span></div>)}</div>
-        <div className="premium-preview"><Lock size={18}/><span>Full branch coming soon: guided lessons, worksheets, quizzes, calculators, and Sage conversations.</span></div>
+        {root.key === 'literacy'
+          ? <button type="button" className="root-enter-button" onClick={() => go('roots/one')}>Enter Root One: The City of Foundations <ArrowRight size={17}/></button>
+          : <div className="premium-preview"><Lock size={18}/><span>This path is still taking shape. Root One is the current teaching experience.</span></div>}
       </article>
     </div>
   </PageShell>;
