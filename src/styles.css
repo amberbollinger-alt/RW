@@ -21,11 +21,14 @@
 .drawer{visibility:hidden;transition:right .25s ease,visibility 0s linear .25s}
 .drawer.show{visibility:visible;transition-delay:0s}
 
-/* The approved landing page has one doorway: enter the Grove. */
+/* The approved landing page has one primary action: begin the assessment. */
 .landing-page{min-height:100vh;background:#f5efde}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .approved-landing-artwork{display:block;width:100%;height:auto}
-.landing-entry-button{position:absolute;left:15.5%;top:28.5%;width:28%;height:3.8%;border:0;border-radius:10px;background:transparent;cursor:pointer}
+.nav-dashboard,.nav-learn,.nav-tools,.nav-about,.nav-support{top:2.35%;height:3.47%}
+.nav-signin{top:1.45%;height:5.37%}
+.card-learn,.card-tools,.card-support,.card-about{top:74.92%;height:6.71%}
+.landing-entry-button{position:absolute;left:15.5%;top:31.87%;width:28%;height:4.25%;border:0;border-radius:10px;background:transparent;cursor:pointer}
 .landing-entry-button span{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .landing-entry-button:hover{outline:2px solid rgba(217,180,91,.65);background:rgba(217,180,91,.09)}
 .landing-entry-button:focus-visible{outline:3px solid #d9b45b;outline-offset:4px}

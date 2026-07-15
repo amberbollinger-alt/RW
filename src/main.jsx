@@ -275,14 +275,13 @@ function Home() {
         <a className="hot nav-about" href="/#/journey" onClick={(event) => { event.preventDefault(); go('journey'); }} aria-label="About RootWise and Sage"></a>
         <a className="hot nav-support" href="/#/schools" onClick={(event) => { event.preventDefault(); go('schools'); }} aria-label="Support and educators"></a>
         <a className="hot nav-signin" href="/#/signup" onClick={(event) => { event.preventDefault(); go('signup'); }} aria-label="Sign in"></a>
-        <button className="landing-entry-button" onClick={() => go('dashboard')} aria-label="Begin your financial roots assessment">
+        <button className="landing-entry-button" onClick={() => go('journey')} aria-label="Begin your financial roots assessment">
           <span>Begin Your Financial Roots Assessment</span>
         </button>
         <a className="hot card-learn" href="/#/dashboard" onClick={(event) => { event.preventDefault(); go('dashboard'); }} aria-label="Explore the learning roots"></a>
         <a className="hot card-tools" href="/#/tools" onClick={(event) => { event.preventDefault(); go('tools'); }} aria-label="Use RootWise tools"></a>
         <a className="hot card-support" href="/#/schools" onClick={(event) => { event.preventDefault(); go('schools'); }} aria-label="Get support"></a>
         <a className="hot card-about" href="/#/journey" onClick={(event) => { event.preventDefault(); go('journey'); }} aria-label="Learn about Sage"></a>
-        <a className="hot cta-footer" href="/#/dashboard" onClick={(event) => { event.preventDefault(); go('dashboard'); }} aria-label="Begin your free assessment"></a>
       </section>
     </main>
   );
