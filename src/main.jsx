@@ -5,7 +5,7 @@ import {
   GraduationCap, Lock, Menu, Sparkles, Sprout, User, Users, X,
   CreditCard, Landmark, TrendingUp, HomeIcon, School
 } from 'lucide-react';
-import { ApprovedArtwork } from './approved-artwork';
+import { ApprovedArtwork, ApprovedLandingArtwork } from './approved-artwork';
 import Grove from './grove';
 import RootOneCity from './root-one-city';
 import './styles.css';
@@ -224,7 +224,7 @@ function App() {
       {route === 'schools' && <Schools />}
       {route === 'my-journey' && <MyJourney profile={profile} />}
       {route === 'roots/one' && <RootOneCity go={go} />}
-      {route !== 'roots/one' && route !== 'dashboard' && <StickyNav />}
+      {!['home', 'roots/one', 'dashboard'].includes(route) && <StickyNav />}
     </>
   );
 }
@@ -259,35 +259,31 @@ function StickyNav() {
 
 function Home() {
   return (
-    <main>
+    <main className="landing-page">
+      <div className="sr-only">
+        <h1>Meet Sage. Build roots. Stop guessing with money.</h1>
+        <p>
+          RootWise helps you grow financial wisdom through guided learning,
+          practical tools, and the seven financial roots.
+        </p>
+      </div>
       <section className="approved-hero" aria-label="RootWise approved landing page">
-        <img src="/rootwise-approved-home.png" alt="RootWise homepage with Sage, money-paper background, rooted tree logo, books, assessment invitation, and green vintage design." />
-        <button className="hot nav-dashboard" onClick={() => go('dashboard')} aria-label="Dashboard"></button>
-        <button className="hot nav-learn" onClick={() => go('learn')} aria-label="Learn"></button>
-        <button className="hot nav-tools" onClick={() => go('tools')} aria-label="Tools"></button>
-        <button className="hot nav-about" onClick={() => go('journey')} aria-label="About"></button>
-        <button className="hot nav-support" onClick={() => go('schools')} aria-label="Support"></button>
-        <button className="hot nav-profile" onClick={() => go('my-journey')} aria-label="Profile"></button>
-        <button className="hot nav-signin" onClick={() => go('signup')} aria-label="Sign in"></button>
-        <button className="hot cta-main" onClick={() => go('journey')} aria-label="Begin your journey"></button>
-        <button className="hot cta-journey" onClick={() => go('journey')} aria-label="Start your journey"></button>
-        <button className="hot cta-footer" onClick={() => go('journey')} aria-label="Begin free assessment"></button>
-        <button className="hot card-learn" onClick={() => go('learn')} aria-label="Explore lessons"></button>
-        <button className="hot card-tools" onClick={() => go('tools')} aria-label="Use tools"></button>
-        <button className="hot card-support" onClick={() => go('schools')} aria-label="School preview"></button>
-        <button className="hot card-about" onClick={() => go('my-journey')} aria-label="My journey"></button>
+        <ApprovedLandingArtwork />
+        <a className="hot nav-dashboard" href="/#/dashboard" onClick={(event) => { event.preventDefault(); go('dashboard'); }} aria-label="The Grove"></a>
+        <a className="hot nav-learn" href="/#/dashboard" onClick={(event) => { event.preventDefault(); go('dashboard'); }} aria-label="Choose a learning root"></a>
+        <a className="hot nav-tools" href="/#/tools" onClick={(event) => { event.preventDefault(); go('tools'); }} aria-label="Tools"></a>
+        <a className="hot nav-about" href="/#/journey" onClick={(event) => { event.preventDefault(); go('journey'); }} aria-label="About RootWise and Sage"></a>
+        <a className="hot nav-support" href="/#/schools" onClick={(event) => { event.preventDefault(); go('schools'); }} aria-label="Support and educators"></a>
+        <a className="hot nav-signin" href="/#/signup" onClick={(event) => { event.preventDefault(); go('signup'); }} aria-label="Sign in"></a>
+        <button className="landing-entry-button" onClick={() => go('dashboard')} aria-label="Begin your financial roots assessment">
+          <span>Begin Your Financial Roots Assessment</span>
+        </button>
+        <a className="hot card-learn" href="/#/dashboard" onClick={(event) => { event.preventDefault(); go('dashboard'); }} aria-label="Explore the learning roots"></a>
+        <a className="hot card-tools" href="/#/tools" onClick={(event) => { event.preventDefault(); go('tools'); }} aria-label="Use RootWise tools"></a>
+        <a className="hot card-support" href="/#/schools" onClick={(event) => { event.preventDefault(); go('schools'); }} aria-label="Get support"></a>
+        <a className="hot card-about" href="/#/journey" onClick={(event) => { event.preventDefault(); go('journey'); }} aria-label="Learn about Sage"></a>
+        <a className="hot cta-footer" href="/#/dashboard" onClick={(event) => { event.preventDefault(); go('dashboard'); }} aria-label="Begin your free assessment"></a>
       </section>
-      <section className="paper-section locked-note">
-        <div className="section-shell split">
-          <div>
-            <div className="section-kicker"><Sparkles size={16}/> The Seven Roots are live</div>
-            <h2>Root$Wise now has its curriculum architecture.</h2>
-            <p className="lead">Financial Literacy, Credit, Debt, Investing, Business, Family Matters, and Educators now shape the journey, the assessment, and the learning center.</p>
-          </div>
-          <div className="sage-card"><h3>Sage says:</h3><p>“I won’t assume where you are. I’ll listen first, then help you understand your options.”</p><button onClick={() => go('learn')}>Explore the Roots <ArrowRight size={16}/></button></div>
-        </div>
-      </section>
-      <Footer />
     </main>
   );
 }
@@ -444,7 +440,5 @@ function MyJourney({ profile }) {
     <div className="profile-card"><h3>{profile?.firstName || 'Your'} Root System</h3><p><strong>Path:</strong> {profile?.pathTitle || 'Not selected yet'}</p><p><strong>Assessment:</strong> {profile?.completedAssessment ? 'Complete' : 'Not complete'}</p><p><strong>Root Score:</strong> {profile?.rootScore || 'Pending'}</p><button onClick={() => go('journey')}>Update My Path</button></div>
   </PageShell>;
 }
-
-function Footer() { return <footer className="site-footer"><div className="legal"><span>© 2026 Root$Wise</span><span>Privacy</span><span>Terms</span><span>Contact</span></div></footer>; }
 
 createRoot(document.getElementById('root')).render(<App />);

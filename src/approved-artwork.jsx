@@ -35,3 +35,32 @@ export function ApprovedArtwork({ variant, className = '' }) {
     </svg>
   );
 }
+
+export function ApprovedLandingArtwork({ className = '' }) {
+  const profileStart = 1306;
+  const profileEnd = 1499;
+  const sourceHeight = 1824;
+  const collapsedHeight = sourceHeight - (profileEnd - profileStart);
+
+  return (
+    <svg
+      className={`approved-landing-artwork ${className}`}
+      viewBox={`0 0 862 ${collapsedHeight}`}
+      preserveAspectRatio="xMidYMin meet"
+      role="img"
+      aria-label="RootWise approved landing page with Sage, the financial journey, and one invitation to begin"
+    >
+      <image href="/rootwise-approved-home.png" width="862" height={sourceHeight} />
+      <svg
+        x="0"
+        y={profileStart}
+        width="862"
+        height={sourceHeight - profileEnd}
+        viewBox={`0 ${profileEnd} 862 ${sourceHeight - profileEnd}`}
+        preserveAspectRatio="none"
+      >
+        <image href="/rootwise-approved-home.png" width="862" height={sourceHeight} />
+      </svg>
+    </svg>
+  );
+}

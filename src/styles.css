@@ -20,3 +20,20 @@
 .root-enter-button:focus-visible{outline:3px solid rgba(217,180,91,.7);outline-offset:3px}
 .drawer{visibility:hidden;transition:right .25s ease,visibility 0s linear .25s}
 .drawer.show{visibility:visible;transition-delay:0s}
+
+/* The approved landing page has one doorway: enter the Grove. */
+.landing-page{min-height:100vh;background:#f5efde}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.approved-landing-artwork{display:block;width:100%;height:auto}
+.landing-entry-button{position:absolute;left:15.5%;top:28.5%;width:28%;height:3.8%;border:0;border-radius:10px;background:transparent;cursor:pointer}
+.landing-entry-button span{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.landing-entry-button:hover{outline:2px solid rgba(217,180,91,.65);background:rgba(217,180,91,.09)}
+.landing-entry-button:focus-visible{outline:3px solid #d9b45b;outline-offset:4px}
+.approved-hero .hot:focus-visible{outline:3px solid #d9b45b;outline-offset:3px;background:rgba(217,180,91,.12)}
+@media(max-width:950px){
+  .landing-page{padding-bottom:88px}
+  .approved-hero>.approved-landing-artwork{width:100%;max-width:none;transform:none}
+  .landing-entry-button{position:fixed;z-index:30;left:50%;top:auto;bottom:18px;width:calc(100% - 32px);max-width:380px;height:auto;transform:translateX(-50%);display:flex;align-items:center;justify-content:center;padding:15px 20px;border:1px solid rgba(217,180,91,.8);border-radius:16px;background:#12351f;color:#f7edd6;box-shadow:0 16px 38px rgba(0,0,0,.35);font-family:Arial,sans-serif;font-weight:900;text-transform:uppercase;letter-spacing:.04em}
+  .landing-entry-button span{position:static;width:auto;height:auto;margin:0;overflow:visible;clip:auto;white-space:normal}
+  .landing-entry-button:hover{outline:0;background:#1b472d}
+}
