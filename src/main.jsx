@@ -269,20 +269,22 @@ function Home() {
       </div>
       <section className="approved-hero" aria-label="RootWise approved landing page">
         <ApprovedLandingArtwork />
-        <a className="hot nav-dashboard" href="/#/dashboard" onClick={(event) => { event.preventDefault(); go('dashboard'); }} aria-label="The Grove"></a>
-        <a className="hot nav-learn" href="/#/dashboard" onClick={(event) => { event.preventDefault(); go('dashboard'); }} aria-label="Choose a learning root"></a>
-        <a className="hot nav-tools" href="/#/tools" onClick={(event) => { event.preventDefault(); go('tools'); }} aria-label="Tools"></a>
-        <a className="hot nav-about" href="/#/journey" onClick={(event) => { event.preventDefault(); go('journey'); }} aria-label="About RootWise and Sage"></a>
-        <a className="hot nav-support" href="/#/schools" onClick={(event) => { event.preventDefault(); go('schools'); }} aria-label="Support and educators"></a>
-        <a className="hot nav-signin" href="/#/signup" onClick={(event) => { event.preventDefault(); go('signup'); }} aria-label="Sign in"></a>
-        <button className="landing-entry-button" onClick={() => go('journey')} aria-label="Begin your financial roots assessment">
-          <span>Begin Your Financial Roots Assessment</span>
-        </button>
-        <a className="hot card-learn" href="/#/dashboard" onClick={(event) => { event.preventDefault(); go('dashboard'); }} aria-label="Explore the learning roots"></a>
-        <a className="hot card-tools" href="/#/tools" onClick={(event) => { event.preventDefault(); go('tools'); }} aria-label="Use RootWise tools"></a>
+        <a className="hot card-learn" href="/#/dashboard" onClick={(event) => { event.preventDefault(); go('dashboard'); }} aria-label="Explore lessons"></a>
+        <a className="hot card-tools" href="/#/tools" onClick={(event) => { event.preventDefault(); go('tools'); }} aria-label="Use tools"></a>
         <a className="hot card-support" href="/#/schools" onClick={(event) => { event.preventDefault(); go('schools'); }} aria-label="Get support"></a>
-        <a className="hot card-about" href="/#/journey" onClick={(event) => { event.preventDefault(); go('journey'); }} aria-label="Learn about Sage"></a>
+        <a className="hot card-about" href="/#/journey" onClick={(event) => { event.preventDefault(); go('journey'); }} aria-label="Learn more about Sage"></a>
       </section>
+      <footer className="landing-legal-footer">
+        <div className="landing-legal-brand"><ApprovedArtwork variant="tree" /><span><strong>Root$Wise</strong><small>Grow financial wisdom at the root.</small></span></div>
+        <div className="landing-legal-links" aria-label="Legal information">
+          <span>Privacy Policy</span>
+          <span>Terms of Use</span>
+          <span>Accessibility</span>
+          <span>FAQ</span>
+          <span>Contact Us</span>
+        </div>
+        <small>© 2026 Root$Wise. All rights reserved.</small>
+      </footer>
     </main>
   );
 }

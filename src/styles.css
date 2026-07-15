@@ -21,22 +21,17 @@
 .drawer{visibility:hidden;transition:right .25s ease,visibility 0s linear .25s}
 .drawer.show{visibility:visible;transition-delay:0s}
 
-/* The approved landing page has one primary action: begin the assessment. */
+/* The approved landing page flows naturally into the Grove without controls. */
 .landing-page{min-height:100vh;background:#f5efde}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .approved-landing-artwork{display:block;width:100%;height:auto}
-.nav-dashboard,.nav-learn,.nav-tools,.nav-about,.nav-support{top:2.35%;height:3.47%}
-.nav-signin{top:1.45%;height:5.37%}
-.card-learn,.card-tools,.card-support,.card-about{top:74.92%;height:6.71%}
-.landing-entry-button{position:absolute;left:15.5%;top:31.87%;width:28%;height:4.25%;border:0;border-radius:10px;background:transparent;cursor:pointer}
-.landing-entry-button span{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-.landing-entry-button:hover{outline:2px solid rgba(217,180,91,.65);background:rgba(217,180,91,.09)}
-.landing-entry-button:focus-visible{outline:3px solid #d9b45b;outline-offset:4px}
+.approved-hero .card-learn,.approved-hero .card-tools,.approved-hero .card-support,.approved-hero .card-about{top:93.4%;height:4.7%}
 .approved-hero .hot:focus-visible{outline:3px solid #d9b45b;outline-offset:3px;background:rgba(217,180,91,.12)}
+.landing-legal-footer{background:#062615;color:#f8ecd6;padding:34px max(24px,calc((100vw - 1180px)/2));display:grid;grid-template-columns:auto 1fr;align-items:center;gap:22px 44px;border-top:1px solid rgba(217,180,91,.3)}
+.landing-legal-brand{display:flex;align-items:center;gap:12px}.landing-legal-brand svg{width:52px;height:52px}.landing-legal-brand span{display:grid;gap:3px}.landing-legal-brand strong{font-size:24px}.landing-legal-brand small{color:#d9c8a8}
+.landing-legal-links{display:flex;justify-content:flex-end;gap:24px;flex-wrap:wrap;color:#eadbbd;font-family:Arial,sans-serif;font-size:14px}.landing-legal-footer>small{grid-column:1/-1;color:#af9f81;border-top:1px solid rgba(255,255,255,.12);padding-top:18px}
 @media(max-width:950px){
-  .landing-page{padding-bottom:88px}
   .approved-hero>.approved-landing-artwork{width:100%;max-width:none;transform:none}
-  .landing-entry-button{position:fixed;z-index:30;left:50%;top:auto;bottom:18px;width:calc(100% - 32px);max-width:380px;height:auto;transform:translateX(-50%);display:flex;align-items:center;justify-content:center;padding:15px 20px;border:1px solid rgba(217,180,91,.8);border-radius:16px;background:#12351f;color:#f7edd6;box-shadow:0 16px 38px rgba(0,0,0,.35);font-family:Arial,sans-serif;font-weight:900;text-transform:uppercase;letter-spacing:.04em}
-  .landing-entry-button span{position:static;width:auto;height:auto;margin:0;overflow:visible;clip:auto;white-space:normal}
-  .landing-entry-button:hover{outline:0;background:#1b472d}
+  .approved-hero .card-learn,.approved-hero .card-tools,.approved-hero .card-support,.approved-hero .card-about{display:block;top:92.2%;height:7.3%}
+  .landing-legal-footer{grid-template-columns:1fr;padding:28px 20px}.landing-legal-links{justify-content:flex-start;gap:14px 20px}
 }
