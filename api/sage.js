@@ -1,47 +1,13 @@
+import { rootOneDistricts } from '../src/root-one-data.js';
+
 const MAX_MESSAGE_LENGTH = 700;
-const MAX_HISTORY_ITEMS = 6;
+const MAX_HISTORY_ITEMS = 10;
 const RATE_LIMIT_WINDOW_MS = 60_000;
 const RATE_LIMIT_MAX_REQUESTS = 12;
+const OPENAI_TIMEOUT_MS = 18_000;
 const requestWindows = new Map();
 
-const DISTRICTS = {
-  gates: {
-    title: 'Through the Gates',
-    theme: 'Orientation',
-    promise: 'See money as a set of choices the learner can shape.',
-    concepts: ['money is a tool', 'tradeoffs', 'starting with what is true today'],
-  },
-  neighborhoods: {
-    title: 'The Neighborhoods',
-    theme: 'Needs, wants, and habits',
-    promise: 'Recognize how repeated choices gradually shape a financial life.',
-    concepts: ['needs and wants', 'repeated spending patterns', 'saving as a habit'],
-  },
-  streets: {
-    title: 'The Streets',
-    theme: 'Budgeting and cash flow',
-    promise: 'Use a flexible budget to give money useful directions.',
-    concepts: ['income and timing', 'categories and limits', 'irregular expenses'],
-  },
-  marketplace: {
-    title: 'The Marketplace',
-    theme: 'Value, influence, and spending',
-    promise: 'Look beyond affordability and decide what a purchase is truly worth.',
-    concepts: ['value', 'sales pressure', 'whole cost'],
-  },
-  'city-hall': {
-    title: 'City Hall',
-    theme: 'Systems and responsibility',
-    promise: 'Build simple systems that keep good decisions working.',
-    concepts: ['automation', 'one trusted view', 'repairing systems without shame'],
-  },
-  skyline: {
-    title: 'The Skyline',
-    theme: 'Goals, options, and direction',
-    promise: 'Connect ordinary choices to personally meaningful future options.',
-    concepts: ['named goals', 'protecting options', 'quiet progress'],
-  },
-};
+const DISTRICTS = new Map(rootOneDistricts.map((district) => [district.key, district]));
 
 function cleanText(value, maxLength = MAX_MESSAGE_LENGTH) {
   return typeof value === 'string' ? value.trim().slice(0, maxLength) : '';
@@ -71,15 +37,28 @@ function extractOutputText(response) {
 }
 
 function buildInstructions(districtKey) {
-  const district = DISTRICTS[districtKey] || DISTRICTS.gates;
-  const concepts = district.concepts.join(', ');
+  const district = DISTRICTS.get(districtKey) || rootOneDistricts[0];
+  const concepts = district.concepts
+    .map((concept) => `${concept.title}: ${concept.body} In real life: ${concept.recognize}`)
+    .join('\n');
+  const choices = district.scenario.options
+    .map((option) => `${option.label} — consequence: ${option.consequence} Course correction: ${option.correction}`)
+    .join('\n');
 
   return `You are Sage, RootWise's trusted financial-learning companion. You are walking beside a learner in Root One: The City of Foundations.
 
 Current district: ${district.title}
 Theme: ${district.theme}
 Chapter promise: ${district.promise}
-Core ideas: ${concepts}
+District analogy: ${district.districtNote}
+What just happened in the story: ${district.journey.event}
+The learner is considering: ${district.scenario.prompt}
+
+Approved concept breakdowns:
+${concepts}
+
+Approved choices and recovery paths:
+${choices}
 
 Speak like a thoughtful friend, not a textbook or customer-service bot. Use plain, natural language suitable for spoken delivery. Be warm, curious, concise, and lightly witty when it fits. Connect answers to the current district and to a realistic everyday choice.
 
@@ -144,6 +123,8 @@ export default async function handler(request, response) {
     : [];
 
   const input = [...history, { role: 'user', content: message }];
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), OPENAI_TIMEOUT_MS);
 
   try {
     const openAIResponse = await fetch('https://api.openai.com/v1/responses', {
@@ -161,6 +142,7 @@ export default async function handler(request, response) {
         max_output_tokens: 500,
         store: false,
       }),
+      signal: controller.signal,
     });
 
     const payload = await openAIResponse.json().catch(() => ({}));
@@ -179,9 +161,14 @@ export default async function handler(request, response) {
 
     return response.status(200).json({ reply });
   } catch (error) {
+    if (error instanceof Error && error.name === 'AbortError') {
+      return response.status(504).json({ error: 'Sage took too long to answer.' });
+    }
     console.error('Sage request failed before completion', {
       name: error instanceof Error ? error.name : 'UnknownError',
     });
     return response.status(502).json({ error: 'Sage could not answer right now.' });
+  } finally {
+    clearTimeout(timeout);
   }
 }

@@ -260,19 +260,23 @@ function StickyNav() {
 function Home() {
   return (
     <main className="landing-page">
-      <div className="sr-only">
-        <h1>Meet Sage. Build roots. Stop guessing with money.</h1>
-        <p>
-          RootWise helps you grow financial wisdom through guided learning,
-          practical tools, and the seven financial roots.
-        </p>
-      </div>
       <section className="approved-hero" aria-label="RootWise approved landing page">
         <ApprovedLandingArtwork />
-        <a className="hot card-learn" href="/#/dashboard" onClick={(event) => { event.preventDefault(); go('dashboard'); }} aria-label="Explore lessons"></a>
-        <a className="hot card-tools" href="/#/tools" onClick={(event) => { event.preventDefault(); go('tools'); }} aria-label="Use tools"></a>
-        <a className="hot card-support" href="/#/schools" onClick={(event) => { event.preventDefault(); go('schools'); }} aria-label="Get support"></a>
-        <a className="hot card-about" href="/#/journey" onClick={(event) => { event.preventDefault(); go('journey'); }} aria-label="Learn more about Sage"></a>
+        <div className="landing-hero-copy">
+          <p className="landing-eyebrow">Grow financial wisdom at the root</p>
+          <h1>Stop guessing with money. Build roots by learning.</h1>
+          <p className="landing-support">
+            RootWise teaches what money is, what it does, the concepts behind it,
+            and how to apply that knowledge to the choices you make in real life.
+          </p>
+          <button type="button" className="landing-primary-cta" onClick={() => go('dashboard')}>
+            Begin Your Journey <ArrowRight size={17} aria-hidden="true" />
+          </button>
+        </div>
+        <blockquote className="landing-sage-quote">
+          <p>“Financial clarity isn’t about how much you make, it’s about understanding where to apply it. Clarity grows one root at a time.”</p>
+          <cite>— Sage</cite>
+        </blockquote>
       </section>
       <footer className="landing-legal-footer">
         <div className="landing-legal-brand"><ApprovedArtwork variant="tree" /><span><strong>Root$Wise</strong><small>Grow financial wisdom at the root.</small></span></div>

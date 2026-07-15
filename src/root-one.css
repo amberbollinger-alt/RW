@@ -378,12 +378,19 @@
   line-height: 1.6;
 }
 
+.city-journey-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 230px;
+  gap: 15px;
+  align-items: start;
+  margin-top: 18px;
+}
+
 .city-sage-opening {
   display: grid;
-  grid-template-columns: 220px 1fr;
+  grid-template-columns: 205px 1fr;
   min-height: 310px;
   overflow: hidden;
-  margin-top: 18px;
   border: 1px solid var(--city-line);
   border-radius: 28px;
   background: linear-gradient(135deg, rgba(17, 24, 21, 0.96), rgba(7, 12, 10, 0.91));
@@ -406,17 +413,72 @@
   transform: translateX(-50%);
 }
 
-.city-sage-opening > div:last-child {
-  align-self: center;
+.city-journey-copy {
   padding: clamp(25px, 4vw, 48px);
 }
 
-.city-sage-opening blockquote {
+.city-journey-arrival {
+  margin: 0;
+  color: #c7bfad;
+  font-size: 0.95rem;
+  line-height: 1.72;
+}
+
+.city-sage-dialogue {
+  display: grid;
+  gap: 8px;
+  margin-top: 22px;
+}
+
+.city-sage-dialogue p {
   margin: 0;
   color: #f2e6cc;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(1.2rem, 2.25vw, 2rem);
-  line-height: 1.45;
+  font-size: clamp(1.02rem, 1.55vw, 1.42rem);
+  line-height: 1.5;
+}
+
+.city-journey-event {
+  margin-top: 25px;
+  border: 1px solid rgba(216, 182, 100, 0.19);
+  border-radius: 17px;
+  padding: 18px;
+  background: rgba(216, 182, 100, 0.045);
+}
+
+.city-journey-event > p:last-child {
+  margin: 10px 0 0;
+  color: #c9c0ad;
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+.city-district-note {
+  position: sticky;
+  top: 118px;
+  border: 1px solid rgba(216, 182, 100, 0.33);
+  border-radius: 22px;
+  padding: 22px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(216, 182, 100, 0.13), transparent 9rem),
+    linear-gradient(145deg, rgba(27, 53, 41, 0.95), rgba(8, 17, 13, 0.98));
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.27);
+}
+
+.city-district-note h2 {
+  margin: 14px 0 0;
+  color: #f0e2c7;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.3rem;
+  font-weight: 500;
+  line-height: 1.18;
+}
+
+.city-district-note > p:last-child {
+  margin: 15px 0 0;
+  color: #bdb4a1;
+  font-size: 0.85rem;
+  line-height: 1.68;
 }
 
 .city-sage-question {
@@ -472,13 +534,13 @@
 
 .city-concepts > div {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: 1fr;
   gap: 13px;
   margin-top: 24px;
 }
 
 .city-concepts > div > section {
-  min-height: 275px;
+  min-height: 0;
   border: 1px solid var(--city-line);
   border-radius: 22px;
   padding: 24px;
@@ -499,7 +561,7 @@
 }
 
 .city-concepts h3 {
-  margin: 28px 0 11px;
+  margin: 18px 0 11px;
   color: #efe2c8;
   font-family: Georgia, "Times New Roman", serif;
   font-size: 1.28rem;
@@ -511,6 +573,33 @@
   color: #aea796;
   font-size: 0.91rem;
   line-height: 1.68;
+}
+
+.city-concepts section .city-story-link {
+  margin-top: 18px;
+  color: #d9c58f;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.04rem;
+  line-height: 1.55;
+}
+
+.city-concepts section aside {
+  margin-top: 20px;
+  border-top: 1px solid rgba(216, 182, 100, 0.18);
+  padding-top: 16px;
+}
+
+.city-concepts section aside strong {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--city-gold);
+  font-size: 0.68rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.city-concepts section aside p {
+  color: #c9c0ad;
 }
 
 .city-scenario {
@@ -615,6 +704,17 @@
   color: #ead9b8;
   font-family: Georgia, "Times New Roman", serif;
   font-size: 1rem;
+}
+
+.city-consequence .city-course-correction {
+  grid-column: 1 / -1;
+  border-color: rgba(75, 180, 130, 0.3);
+  background: rgba(27, 88, 63, 0.18);
+}
+
+.city-course-correction > p:last-child {
+  margin-top: 8px;
+  color: #d8d0bd;
 }
 
 .city-apply {
@@ -749,6 +849,33 @@
   margin-top: 32px;
   border-top: 1px solid var(--city-line);
   padding-top: 24px;
+}
+
+.city-journey-transition {
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  gap: 14px;
+  align-items: start;
+  margin-top: 24px;
+  border: 1px solid rgba(216, 182, 100, 0.2);
+  border-radius: 20px;
+  padding: 19px 22px;
+  color: #d4c9b3;
+  background: linear-gradient(135deg, rgba(18, 48, 35, 0.62), rgba(7, 14, 11, 0.86));
+}
+
+.city-journey-transition > svg {
+  margin-top: 2px;
+  color: var(--city-gold);
+}
+
+.city-journey-transition p {
+  margin: 0;
+}
+
+.city-journey-transition div > p:last-child {
+  margin-top: 7px;
+  line-height: 1.65;
 }
 
 .city-lesson-footer button {
@@ -986,6 +1113,10 @@
   display: none;
 }
 
+.city-sage-scrim {
+  display: none;
+}
+
 @keyframes city-rise {
   from { opacity: 0; transform: translateY(7px); }
   to { opacity: 1; transform: translateY(0); }
@@ -1002,6 +1133,11 @@
   .city-lesson { padding-right: clamp(18px, 3vw, 48px); padding-left: clamp(18px, 3vw, 48px); }
 }
 
+@media (max-width: 1450px) {
+  .city-journey-shell { grid-template-columns: 1fr; }
+  .city-district-note { position: static; }
+}
+
 @media (max-width: 1180px) {
   .city-layout { grid-template-columns: 260px minmax(0, 1fr); }
   .city-sage-rail {
@@ -1014,8 +1150,21 @@
     background: transparent;
   }
   .city-sage-companion { display: none; max-height: min(76vh, 680px); margin: 0; }
-  .city-sage-companion.is-compact-open { display: flex; position: relative; top: auto; }
+  .city-sage-companion.is-compact-open { position: relative; z-index: 2; top: auto; display: flex; }
+  .city-sage-scrim {
+    position: fixed;
+    z-index: 1;
+    inset: 0;
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    border: 0;
+    background: rgba(0, 0, 0, 0.72);
+    cursor: pointer;
+  }
   .city-sage-mobile-toggle {
+    position: relative;
+    z-index: 2;
     display: grid;
     grid-template-columns: 42px 1fr auto;
     gap: 9px;
@@ -1077,10 +1226,10 @@
     background: rgba(0, 0, 0, 0.72);
     cursor: pointer;
   }
+  .city-journey-shell { grid-template-columns: 1fr; }
+  .city-district-note { position: static; }
   .city-sage-opening { grid-template-columns: 170px 1fr; }
   .city-sage-portrait img { width: 165%; }
-  .city-concepts > div { grid-template-columns: 1fr; }
-  .city-concepts > div > section { min-height: 0; }
   .city-apply { grid-template-columns: 1fr; }
 }
 
@@ -1099,7 +1248,8 @@
   .city-sage-portrait { min-height: 190px; }
   .city-sage-portrait img { top: -12px; bottom: auto; width: 76%; }
   .city-sage-opening > div:last-child { padding: 23px; }
-  .city-sage-opening blockquote { font-size: 1.18rem; }
+  .city-sage-dialogue p { font-size: 1.05rem; }
+  .city-district-note { padding: 20px; }
   .city-consequence { grid-template-columns: 1fr; }
   .city-root-connection { grid-template-columns: 1fr; }
   .city-connection-tree { width: 130px; height: 130px; }

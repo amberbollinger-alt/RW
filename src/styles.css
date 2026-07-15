@@ -21,17 +21,27 @@
 .drawer{visibility:hidden;transition:right .25s ease,visibility 0s linear .25s}
 .drawer.show{visibility:visible;transition-delay:0s}
 
-/* The approved landing page flows naturally into the Grove without controls. */
-.landing-page{min-height:100vh;background:#f5efde}
+/* The approved landing artwork is locked; only approved copy and controls are overlaid. */
+.landing-page,
+.landing-page button,
+.landing-page a{font-family:Georgia,'Times New Roman',serif}
+.landing-page{min-height:100vh;background:#062615}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .approved-landing-artwork{display:block;width:100%;height:auto}
-.approved-hero .card-learn,.approved-hero .card-tools,.approved-hero .card-support,.approved-hero .card-about{top:93.4%;height:4.7%}
-.approved-hero .hot:focus-visible{outline:3px solid #d9b45b;outline-offset:3px;background:rgba(217,180,91,.12)}
-.landing-legal-footer{background:#062615;color:#f8ecd6;padding:34px max(24px,calc((100vw - 1180px)/2));display:grid;grid-template-columns:auto 1fr;align-items:center;gap:22px 44px;border-top:1px solid rgba(217,180,91,.3)}
-.landing-legal-brand{display:flex;align-items:center;gap:12px}.landing-legal-brand svg{width:52px;height:52px}.landing-legal-brand span{display:grid;gap:3px}.landing-legal-brand strong{font-size:24px}.landing-legal-brand small{color:#d9c8a8}
-.landing-legal-links{display:flex;justify-content:flex-end;gap:24px;flex-wrap:wrap;color:#eadbbd;font-family:Arial,sans-serif;font-size:14px}.landing-legal-footer>small{grid-column:1/-1;color:#af9f81;border-top:1px solid rgba(255,255,255,.12);padding-top:18px}
+.landing-hero-copy{position:absolute;z-index:2;top:15.7%;left:13.4%;width:31.5%;color:#12351f}
+.landing-eyebrow{margin:0 0 14px;font-size:clamp(.34rem,.82vw,.78rem);font-weight:700;letter-spacing:.09em;line-height:1.3;text-transform:uppercase}
+.landing-hero-copy h1{margin:0;max-width:11ch;color:#12351f;font-size:clamp(1rem,4.15vw,4.35rem);font-weight:500;letter-spacing:-.047em;line-height:.98}
+.landing-support{max-width:31rem;margin:18px 0 0;color:#3d352a;font-size:clamp(.42rem,1.12vw,1.08rem);line-height:1.55}
+.landing-primary-cta{display:inline-flex;align-items:center;justify-content:center;gap:clamp(4px,.7vw,9px);margin-top:clamp(8px,1.65vw,21px);border:1px solid #12351f;border-radius:12px;padding:clamp(6px,1vw,13px) clamp(9px,1.5vw,19px);color:#f8ecd6;background:linear-gradient(135deg,#173f2a,#0b2d1b);box-shadow:0 12px 26px rgba(16,49,30,.2);cursor:pointer;font-size:clamp(.42rem,.96vw,.9rem);font-weight:700;letter-spacing:.02em}
+.landing-primary-cta:hover{background:linear-gradient(135deg,#1d5135,#103923);transform:translateY(-1px)}
+.landing-primary-cta:focus-visible{outline:3px solid #d9b45b;outline-offset:4px}
+.landing-sage-quote{position:absolute;z-index:2;top:39.1%;right:9.4%;width:18.5%;margin:0;color:#173a25}
+.landing-sage-quote p{margin:0;font-size:clamp(.38rem,1vw,.94rem);line-height:1.42}
+.landing-sage-quote cite{display:block;margin-top:clamp(3px,.55vw,8px);color:#6b5427;font-size:clamp(.34rem,.67vw,.68rem);font-style:normal;font-weight:700}
+.landing-legal-footer{background:#062615;color:#f8ecd6;padding:13px max(20px,calc((100vw - 1180px)/2));display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px 30px;border-top:1px solid rgba(217,180,91,.3)}
+.landing-legal-brand{display:flex;align-items:center;gap:8px}.landing-legal-brand svg{width:32px;height:32px}.landing-legal-brand span{display:grid;gap:1px}.landing-legal-brand strong{font-size:17px}.landing-legal-brand small{color:#d9c8a8;font-size:10px}
+.landing-legal-links{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;color:#eadbbd;font-size:12px}.landing-legal-footer>small{color:#af9f81;font-size:10px;white-space:nowrap}
 @media(max-width:950px){
   .approved-hero>.approved-landing-artwork{width:100%;max-width:none;transform:none}
-  .approved-hero .card-learn,.approved-hero .card-tools,.approved-hero .card-support,.approved-hero .card-about{display:block;top:92.2%;height:7.3%}
-  .landing-legal-footer{grid-template-columns:1fr;padding:28px 20px}.landing-legal-links{justify-content:flex-start;gap:14px 20px}
+  .landing-legal-footer{grid-template-columns:auto 1fr;padding:10px 14px;gap:8px 14px}.landing-legal-links{justify-content:flex-end;gap:7px 12px;font-size:10px}.landing-legal-footer>small{grid-column:1/-1;text-align:center;font-size:9px}.landing-legal-brand svg{width:27px;height:27px}.landing-legal-brand strong{font-size:14px}.landing-legal-brand small{display:none}
 }

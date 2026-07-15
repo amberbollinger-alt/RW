@@ -59,7 +59,7 @@ function readProgress() {
 function initialSageMessage(district) {
   return {
     role: 'assistant',
-    content: `We’re in ${district.title}. Ask me about the idea, give me a situation to walk through, or tell me where it stops making sense.`,
+    content: `This part of the walk is ${district.title}. ${district.question} You can answer that, give me a situation of your own, or tell me where the idea stops making sense.`,
   };
 }
 
@@ -131,19 +131,59 @@ function ChapterPromise({ district }) {
   );
 }
 
-function SageOpening({ district }) {
+function JourneyScene({ district }) {
   return (
-    <section className="city-sage-opening">
-      <div className="city-sage-portrait" aria-hidden="true">
-        <img src="/rootwise-sage.webp" alt="" />
-      </div>
-      <div>
-        <p className="city-eyebrow"><Sparkles size={15} /> Sage opens the walk</p>
-        <blockquote>“{district.sageOpening}”</blockquote>
-        <div className="city-sage-question">
-          <CircleHelp size={18} />
-          <span>{district.question}</span>
+    <section className="city-journey-shell">
+      <div className="city-sage-opening">
+        <div className="city-sage-portrait" aria-hidden="true">
+          <img src="/rootwise-sage.webp" alt="" />
         </div>
+        <div className="city-journey-copy">
+          <p className="city-eyebrow"><Sparkles size={15} /> Sage leads the way</p>
+          <p className="city-journey-arrival">{district.journey.arrival}</p>
+          <div className="city-sage-dialogue" aria-label={`Sage introduces ${district.title}`}>
+            {district.journey.sageDialogue.map((line) => <p key={line}>“{line}”</p>)}
+          </div>
+          <div className="city-journey-event">
+            <p className="city-eyebrow"><Compass size={15} /> What happens here</p>
+            <p>{district.journey.event}</p>
+          </div>
+          <div className="city-sage-question">
+            <CircleHelp size={18} />
+            <span>{district.question}</span>
+          </div>
+        </div>
+      </div>
+      <aside className="city-district-note" aria-label={`${district.title} district note`}>
+        <p className="city-eyebrow"><Map size={15} /> District note</p>
+        <h2>What this place represents</h2>
+        <p>{district.districtNote}</p>
+      </aside>
+    </section>
+  );
+}
+
+function ConceptBreakdown({ district }) {
+  return (
+    <section className="city-concepts">
+      <header>
+        <p className="city-eyebrow"><Lightbulb size={15} /> Break down the walk</p>
+        <h2>What just happened—and why it matters</h2>
+        <p>Sage steps out of the story here and connects what happened in the city to the financial idea underneath it.</p>
+      </header>
+      <div>
+        {district.concepts.map((concept, index) => (
+          <section key={concept.title}>
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <p className="city-story-link">{concept.storyLink}</p>
+            <h3>{concept.title}</h3>
+            <p>{concept.body}</p>
+            <aside>
+              <strong>Where this may show up in your life</strong>
+              <p>{concept.recognize}</p>
+            </aside>
+          </section>
+        ))}
       </div>
     </section>
   );
@@ -185,6 +225,10 @@ function ScenarioCard({ district, selected, onSelect }) {
             <img src="/rootwise-sage.webp" alt="Sage" />
             <p>“{selectedOption.sage}”</p>
           </div>
+          <div className="city-course-correction">
+            <p className="city-eyebrow"><Route size={15} /> Course correction</p>
+            <p>{selectedOption.correction}</p>
+          </div>
         </div>
       )}
     </section>
@@ -217,6 +261,7 @@ function SageCompanion({ district }) {
   const [sending, setSending] = useState(false);
   const [compactOpen, setCompactOpen] = useState(false);
   const listRef = useRef(null);
+  const companionRef = useRef(null);
   const closeRef = useRef(null);
   const toggleRef = useRef(null);
   const messages = useMemo(
@@ -231,14 +276,32 @@ function SageCompanion({ district }) {
   useEffect(() => {
     if (!compactOpen) return undefined;
     closeRef.current?.focus();
-    const closeOnEscape = (event) => {
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const handleDialogKey = (event) => {
       if (event.key === 'Escape') {
         setCompactOpen(false);
         toggleRef.current?.focus();
       }
+      if (event.key === 'Tab') {
+        const focusable = companionRef.current?.querySelectorAll('button:not(:disabled), textarea:not(:disabled)');
+        if (!focusable?.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
     };
-    window.addEventListener('keydown', closeOnEscape);
-    return () => window.removeEventListener('keydown', closeOnEscape);
+    window.addEventListener('keydown', handleDialogKey);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', handleDialogKey);
+    };
   }, [compactOpen]);
 
   const send = async (message) => {
@@ -249,6 +312,8 @@ function SageCompanion({ district }) {
     setConversations((current) => ({ ...current, [district.key]: nextMessages }));
     setDraft('');
     setSending(true);
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 22_000);
 
     try {
       const response = await fetch('/api/sage', {
@@ -259,8 +324,9 @@ function SageCompanion({ district }) {
           district: {
             key: district.key,
           },
-          history: messages.slice(-5),
+          history: messages.slice(-9),
         }),
+        signal: controller.signal,
       });
 
       const payload = await response.json().catch(() => ({}));
@@ -270,19 +336,22 @@ function SageCompanion({ district }) {
         ...current,
         [district.key]: [...nextMessages, { role: 'assistant', content: payload.reply }],
       }));
-    } catch {
+    } catch (error) {
       setConversations((current) => ({
         ...current,
         [district.key]: [
           ...nextMessages,
           {
             role: 'assistant',
-            content: 'I’m having trouble reaching our conversation service right now. Your question is still here—please try me again in a moment.',
+            content: error?.name === 'AbortError'
+              ? 'That took longer than it should. Your question is still here—give me another try in a moment.'
+              : 'I’m having trouble reaching our conversation service right now. Your question is still here—please try me again in a moment.',
             unavailable: true,
           },
         ],
       }));
     } finally {
+      window.clearTimeout(timeout);
       setSending(false);
     }
   };
@@ -301,7 +370,15 @@ function SageCompanion({ district }) {
         <span><strong>Ask Sage</strong><small>Talk through this district</small></span>
         <MessageCircle size={19} />
       </button>
-      <aside id="city-sage-companion" className={`city-sage-companion ${compactOpen ? 'is-compact-open' : ''}`} aria-label="Ask Sage">
+      {compactOpen && <button type="button" className="city-sage-scrim" onClick={() => { setCompactOpen(false); toggleRef.current?.focus(); }} aria-label="Close Ask Sage" />}
+      <aside
+        ref={companionRef}
+        id="city-sage-companion"
+        className={`city-sage-companion ${compactOpen ? 'is-compact-open' : ''}`}
+        aria-label="Ask Sage"
+        role={compactOpen ? 'dialog' : undefined}
+        aria-modal={compactOpen ? 'true' : undefined}
+      >
       <header>
         <img src="/rootwise-sage.webp" alt="Sage" />
         <div><span>Walking with you</span><strong>Ask Sage</strong></div>
@@ -311,7 +388,7 @@ function SageCompanion({ district }) {
         </button>
       </header>
 
-      <div className="city-sage-messages" ref={listRef} aria-live="polite">
+      <div className="city-sage-messages" ref={listRef} role="log" aria-live="polite" aria-relevant="additions">
         {messages.map((message, index) => (
           <div className={`city-message city-message--${message.role} ${message.unavailable ? 'is-unavailable' : ''}`} key={`${message.role}-${index}`}>
             {message.content}
@@ -443,30 +520,15 @@ export default function RootOneCity({ go }) {
 
         <article className="city-lesson" key={district.key}>
           <ChapterPromise district={district} />
-          <SageOpening district={district} />
-
-          <section className="city-concepts">
-            <header>
-              <p className="city-eyebrow"><Lightbulb size={15} /> What to notice here</p>
-              <h2>{district.title}</h2>
-              <p>The city is the setting. Your money is the subject. These are the ideas that give this district roots.</p>
-            </header>
-            <div>
-              {district.concepts.map((concept, index) => (
-                <section key={concept.title}>
-                  <span>{String(index + 1).padStart(2, '0')}</span>
-                  <h3>{concept.title}</h3>
-                  <p>{concept.body}</p>
-                </section>
-              ))}
-            </div>
-          </section>
+          <JourneyScene district={district} />
 
           <ScenarioCard
             district={district}
             selected={choices[district.key]}
             onSelect={(choice) => setChoices((current) => ({ ...current, [district.key]: choice }))}
           />
+
+          <ConceptBreakdown district={district} />
 
           <section className="city-apply">
             <div>
@@ -491,6 +553,14 @@ export default function RootOneCity({ go }) {
           </section>
 
           <RootConnection connection={district.connection} />
+
+          <section className="city-journey-transition" aria-label="The road ahead">
+            <Route size={18} aria-hidden="true" />
+            <div>
+              <p className="city-eyebrow">The road continues</p>
+              <p>{district.journey.transition}</p>
+            </div>
+          </section>
 
           <footer className="city-lesson-footer">
             <button type="button" className="city-secondary" onClick={() => selectDistrict(activeIndex - 1)} disabled={activeIndex === 0}>
