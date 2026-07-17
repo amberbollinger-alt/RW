@@ -42,13 +42,22 @@ function readProgress() {
     if (!value || typeof value !== 'object' || Array.isArray(value)) return {};
 
     const validKeys = new Set(rootOneDistricts.map((district) => district.key));
+    const correctAnswers = new globalThis.Map(rootOneDistricts.map((district) => [
+      district.key,
+      district.recognitionCheck.options.find((option) => option.isCorrect)?.id,
+    ]));
+    const choices = value.choices && typeof value.choices === 'object' && !Array.isArray(value.choices) ? value.choices : {};
+    const checkAnswers = value.checkAnswers && typeof value.checkAnswers === 'object' && !Array.isArray(value.checkAnswers) ? value.checkAnswers : {};
     return {
       activeIndex: Number.isInteger(value.activeIndex)
         ? Math.max(0, Math.min(value.activeIndex, rootOneDistricts.length - 1))
         : 0,
       visited: Array.isArray(value.visited) ? value.visited.filter((key) => validKeys.has(key)) : [],
-      completed: Array.isArray(value.completed) ? value.completed.filter((key) => validKeys.has(key)) : [],
-      choices: value.choices && typeof value.choices === 'object' && !Array.isArray(value.choices) ? value.choices : {},
+      completed: Array.isArray(value.completed)
+        ? value.completed.filter((key) => validKeys.has(key) && choices[key] && checkAnswers[key] === correctAnswers.get(key))
+        : [],
+      choices,
+      checkAnswers,
       reflections: value.reflections && typeof value.reflections === 'object' && !Array.isArray(value.reflections) ? value.reflections : {},
     };
   } catch {
@@ -132,21 +141,30 @@ function ChapterPromise({ district }) {
 }
 
 function JourneyScene({ district }) {
+  const story = district.journey.story || [
+    { type: 'narration', text: district.journey.arrival },
+    ...district.journey.sageDialogue.map((text) => ({ type: 'sage', text })),
+    { type: 'narration', text: district.journey.event },
+  ];
+
   return (
-    <section className="city-journey-shell">
+    <section className="city-journey-shell" aria-labelledby={`story-title-${district.key}`}>
       <div className="city-sage-opening">
         <div className="city-sage-portrait" aria-hidden="true">
           <img src="/rootwise-sage.webp" alt="" />
         </div>
         <div className="city-journey-copy">
-          <p className="city-eyebrow"><Sparkles size={15} /> Sage leads the way</p>
-          <p className="city-journey-arrival">{district.journey.arrival}</p>
-          <div className="city-sage-dialogue" aria-label={`Sage introduces ${district.title}`}>
-            {district.journey.sageDialogue.map((line) => <p key={line}>“{line}”</p>)}
-          </div>
-          <div className="city-journey-event">
-            <p className="city-eyebrow"><Compass size={15} /> What happens here</p>
-            <p>{district.journey.event}</p>
+          <p className="city-eyebrow"><Sparkles size={15} /> Sage’s Story</p>
+          <h2 id={`story-title-${district.key}`} className="city-story-title">{district.title}</h2>
+          <div className="city-story-sequence">
+            {story.map((block, index) => block.type === 'sage' ? (
+              <blockquote className="city-story-sage" key={`${district.key}-story-${index}`}>
+                <cite>Sage</cite>
+                <p>“{block.text}”</p>
+              </blockquote>
+            ) : (
+              <p className="city-story-narration" key={`${district.key}-story-${index}`}>{block.text}</p>
+            ))}
           </div>
           <div className="city-sage-question">
             <CircleHelp size={18} />
@@ -163,13 +181,32 @@ function JourneyScene({ district }) {
   );
 }
 
+function RootRevealed({ district }) {
+  return (
+    <section className="city-concepts city-root-revealed">
+      <header>
+        <p className="city-eyebrow"><Sprout size={15} /> The Root Revealed</p>
+        <h2>{district.rootRevealed.title}</h2>
+        <p>Here is what Maya’s story was really showing you—and how the same pattern works with money.</p>
+      </header>
+      <div>
+        <section>
+          <span aria-hidden="true">01</span>
+          <p className="city-story-link">The city is the setting. This financial idea is the lesson.</p>
+          <p>{district.rootRevealed.body}</p>
+        </section>
+      </div>
+    </section>
+  );
+}
+
 function ConceptBreakdown({ district }) {
   return (
     <section className="city-concepts">
       <header>
-        <p className="city-eyebrow"><Lightbulb size={15} /> Break down the walk</p>
-        <h2>What just happened—and why it matters</h2>
-        <p>Sage steps out of the story here and connects what happened in the city to the financial idea underneath it.</p>
+        <p className="city-eyebrow"><Lightbulb size={15} /> Grow Deeper</p>
+        <h2>How this one idea works with money</h2>
+        <p>Each lens below deepens the same root so you can recognize it in a bank balance, a daily choice, and your own life.</p>
       </header>
       <div>
         {district.concepts.map((concept, index) => (
@@ -189,47 +226,88 @@ function ConceptBreakdown({ district }) {
   );
 }
 
-function ScenarioCard({ district, selected, onSelect }) {
-  const selectedOption = district.scenario.options.find((option) => option.id === selected);
+function RootCheck({ district, scenarioSelected, onScenarioSelect, recognitionSelected, onRecognitionSelect }) {
+  const selectedOption = district.scenario.options.find((option) => option.id === scenarioSelected);
+  const selectedRecognition = district.recognitionCheck.options.find((option) => option.id === recognitionSelected);
+  const isComplete = Boolean(selectedOption && selectedRecognition?.isCorrect);
 
   return (
-    <section className="city-scenario">
+    <section className="city-scenario city-root-check">
       <header>
-        <p className="city-eyebrow"><Compass size={15} /> A choice in the city</p>
-        <h2>{district.scenario.prompt}</h2>
-        <p>{district.scenario.setup}</p>
+        <p className="city-eyebrow"><CheckCircle2 size={15} /> Root Check</p>
+        <h2>See the root. Then use it.</h2>
+        <p>This is not a vocabulary test. First recognize the pattern in Maya’s story, then use the idea in a new situation.</p>
       </header>
 
-      <div className="city-scenario-options">
-        {district.scenario.options.map((option) => (
-          <button
-            type="button"
-            className={selected === option.id ? 'is-selected' : ''}
-            onClick={() => onSelect(option.id)}
-            aria-pressed={selected === option.id}
-            key={option.id}
-          >
-            <span>{selected === option.id ? <Check size={16} /> : <ArrowRight size={16} />}</span>
-            {option.label}
-          </button>
-        ))}
+      <div className="city-root-check-block">
+        <p className="city-eyebrow"><CircleHelp size={15} /> Recognize it</p>
+        <h3>{district.recognitionCheck.prompt}</h3>
+        <div className="city-scenario-options">
+          {district.recognitionCheck.options.map((option) => (
+            <button
+              type="button"
+              className={recognitionSelected === option.id ? 'is-selected' : ''}
+              onClick={() => onRecognitionSelect(option.id)}
+              aria-pressed={recognitionSelected === option.id}
+              key={option.id}
+            >
+              <span>{recognitionSelected === option.id ? <Check size={16} /> : <ArrowRight size={16} />}</span>
+              {option.label}
+            </button>
+          ))}
+        </div>
+        {selectedRecognition && (
+          <div className={selectedRecognition.isCorrect ? 'city-root-check-feedback is-correct' : 'city-root-check-feedback'} aria-live="polite">
+            <strong>{selectedRecognition.isCorrect ? 'That is the root' : 'Look one layer deeper'}</strong>
+            <p>{selectedRecognition.feedback}</p>
+          </div>
+        )}
       </div>
 
-      {selectedOption && (
-        <div className="city-consequence" aria-live="polite">
-          <div>
-            <p className="city-eyebrow">What follows</p>
-            <p>{selectedOption.consequence}</p>
-          </div>
-          <div className="city-consequence-sage">
-            <img src="/rootwise-sage.webp" alt="Sage" />
-            <p>“{selectedOption.sage}”</p>
-          </div>
-          <div className="city-course-correction">
-            <p className="city-eyebrow"><Route size={15} /> Course correction</p>
-            <p>{selectedOption.correction}</p>
-          </div>
+      <div className="city-root-check-divider" aria-hidden="true" />
+
+      <div className="city-root-check-block">
+        <p className="city-eyebrow"><Compass size={15} /> Apply it</p>
+        <h3>{district.scenario.prompt}</h3>
+        <p className="city-root-check-setup">{district.scenario.setup}</p>
+        <div className="city-scenario-options">
+          {district.scenario.options.map((option) => (
+            <button
+              type="button"
+              className={scenarioSelected === option.id ? 'is-selected' : ''}
+              onClick={() => onScenarioSelect(option.id)}
+              aria-pressed={scenarioSelected === option.id}
+              key={option.id}
+            >
+              <span>{scenarioSelected === option.id ? <Check size={16} /> : <ArrowRight size={16} />}</span>
+              {option.label}
+            </button>
+          ))}
         </div>
+
+        {selectedOption && (
+          <div className="city-consequence" aria-live="polite">
+            <div>
+              <p className="city-eyebrow">What follows</p>
+              <p>{selectedOption.consequence}</p>
+            </div>
+            <div className="city-consequence-sage">
+              <img src="/rootwise-sage.webp" alt="Sage" />
+              <p>“{selectedOption.sage}”</p>
+            </div>
+            <div className="city-course-correction">
+              <p className="city-eyebrow"><Route size={15} /> Course correction</p>
+              <p>{selectedOption.correction}</p>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {isComplete && district.rootCheckRecap && (
+        <aside className="city-root-check-recap" aria-live="polite">
+          <p className="city-eyebrow"><Sprout size={15} /> This root is taking hold</p>
+          <p>{district.rootCheckRecap}</p>
+        </aside>
       )}
     </section>
   );
@@ -432,6 +510,7 @@ export default function RootOneCity({ go }) {
   const [visited, setVisited] = useState(saved.visited?.length ? saved.visited : [rootOneDistricts[0].key]);
   const [completed, setCompleted] = useState(saved.completed || []);
   const [choices, setChoices] = useState(saved.choices || {});
+  const [checkAnswers, setCheckAnswers] = useState(saved.checkAnswers || {});
   const [reflections, setReflections] = useState(saved.reflections || {});
   const [navOpen, setNavOpen] = useState(false);
   const menuButtonRef = useRef(null);
@@ -439,8 +518,8 @@ export default function RootOneCity({ go }) {
   const district = rootOneDistricts[activeIndex];
 
   useEffect(() => {
-    localStorage.setItem(PROGRESS_KEY, JSON.stringify({ activeIndex, visited, completed, choices, reflections }));
-  }, [activeIndex, visited, completed, choices, reflections]);
+    localStorage.setItem(PROGRESS_KEY, JSON.stringify({ activeIndex, visited, completed, choices, checkAnswers, reflections }));
+  }, [activeIndex, visited, completed, choices, checkAnswers, reflections]);
 
   useEffect(() => {
     if (!navOpen) return undefined;
@@ -469,6 +548,9 @@ export default function RootOneCity({ go }) {
       ? current.filter((key) => key !== district.key)
       : [...current, district.key]);
   };
+
+  const selectedRecognition = district.recognitionCheck.options.find((option) => option.id === checkAnswers[district.key]);
+  const rootCheckComplete = Boolean(choices[district.key] && selectedRecognition?.isCorrect);
 
   return (
     <main className="city-experience">
@@ -521,18 +603,21 @@ export default function RootOneCity({ go }) {
         <article className="city-lesson" key={district.key}>
           <ChapterPromise district={district} />
           <JourneyScene district={district} />
-
-          <ScenarioCard
-            district={district}
-            selected={choices[district.key]}
-            onSelect={(choice) => setChoices((current) => ({ ...current, [district.key]: choice }))}
-          />
+          <RootRevealed district={district} />
 
           <ConceptBreakdown district={district} />
 
+          <RootCheck
+            district={district}
+            scenarioSelected={choices[district.key]}
+            onScenarioSelect={(choice) => setChoices((current) => ({ ...current, [district.key]: choice }))}
+            recognitionSelected={checkAnswers[district.key]}
+            onRecognitionSelect={(answer) => setCheckAnswers((current) => ({ ...current, [district.key]: answer }))}
+          />
+
           <section className="city-apply">
             <div>
-              <p className="city-eyebrow"><MessageCircle size={15} /> Bring it home</p>
+              <p className="city-eyebrow"><MessageCircle size={15} /> Root Check · Make it yours</p>
               <h2>What do you notice in your own life?</h2>
               <p>{district.reflect}</p>
               <label htmlFor={`reflection-${district.key}`}>
@@ -570,10 +655,11 @@ export default function RootOneCity({ go }) {
               type="button"
               className={completed.includes(district.key) ? 'city-complete is-complete' : 'city-complete'}
               onClick={toggleComplete}
+              disabled={!completed.includes(district.key) && !rootCheckComplete}
               aria-pressed={completed.includes(district.key)}
             >
               {completed.includes(district.key) ? <Check size={17} /> : <Sprout size={17} />}
-              {completed.includes(district.key) ? 'District anchored' : 'Anchor this district'}
+              {completed.includes(district.key) ? 'District anchored' : rootCheckComplete ? 'Anchor this district' : 'Complete Root Check'}
             </button>
             <button
               type="button"

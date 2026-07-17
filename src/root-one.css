@@ -399,6 +399,8 @@
 
 .city-sage-portrait {
   position: relative;
+  align-self: start;
+  height: 390px;
   min-height: 310px;
   overflow: hidden;
   background: radial-gradient(circle at 50% 35%, rgba(216, 182, 100, 0.16), transparent 48%);
@@ -415,6 +417,55 @@
 
 .city-journey-copy {
   padding: clamp(25px, 4vw, 48px);
+}
+
+.city-story-title {
+  margin: 14px 0 24px;
+  color: var(--city-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.8rem, 3vw, 3rem);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+}
+
+.city-story-sequence {
+  display: grid;
+  gap: 19px;
+}
+
+.city-story-narration {
+  margin: 0;
+  color: #c9c0ad;
+  font-size: 0.96rem;
+  line-height: 1.82;
+}
+
+.city-story-sage {
+  margin: 2px 0;
+  border-left: 2px solid rgba(216, 182, 100, 0.62);
+  border-radius: 0 15px 15px 0;
+  padding: 15px 18px;
+  background: linear-gradient(90deg, rgba(216, 182, 100, 0.08), rgba(216, 182, 100, 0.025));
+}
+
+.city-story-sage cite {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--city-gold);
+  font-size: 0.64rem;
+  font-style: normal;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.city-story-sage p {
+  margin: 0;
+  color: #f2e6cc;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.02rem, 1.45vw, 1.3rem);
+  line-height: 1.55;
 }
 
 .city-journey-arrival {
@@ -618,6 +669,77 @@
 
 .city-scenario header > p:last-child {
   margin: 18px 0 0;
+}
+
+.city-root-check-block {
+  margin-top: 30px;
+}
+
+.city-root-check-block h3 {
+  max-width: 780px;
+  margin: 10px 0 0;
+  color: #efe2c8;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.25rem, 2.2vw, 1.85rem);
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.city-root-check-setup {
+  max-width: 780px;
+  margin: 12px 0 0;
+  color: var(--city-muted);
+  line-height: 1.7;
+}
+
+.city-root-check-feedback,
+.city-root-check-recap {
+  margin-top: 16px;
+  border: 1px solid rgba(216, 182, 100, 0.23);
+  border-radius: 18px;
+  padding: 18px 20px;
+  background: rgba(216, 182, 100, 0.055);
+  animation: city-rise 220ms ease both;
+}
+
+.city-root-check-feedback strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--city-gold);
+  font-size: 0.7rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.city-root-check-feedback.is-correct {
+  border-color: rgba(75, 180, 130, 0.34);
+  background: rgba(27, 88, 63, 0.2);
+}
+
+.city-root-check-feedback.is-correct strong {
+  color: #79d7a8;
+}
+
+.city-root-check-feedback p,
+.city-root-check-recap > p:last-child {
+  margin: 0;
+  color: #d8d0bd;
+  line-height: 1.68;
+}
+
+.city-root-check-divider {
+  height: 1px;
+  margin-top: 30px;
+  background: linear-gradient(90deg, transparent, rgba(216, 182, 100, 0.32), transparent);
+}
+
+.city-root-check-recap {
+  border-color: rgba(75, 180, 130, 0.34);
+  background: rgba(27, 88, 63, 0.2);
+}
+
+.city-root-check-recap .city-eyebrow {
+  margin-bottom: 8px;
 }
 
 .city-scenario-options {
@@ -1133,7 +1255,7 @@
   .city-lesson { padding-right: clamp(18px, 3vw, 48px); padding-left: clamp(18px, 3vw, 48px); }
 }
 
-@media (max-width: 1450px) {
+@media (max-width: 1680px) {
   .city-journey-shell { grid-template-columns: 1fr; }
   .city-district-note { position: static; }
 }
@@ -1245,9 +1367,9 @@
   .city-apply > aside,
   .city-root-connection { border-radius: 22px; }
   .city-sage-opening { display: block; }
-  .city-sage-portrait { min-height: 190px; }
+  .city-sage-portrait { height: 190px; min-height: 190px; }
   .city-sage-portrait img { top: -12px; bottom: auto; width: 76%; }
-  .city-sage-opening > div:last-child { padding: 23px; }
+  .city-journey-copy { padding: 23px; }
   .city-sage-dialogue p { font-size: 1.05rem; }
   .city-district-note { padding: 20px; }
   .city-consequence { grid-template-columns: 1fr; }
