@@ -468,6 +468,30 @@
   line-height: 1.55;
 }
 
+.city-story-dialogue {
+  margin: 0;
+  border-left: 2px solid rgba(74, 176, 128, 0.48);
+  padding: 3px 0 3px 18px;
+}
+
+.city-story-dialogue cite {
+  display: block;
+  margin-bottom: 5px;
+  color: #79d7a8;
+  font-size: 0.64rem;
+  font-style: normal;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.city-story-dialogue p {
+  margin: 0;
+  color: #e7ddc8;
+  font-size: 1rem;
+  line-height: 1.72;
+}
+
 .city-journey-arrival {
   margin: 0;
   color: #c7bfad;
@@ -673,6 +697,21 @@
 
 .city-root-check-block {
   margin-top: 30px;
+}
+
+.city-knowledge-check .city-root-check-block + .city-root-check-block {
+  margin-top: 34px;
+  border-top: 1px solid rgba(216, 182, 100, 0.18);
+  padding-top: 30px;
+}
+
+.city-reflection-prompts {
+  display: grid;
+  gap: 8px;
+  margin: 18px 0 0;
+  padding-left: 22px;
+  color: #d6cdb9;
+  line-height: 1.55;
 }
 
 .city-root-check-block h3 {

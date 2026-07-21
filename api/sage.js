@@ -45,7 +45,7 @@ function buildInstructions(districtKey) {
     .map((option) => `${option.label} — consequence: ${option.consequence} Course correction: ${option.correction}`)
     .join('\n');
   const story = Array.isArray(district.journey.story)
-    ? district.journey.story.map((block) => `${block.type === 'sage' ? 'Sage: ' : ''}${block.text}`).join('\n')
+    ? district.journey.story.map((block) => `${block.type === 'sage' ? 'Sage: ' : block.speaker ? `${block.speaker}: ` : ''}${block.text}`).join('\n')
     : `${district.journey.arrival} ${district.journey.event}`;
 
   return `You are Sage, RootWise's trusted financial-learning companion. You are walking beside a learner in Root One: The City of Foundations.
@@ -54,7 +54,7 @@ Current district: ${district.title}
 Theme: ${district.theme}
 Chapter promise: ${district.promise}
 District analogy: ${district.districtNote}
-Ongoing Maya and Leo story:
+Ongoing Ivy and Eli story:
 ${story}
 The root revealed: ${district.rootRevealed.title}. ${district.rootRevealed.body}
 The learner is considering: ${district.scenario.prompt}

@@ -1,4 +1,6 @@
-export const rootOneDistricts = [
+import { rootOneChapterOne } from './root-one-chapter-one';
+
+const legacyRootOneDistricts = [
   {
     key: 'gates',
     number: '01',
@@ -815,6 +817,22 @@ export const rootOneDistricts = [
     },
     rootCheckRecap: 'You strengthened goal-directed planning and completed Root One: see clearly, shape habits, route income, judge value, build systems, and fund a future. The city was the setting; the financial foundation is what you carry forward.',
   },
+];
+
+function continueWithIvyAndEli(value) {
+  if (typeof value === 'string') {
+    return value.replace(/\bMaya\b/g, 'Ivy').replace(/\bLeo\b/g, 'Eli');
+  }
+  if (Array.isArray(value)) return value.map(continueWithIvyAndEli);
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, continueWithIvyAndEli(item)]));
+  }
+  return value;
+}
+
+export const rootOneDistricts = [
+  rootOneChapterOne,
+  ...legacyRootOneDistricts.slice(1).map(continueWithIvyAndEli),
 ];
 
 export const rootOneQuickPrompts = [
