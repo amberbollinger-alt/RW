@@ -16,7 +16,6 @@ import {
   Route,
   Send,
   Sparkles,
-  Sprout,
   Store,
   Target,
   X,
@@ -82,18 +81,12 @@ function readProgress() {
 function initialSageMessage(district) {
   return {
     role: 'assistant',
-    content: `This part of the walk is ${district.title}. ${district.question} You can answer that, give me a situation of your own, or tell me where the idea stops making sense.`,
+    content: `We’re exploring ${district.title}. Ask me about the story, the financial concept, or anything that is unclear.`,
   };
 }
 
-function quickPromptFor(mode, district) {
-  if (mode === 'apply') {
-    return `Help me apply ${district.title} to my own life. Start by asking me one simple question, and do not assume my income or situation.`;
-  }
-  if (mode === 'example') {
-    return `Show me one realistic, everyday example of ${district.theme.toLowerCase()} and walk me through the tradeoff.`;
-  }
-  return `Explain the main idea in ${district.title} a different way. Use plain language and a simple analogy.`;
+function quickPromptFor(_mode, district) {
+  return `Take me deeper into the main financial idea in ${district.title}. Use plain language, connect it directly to Ivy and Eli’s story, and explain one part the chapter has not covered yet.`;
 }
 
 function DistrictSidebar({ activeIndex, completed, visited, onSelect, onClose, closeButtonRef }) {
@@ -104,12 +97,12 @@ function DistrictSidebar({ activeIndex, completed, visited, onSelect, onClose, c
           <p>Root One</p>
           <h2>The City of Foundations</h2>
         </div>
-        <button ref={closeButtonRef} type="button" className="city-nav-close" onClick={onClose} aria-label="Close district menu">
+        <button ref={closeButtonRef} type="button" className="city-nav-close" onClick={onClose} aria-label="Close chapter menu">
           <X size={20} />
         </button>
       </header>
 
-      <nav aria-label="City districts">
+      <nav aria-label="Root One chapters">
         {rootOneDistricts.map((district, index) => {
           const Icon = districtIcons[district.key] || Compass;
           const isComplete = completed.includes(district.key);
@@ -135,7 +128,7 @@ function DistrictSidebar({ activeIndex, completed, visited, onSelect, onClose, c
       </nav>
 
       <footer>
-        <span>{completed.length} of {rootOneDistricts.length} districts anchored</span>
+        <span>{completed.length} of {rootOneDistricts.length} chapters complete</span>
         <div className="city-nav-progress" aria-hidden="true">
           <i style={{ width: `${(completed.length / rootOneDistricts.length) * 100}%` }} />
         </div>
@@ -147,7 +140,7 @@ function DistrictSidebar({ activeIndex, completed, visited, onSelect, onClose, c
 function ChapterPromise({ district }) {
   return (
     <section className="city-promise">
-      <div className="city-promise-label"><Sprout size={17} /> Chapter promise</div>
+      <div className="city-promise-label"><Target size={17} /> Chapter promise</div>
       <h1>{district.promise}</h1>
       <p>Sage will begin here, so you know exactly what this walk is meant to give you.</p>
     </section>
@@ -170,6 +163,12 @@ function JourneyScene({ district }) {
         <div className="city-journey-copy">
           <p className="city-eyebrow"><Sparkles size={15} /> Sage’s Story</p>
           <h2 id={`story-title-${district.key}`} className="city-story-title">{district.title}</h2>
+          {district.storyImage && (
+            <figure className="city-story-image">
+              <img src={district.storyImage} alt={district.storyImageAlt || ''} />
+              <figcaption>Ivy and Eli · The hill above the city</figcaption>
+            </figure>
+          )}
           <div className="city-story-sequence">
             {story.map((block, index) => block.type === 'sage' ? (
               <blockquote className="city-story-sage" key={`${district.key}-story-${index}`}>
@@ -191,27 +190,27 @@ function JourneyScene({ district }) {
           </div>
         </div>
       </div>
-      <aside className="city-district-note" aria-label={`${district.title} district note`}>
-        <p className="city-eyebrow"><Map size={15} /> District note</p>
-        <h2>What this place represents</h2>
+      <aside className="city-district-note" aria-label={`${district.title} story setting`}>
+        <p className="city-eyebrow"><Map size={15} /> Story setting</p>
+        <h2>Why this setting matters</h2>
         <p>{district.districtNote}</p>
       </aside>
     </section>
   );
 }
 
-function RootRevealed({ district }) {
+function FinancialParallel({ district }) {
   return (
     <section className="city-concepts city-root-revealed">
       <header>
-        <p className="city-eyebrow"><Sprout size={15} /> The Root Revealed</p>
+        <p className="city-eyebrow"><Lightbulb size={15} /> The Financial Parallel</p>
         <h2>{district.rootRevealed.title}</h2>
         <p>{district.rootRevealed.intro || 'Here is what the story was really showing you—and how the same pattern works with money.'}</p>
       </header>
       <div>
         <section>
           <span aria-hidden="true">01</span>
-          <p className="city-story-link">{district.rootRevealed.storyLink || 'The setting carries the story. The financial idea is the lesson.'}</p>
+          <p className="city-story-link">{district.rootRevealed.storyLink || 'Here is what the story showed us about money.'}</p>
           <p>{district.rootRevealed.body}</p>
         </section>
       </div>
@@ -223,9 +222,9 @@ function ConceptBreakdown({ district }) {
   return (
     <section className="city-concepts">
       <header>
-        <p className="city-eyebrow"><Lightbulb size={15} /> Grow Deeper</p>
+        <p className="city-eyebrow"><Lightbulb size={15} /> Deeper Dive</p>
         <h2>How this one idea works with money</h2>
-        <p>Each lens below deepens the same root so you can recognize it in a bank balance, a daily choice, and your own life.</p>
+        <p>Each section deepens the same financial idea so you can recognize it in a bank balance, a daily choice, and your own life.</p>
       </header>
       <div>
         {district.concepts.map((concept, index) => (
@@ -259,8 +258,8 @@ function RootCheck({ district, scenarioSelected, onScenarioSelect, recognitionSe
   return (
     <section className="city-scenario city-root-check">
       <header>
-        <p className="city-eyebrow"><CheckCircle2 size={15} /> Root Check</p>
-        <h2>See the root. Then use it.</h2>
+        <p className="city-eyebrow"><CheckCircle2 size={15} /> Knowledge Check</p>
+        <h2>Understand it. Then use it.</h2>
         <p>This is not a vocabulary test. Recognize what the story demonstrated, then use the idea in a new situation.</p>
       </header>
 
@@ -289,7 +288,7 @@ function RootCheck({ district, scenarioSelected, onScenarioSelect, recognitionSe
                 </div>
                 {selected && (
                   <div className={selected.isCorrect ? 'city-root-check-feedback is-correct' : 'city-root-check-feedback'} aria-live="polite">
-                    <strong>{selected.isCorrect ? 'That is the root' : 'Look one layer deeper'}</strong>
+                    <strong>{selected.isCorrect ? 'You’ve got it' : 'Look one step deeper'}</strong>
                     <p>{question.explanation}</p>
                   </div>
                 )}
@@ -317,7 +316,7 @@ function RootCheck({ district, scenarioSelected, onScenarioSelect, recognitionSe
           </div>
           {selectedRecognition && (
             <div className={selectedRecognition.isCorrect ? 'city-root-check-feedback is-correct' : 'city-root-check-feedback'} aria-live="polite">
-              <strong>{selectedRecognition.isCorrect ? 'That is the root' : 'Look one layer deeper'}</strong>
+              <strong>{selectedRecognition.isCorrect ? 'You’ve got it' : 'Look one step deeper'}</strong>
               <p>{selectedRecognition.feedback}</p>
             </div>
           )}
@@ -365,7 +364,7 @@ function RootCheck({ district, scenarioSelected, onScenarioSelect, recognitionSe
 
       {isComplete && district.rootCheckRecap && (
         <aside className="city-root-check-recap" aria-live="polite">
-          <p className="city-eyebrow"><Sprout size={15} /> This root is taking hold</p>
+          <p className="city-eyebrow"><CheckCircle2 size={15} /> Concept understood</p>
           <p>{district.rootCheckRecap}</p>
         </aside>
       )}
@@ -373,20 +372,17 @@ function RootCheck({ district, scenarioSelected, onScenarioSelect, recognitionSe
   );
 }
 
-function RootConnection({ connection }) {
+function ChapterConnection({ connection }) {
   return (
     <section className="city-root-connection">
-      <div className="city-connection-tree">
-        <ApprovedArtwork variant="tree" className="city-approved-tree" />
-      </div>
       <div>
-        <p className="city-eyebrow"><Sprout size={15} /> The Root Connection</p>
-        <h2>One district. One root. One tree.</h2>
+        <p className="city-eyebrow"><Route size={15} /> Chapter Connection</p>
+        <h2>How this chapter connects</h2>
         <dl>
           <div><dt>Look back</dt><dd>{connection.lookBack}</dd></div>
-          <div><dt>New growth</dt><dd>{connection.newGrowth}</dd></div>
-          <div><dt>Whole-tree scenario</dt><dd>{connection.wholeTreeScenario}</dd></div>
-          <div><dt>Carry it forward</dt><dd>{connection.carryForward}</dd></div>
+          <div><dt>What changed</dt><dd>{connection.newGrowth}</dd></div>
+          <div><dt>Use it together</dt><dd>{connection.wholeTreeScenario}</dd></div>
+          <div><dt>What comes next</dt><dd>{connection.carryForward}</dd></div>
         </dl>
       </div>
     </section>
@@ -505,7 +501,7 @@ function SageCompanion({ district }) {
         aria-controls="city-sage-companion"
       >
         <img src="/rootwise-sage.webp" alt="" />
-        <span><strong>Ask Sage</strong><small>Talk through this district</small></span>
+        <span><strong>Ask Sage</strong><small>Talk through this chapter</small></span>
         <MessageCircle size={19} />
       </button>
       {compactOpen && <button type="button" className="city-sage-scrim" onClick={() => { setCompactOpen(false); toggleRef.current?.focus(); }} aria-label="Close Ask Sage" />}
@@ -520,7 +516,7 @@ function SageCompanion({ district }) {
       <header>
         <img src="/rootwise-sage.webp" alt="Sage" />
         <div><span>Walking with you</span><strong>Ask Sage</strong></div>
-        <i title="Sage uses the current district as context" />
+        <i title="Sage uses the current chapter as context" />
         <button ref={closeRef} type="button" className="city-sage-collapse" onClick={() => { setCompactOpen(false); toggleRef.current?.focus(); }} aria-label="Close Ask Sage">
           <X size={18} />
         </button>
@@ -634,7 +630,7 @@ export default function RootOneCity({ go }) {
           aria-expanded={navOpen}
           aria-controls="city-district-navigation"
         >
-          <Menu size={18} /> Districts
+          <Menu size={18} /> Chapters
         </button>
       </header>
 
@@ -645,12 +641,12 @@ export default function RootOneCity({ go }) {
         aria-valuemin={0}
         aria-valuemax={rootOneDistricts.length}
         aria-valuenow={completed.length}
-        aria-valuetext={`${completed.length} of ${rootOneDistricts.length} districts anchored`}
+        aria-valuetext={`${completed.length} of ${rootOneDistricts.length} chapters complete`}
       >
         <i style={{ width: `${(completed.length / rootOneDistricts.length) * 100}%` }} />
       </div>
 
-      {navOpen && <button type="button" className="city-nav-scrim" aria-label="Close district menu" onClick={() => { setNavOpen(false); menuButtonRef.current?.focus(); }} />}
+      {navOpen && <button type="button" className="city-nav-scrim" aria-label="Close chapter menu" onClick={() => { setNavOpen(false); menuButtonRef.current?.focus(); }} />}
 
       <div className="city-layout">
         <div id="city-district-navigation" className={navOpen ? 'city-nav-wrap is-open' : 'city-nav-wrap'}>
@@ -667,7 +663,7 @@ export default function RootOneCity({ go }) {
         <article className="city-lesson" key={district.key}>
           <ChapterPromise district={district} />
           <JourneyScene district={district} />
-          <RootRevealed district={district} />
+          <FinancialParallel district={district} />
 
           <ConceptBreakdown district={district} />
 
@@ -686,7 +682,7 @@ export default function RootOneCity({ go }) {
 
           <section className="city-apply">
             <div>
-              <p className="city-eyebrow"><MessageCircle size={15} /> Root Check · Make it yours</p>
+              <p className="city-eyebrow"><MessageCircle size={15} /> Make it yours</p>
               <h2>What do you notice in your own life?</h2>
               <p>{district.reflect}</p>
               {district.reflectionPrompts?.length ? (
@@ -711,7 +707,7 @@ export default function RootOneCity({ go }) {
             </aside>
           </section>
 
-          <RootConnection connection={district.connection} />
+          <ChapterConnection connection={district.connection} />
 
           <section className="city-journey-transition" aria-label="The road ahead">
             <Route size={18} aria-hidden="true" />
@@ -723,7 +719,7 @@ export default function RootOneCity({ go }) {
 
           <footer className="city-lesson-footer">
             <button type="button" className="city-secondary" onClick={() => selectDistrict(activeIndex - 1)} disabled={activeIndex === 0}>
-              <ArrowLeft size={17} /> Previous district
+              <ArrowLeft size={17} /> Previous chapter
             </button>
             <button
               type="button"
@@ -732,15 +728,15 @@ export default function RootOneCity({ go }) {
               disabled={!completed.includes(district.key) && !rootCheckComplete}
               aria-pressed={completed.includes(district.key)}
             >
-              {completed.includes(district.key) ? <Check size={17} /> : <Sprout size={17} />}
-              {completed.includes(district.key) ? 'District anchored' : rootCheckComplete ? 'Anchor this district' : 'Complete Root Check'}
+              {completed.includes(district.key) ? <Check size={17} /> : <CheckCircle2 size={17} />}
+              {completed.includes(district.key) ? 'Chapter complete' : rootCheckComplete ? 'Complete this chapter' : 'Complete Knowledge Check'}
             </button>
             <button
               type="button"
               className="city-primary"
               onClick={() => activeIndex === rootOneDistricts.length - 1 ? go('dashboard') : selectDistrict(activeIndex + 1)}
             >
-              {activeIndex === rootOneDistricts.length - 1 ? 'Return to the Grove' : 'Next district'} <ArrowRight size={17} />
+              {activeIndex === rootOneDistricts.length - 1 ? 'Return to the Grove' : 'Next chapter'} <ArrowRight size={17} />
             </button>
           </footer>
         </article>

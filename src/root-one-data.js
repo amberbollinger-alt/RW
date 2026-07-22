@@ -271,7 +271,7 @@ const legacyRootOneDistricts = [
       wholeTreeScenario: 'Take one valued habit, calculate its monthly route, and redesign its frequency without erasing the reason it matters.',
       carryForward: 'Habits create traffic. The Streets will give the entire paycheck a route so those habits can live beside every other priority.',
     },
-    rootCheckRecap: 'You strengthened the root of habits: repeated choices shape direction, and lasting corrections protect the value behind the routine. Next, those routines will become part of Maya\'s first working budget.',
+    rootCheckRecap: 'You now understand that repeated choices shape direction, and lasting corrections protect the value behind a routine. Next, those routines will become part of Ivy\'s first working budget.',
   },
   {
     key: 'streets',
@@ -407,7 +407,7 @@ const legacyRootOneDistricts = [
       wholeTreeScenario: 'When an irregular cost lands beside a repeated habit, decide what must be protected, what can bend, and how the used category will be restored.',
       carryForward: 'A budget shows where Maya plans to go. The Marketplace will test whether a persuasive offer deserves a place on that route.',
     },
-    rootCheckRecap: 'You strengthened budgeting: give income a route, include timing, and plan both the detour and the return. Next, Maya will decide whether an attractive purchase is valuable enough to change that route.',
+    rootCheckRecap: 'You now understand how to give income a route, include timing, and plan both the detour and the return. Next, Ivy will decide whether an attractive purchase is valuable enough to change that route.',
   },
   {
     key: 'marketplace',
@@ -543,7 +543,7 @@ const legacyRootOneDistricts = [
       wholeTreeScenario: 'When an attractive offer fits the monthly payment but competes with a goal, name its job, calculate the whole cost, and include the postponed priority.',
       carryForward: 'Thoughtful choices still require attention. City Hall will turn Maya\'s best intentions into systems that work on busy days too.',
     },
-    rootCheckRecap: 'You strengthened value-based spending: judge a purchase by its job, whole cost, and tradeoff rather than one label or payment. Next, Maya will learn why a good decision needs a reliable system behind it.',
+    rootCheckRecap: 'You now understand how to judge a purchase by its job, full cost, and tradeoff rather than one label or payment. Next, Ivy will learn why a good decision needs a reliable system behind it.',
   },
   {
     key: 'city-hall',
@@ -679,7 +679,7 @@ const legacyRootOneDistricts = [
       wholeTreeScenario: 'Choose one recurring problem and build a trigger, action, safeguard, and review that respects the budget and protects the priorities behind it.',
       carryForward: 'A system answers how progress will continue. The Skyline will ask what future Maya wants those systems to build.',
     },
-    rootCheckRecap: 'You strengthened financial systems: repair the route, add safeguards, automate what works, and review it. Next, Maya will connect every district to a future she has chosen deliberately.',
+    rootCheckRecap: 'You now understand how financial systems repair problems, add safeguards, automate what works, and stay useful through review. Next, Ivy will connect every chapter to a future she has chosen deliberately.',
   },
   {
     key: 'skyline',
@@ -737,7 +737,7 @@ const legacyRootOneDistricts = [
     question: 'What changed when Maya turned the bonus from money she was holding into money with named jobs and next steps?',
     rootRevealed: {
       title: 'A future translated into decisions',
-      body: 'Goal-directed planning gives a valued future a reason, an amount, a date, and a funded next step. The goal then coordinates the earlier roots instead of competing with them as a vague wish.',
+      body: 'Goal-directed planning gives a valued future a reason, an amount, a date, and a funded next step. The goal then coordinates the earlier concepts instead of competing with them as a vague wish.',
     },
     concepts: [
       {
@@ -836,7 +836,5 @@ export const rootOneDistricts = [
 ];
 
 export const rootOneQuickPrompts = [
-  { key: 'apply', label: 'Apply this to my life' },
-  { key: 'example', label: 'Show me a real example' },
-  { key: 'simplify', label: "I still don't get it" },
+  { key: 'deep-dive', label: 'Deeper Dive' },
 ];
