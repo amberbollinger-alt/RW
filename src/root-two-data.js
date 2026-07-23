@@ -12,7 +12,7 @@ const chapterOneLessons = [
       },
       {
         type: "narration",
-        text: "Sage kneels beside the press, listens once, removes a narrow side panel, and resets a slipped safety catch. The machine hums back to life in eleven minutes. Sage writes seventy-five dollars on the invoice.",
+        text: "Ivy kneels beside the press, listens once, removes a narrow side panel, and resets a slipped safety catch. The machine hums back to life in eleven minutes. Ivy writes seventy-five dollars on the invoice.",
       },
       {
         type: "dialogue",
@@ -21,16 +21,16 @@ const chapterOneLessons = [
       },
       {
         type: "narration",
-        text: "Sage hears him. She does not become defensive. She points to three things: the press is operating before the pickup cart arrives, no replacement part was purchased, and the laundress did not lose a morning of orders. Then Sage opens her tool case. Tucked beneath the wrenches are years of worn service manuals, training cards, and notes from hundreds of earlier repairs.",
+        text: "Ivy hears him. She does not become defensive. She points to three things: the press is operating before the pickup cart arrives, no replacement part was purchased, and the laundress did not lose a morning of orders. Then Ivy opens her tool case. Tucked beneath the wrenches are years of worn service manuals, training cards, and notes from hundreds of earlier repairs.",
       },
       {
         type: "sage",
         speaker: "Sage",
-        text: "If I had needed three hours to discover the same answer, would the result have become more valuable—or merely slower?",
+        text: "If Ivy had needed three hours to discover the same answer, would the result have become more valuable—or merely slower?",
       },
       {
         type: "narration",
-        text: "Eli watches the laundress restart the press. The invoice did not purchase eleven minutes of visible movement. It purchased a correct diagnosis, restored production, avoided delay, and the confidence to touch a machine that could injure someone if handled badly. The short repair was not evidence that little value existed. It was evidence that much of the work happened before Sage arrived.",
+        text: "Eli watches the laundress restart the press. The invoice did not purchase eleven minutes of visible movement. It purchased a correct diagnosis, restored production, avoided delay, and the confidence to touch a machine that could injure someone if handled badly. The short repair was not evidence that little value existed. It was evidence that much of the work happened before Ivy arrived.",
       },
     ],
     concept: {
@@ -49,7 +49,7 @@ const chapterOneLessons = [
         "The task is… I became faster because… The person receiving the work benefits because…",
     },
     check: {
-      prompt: "What did the laundress receive beyond eleven minutes of Sage’s time?",
+      prompt: "What did the laundress receive beyond eleven minutes of Ivy’s time?",
       options: [
         {
           label: "Only the physical motion of resetting a catch",
@@ -78,24 +78,24 @@ const chapterOneLessons = [
     title: "The Years Inside the Hour",
     focus: "Accumulated knowledge",
     opening:
-      "Sage invites Ivy and Eli to walk with her to the next repair. Eli is still looking at the invoice, but now he is curious about everything the number failed to show.",
+      "Ivy invites Eli to walk with her to the next repair. Sage joins them as Eli continues thinking about everything the invoice failed to show.",
     story: [
       {
         type: "narration",
-        text: "On the way, Sage describes her first year in the trade. She carried tools for a senior technician and was not permitted to diagnose dangerous equipment alone. She learned electrical safety, studied diagrams at night, ruined inexpensive practice parts, and spent months recognizing which sounds meant wear, blockage, loose alignment, or immediate danger.",
+        text: "On the way, Ivy describes her first year in the trade. She carried tools for a senior technician and was not permitted to diagnose dangerous equipment alone. She learned electrical safety, studied diagrams at night, ruined inexpensive practice parts, and spent months recognizing which sounds meant wear, blockage, loose alignment, or immediate danger.",
       },
       {
         type: "dialogue",
         speaker: "Ivy",
-        text: "So the customer isn’t paying you today for every hour you spent learning. But those hours change what you can do today.",
+        text: "The customer isn’t paying me today for every hour I spent learning. But those hours change what I can do today.",
       },
       {
         type: "narration",
-        text: "Sage nods. Her next customer runs a small bakery. One oven is heating unevenly, and the baker has already replaced a sensor without solving the problem. Sage checks the repair history, watches one heating cycle, and notices a faint color change near a connection. She shuts the oven down before opening it. The wire beneath the panel has begun to burn.",
+        text: "Ivy nods. Her next customer runs a small bakery. One oven is heating unevenly, and the baker has already replaced a sensor without solving the problem. Ivy checks the repair history, watches one heating cycle, and notices a faint color change near a connection. She shuts the oven down before opening it. The wire beneath the panel has begun to burn.",
       },
       {
         type: "narration",
-        text: "Eli realizes he would not have noticed the color change. Even if he had, he would not have known whether it meant dust, age, or danger. Sage’s expertise is not simply possessing information. It is retrieving the right knowledge in the right moment and accepting responsibility for what happens next.",
+        text: "Eli realizes he would not have noticed the color change. Even if he had, he would not have known whether it meant dust, age, or danger. Ivy’s expertise is not simply possessing information. It is retrieving the right knowledge in the right moment and accepting responsibility for what happens next.",
       },
       {
         type: "sage",
@@ -104,7 +104,7 @@ const chapterOneLessons = [
       },
       {
         type: "narration",
-        text: "The baker cancels the afternoon batch while the connection is replaced. That costs money today. Continuing to use the oven might have cost much more—or harmed someone. The accumulated knowledge inside that hour does not remove every cost. It changes which cost becomes necessary.",
+        text: "The baker cancels the afternoon batch while the connection is replaced. That costs money today. Continuing to use the oven might have cost much more—or harmed someone. The accumulated knowledge inside Ivy’s hour does not remove every cost. It changes which cost becomes necessary.",
       },
     ],
     concept: {
@@ -123,7 +123,7 @@ const chapterOneLessons = [
         "I can reliably… I learned through… I now recognize…",
     },
     check: {
-      prompt: "Why did Sage’s experience matter during the bakery repair?",
+      prompt: "Why did Ivy’s experience matter during the bakery repair?",
       options: [
         {
           label: "It guaranteed that repairing the oven would cost nothing",
@@ -309,7 +309,7 @@ const chapterOneLessons = [
     story: [
       {
         type: "narration",
-        text: "In a quiet courtyard, the district posts the previous day’s payments. The crane operator earned emergency pay. Sage earned two repair fees. The musicians earned different amounts, and one earned nothing from the community performance. A caregiver who stayed beside an ill neighbor through the storm does not appear on the board at all.",
+        text: "In a quiet courtyard, the district posts the previous day’s payments. The crane operator earned emergency pay. Ivy earned two repair fees. The musicians earned different amounts, and one earned nothing from the community performance. A caregiver who stayed beside an ill neighbor through the storm does not appear on the board at all.",
       },
       {
         type: "dialogue",
@@ -327,7 +327,7 @@ const chapterOneLessons = [
       },
       {
         type: "narration",
-        text: "They return to Sage one final time. Sage tells Eli that a high invoice can never make a person more human than the person who pays it. A quiet month does not erase hard-earned knowledge. And if a customer cannot afford a necessary repair, the need may remain real even when no transaction can occur.",
+        text: "Back at her repair bench, Ivy tells Eli that a high invoice can never make her more human than the laundress who pays it. A quiet month does not erase her knowledge. And if a customer cannot afford a necessary repair, the need may remain real even when no transaction can occur.",
       },
       {
         type: "sage",
@@ -2851,7 +2851,7 @@ const chapterSevenLessons = [
     story: [
       {
         type: "narration",
-        text: "During the first supervised repair, Ivy follows the correct checklist and still reaches the wrong likely cause. Her mentor shows her a vibration pattern that rarely appears in a classroom example. Ivy corrects the diagnosis before any part is ordered.",
+        text: "During her first supervised repair in the advanced course, Ivy follows the correct checklist and still reaches the wrong likely cause. Her mentor shows her a vibration pattern that rarely appears in a classroom example. Ivy corrects the diagnosis before any part is ordered.",
       },
       {
         type: "dialogue",

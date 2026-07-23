@@ -21,3 +21,33 @@
 .r2-right-rail>.r2-sage{position:sticky;top:96px}
 @media(max-width:1100px){.r2-layout{grid-template-columns:250px minmax(0,1fr)}.r2-right-rail{position:fixed;z-index:50;right:18px;bottom:18px}.r2-guide-cards{display:none}.r2-right-rail>.r2-sage{position:fixed}}
 @media(max-width:760px){.root-two-backdrop{background-position:50% top}.r2-card h2{font-size:clamp(23px,7vw,30px)}.r2-promise h1{font-size:clamp(28px,9vw,38px)}.r2-lesson-map>div{display:grid}.r2-lesson-map button{border-radius:12px}.r2-carry blockquote{font-size:16px}}
+
+/* Opportunity District identity: civic, structured, and distinct from Root Three. */
+.root-two-city{--r2-navy:#102f4b;--r2-navy-soft:#1d4961;--r2-green:#1c5948;--r2-gold:#a85f35;--r2-accent-soft:#f4e5d8;--r2-ink:#122f3d;--r2-paper:rgba(255,255,253,.96);--r2-line:rgba(23,62,79,.19);background:#edf3ef}
+.r2-topbar{background:linear-gradient(90deg,rgba(13,42,67,.98),rgba(20,63,73,.98));border-bottom:3px solid var(--r2-gold)}
+.r2-progress{background:rgba(16,47,75,.18)}.r2-progress i{background:linear-gradient(90deg,var(--r2-gold),#79a979)}
+.r2-layout{grid-template-columns:minmax(240px,290px) minmax(0,780px) minmax(250px,300px);gap:18px;max-width:1420px}
+.r2-district-nav{border-radius:8px 24px 8px 8px;background:rgba(248,251,249,.96);border-top:6px solid var(--r2-navy);box-shadow:0 18px 44px rgba(15,47,68,.14)}
+.r2-district-nav>header{background:linear-gradient(145deg,#f7f9f5,#e9f1eb)}
+.r2-district-nav header p,.r2-eyebrow{color:#557145}
+.r2-district-nav nav{gap:2px;padding:8px 7px}.r2-district-nav nav button{border-radius:5px 14px 5px 5px;border-left:3px solid transparent;padding:10px 8px}.r2-district-nav nav button>span:first-child{border-radius:6px;background:#e2ebe8;color:var(--r2-navy)}
+.r2-district-nav nav button.is-active{background:linear-gradient(100deg,var(--r2-navy),var(--r2-navy-soft));border-left-color:var(--r2-gold);box-shadow:0 7px 16px rgba(16,47,75,.18)}
+.r2-district-nav footer b{background:linear-gradient(90deg,var(--r2-gold),#6b9d78)}
+.r2-promise,.r2-card{border-radius:8px 24px 8px 8px;border-color:var(--r2-line);box-shadow:0 15px 38px rgba(17,54,69,.1)}
+.r2-promise{position:relative;overflow:hidden;padding:30px 34px;background:linear-gradient(112deg,rgba(255,252,239,.98),rgba(247,251,248,.97));border-left:7px solid var(--r2-gold)}
+.r2-promise:after{content:"OPPORTUNITY DISTRICT";position:absolute;right:-28px;top:25px;transform:rotate(90deg);color:rgba(16,47,75,.16);font-size:9px;font-weight:900;letter-spacing:.18em}
+.r2-promise h1{font-weight:720;letter-spacing:-.025em}.r2-promise>p{margin:0 0 12px;font-size:17px;color:#315365}
+.r2-card{background:var(--r2-paper);border-top:1px solid rgba(255,255,255,.8)}
+.r2-story{border-left:7px solid var(--r2-navy)}.r2-story-flow blockquote{border-radius:5px 15px 5px 5px;background:#f1f5f4}.r2-story-flow blockquote.is-sage{background:#e7f0e9;border-color:#8dac91}
+.r2-parallel{border-top:1px solid var(--r2-line);border-left:7px solid var(--r2-gold)}
+.r2-deep-dive article{border-radius:5px 15px 5px 5px;background:#f6f9f7}.r2-deep-dive article>span{border-radius:7px;background:var(--r2-navy);color:#fff}
+.r2-lesson-map{background:rgba(244,248,244,.97)}.r2-lesson-map button{border-radius:5px 13px 5px 5px}.r2-lesson-map button.is-active{background:var(--r2-navy);box-shadow:inset 4px 0 var(--r2-gold)}
+.r2-options button{border-radius:5px 14px 5px 5px}.r2-options button>span{border-radius:6px}.r2-options button.is-selected{background:var(--r2-navy)}
+.r2-options button.is-selected>span{background:var(--r2-gold);color:#fff}.r2-carry blockquote{border-left-color:var(--r2-gold);background:#f1f4f2}
+.r2-scenario textarea,.r2-sage textarea{border-radius:5px 13px 5px 5px}.r2-feedback,.r2-carry blockquote{border-radius:5px 14px 5px 5px}
+.r2-lesson-footer button{border-radius:5px 13px 5px 5px}.r2-lesson-footer button:last-child{background:var(--r2-navy)}
+.r2-guide-cards>section,.r2-guide-cards>button{border-radius:6px 18px 6px 6px;border-left:4px solid var(--r2-navy);background:rgba(252,253,250,.96)}.r2-guide-cards>section:nth-child(2){border-left-color:#668e62}.r2-guide-cards>section:nth-child(3){border-left-color:var(--r2-gold)}
+.r2-sage{border-radius:7px 22px 7px 7px;border-top:5px solid var(--r2-gold);background:rgba(250,252,249,.97)}.r2-sage>header{background:linear-gradient(100deg,var(--r2-navy),var(--r2-navy-soft));color:#fff}.r2-sage>header small{color:#d5e2df}.r2-sage form button,.r2-sage-toggle{background:var(--r2-navy)}
+.root-two-city :focus-visible{outline-color:var(--r2-gold)}
+@media(max-width:1100px){.r2-layout{grid-template-columns:255px minmax(0,1fr)}}
+@media(max-width:760px){.r2-promise,.r2-card{border-radius:7px 19px 7px 7px}.r2-promise{padding:24px 22px}.r2-promise:after{display:none}.r2-district-nav{border-radius:0 20px 8px 0}}
