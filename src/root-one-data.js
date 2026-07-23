@@ -1,4 +1,4 @@
-import { rootOneChapterOne } from './root-one-chapter-one';
+import { rootOneChapterOne } from './root-one-chapter-one.js';
 
 const legacyRootOneDistricts = [
   {
