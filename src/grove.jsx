@@ -2,13 +2,14 @@ import { ArrowRight, LockKeyhole, Sprout } from 'lucide-react';
 import { rootOneDistricts } from './root-one-data';
 import { rootTwoDistricts } from './root-two-data';
 import { rootThreeDistricts } from './root-three-data';
+import { rootFourChapters } from './root-four-data';
 import './grove.css';
 
 const groveRoutes = [
   { key: 'literacy', number: '01', label: 'Foundations', description: 'Learn the language beneath every money decision.', ready: true },
   { key: 'value', number: '02', label: 'Value & Earning', description: 'Understand work, income, value, and opportunity.', ready: true },
   { key: 'choice', number: '03', label: 'Choice, Cash Flow & Spending', description: 'Practice spending, tradeoffs, and conscious choice.', ready: true },
-  { key: 'investing', number: '04', label: 'Investing', description: 'Explore growth, time, and risk.', ready: false },
+  { key: 'preparedness', number: '04', label: 'Preparedness, Protection & Future Choice', description: 'Use today’s money to protect tomorrow’s freedom.', ready: true },
   { key: 'business', number: '05', label: 'Business', description: 'Build value beyond a paycheck.', ready: false },
   { key: 'family', number: '06', label: 'Family', description: 'Grow wisdom across relationships and generations.', ready: false },
   { key: 'educators', number: '07', label: 'Educators', description: 'Help financial wisdom take root in others.', ready: false },
@@ -91,16 +92,19 @@ function readRootProgress() {
   const rootOneKeys = new Set(rootOneDistricts.map((district) => district.key));
   const rootTwoKeys = new Set(rootTwoDistricts.flatMap((district) => district.lessons.map((lesson) => lesson.progressKey)));
   const rootThreeKeys = new Set(rootThreeDistricts.map((district) => district.key));
+  const rootFourKeys = new Set(rootFourChapters.map((chapter) => chapter.key));
   return [
     safeCompleted('rootwise_root_one_city_progress', rootOneKeys) === rootOneKeys.size,
     safeCompleted('rootwise_root_two_journey_v3', rootTwoKeys) === rootTwoKeys.size,
     safeCompleted('rootwise_root_three_city_progress_v1', rootThreeKeys) === rootThreeKeys.size,
+    safeCompleted('rootwise_root_four_reservoir_progress_v1', rootFourKeys) === rootFourKeys.size,
   ].filter(Boolean).length;
 }
 
 function enterRoot(route, go) {
   if (route.key === 'value') go('roots/two');
   else if (route.key === 'choice') go('roots/three');
+  else if (route.key === 'preparedness') go('roots/four');
   else go('roots/one');
 }
 
@@ -127,8 +131,8 @@ export default function Grove({ profile, go, view = 'welcome' }) {
             <h1 id="user-grove-title">{name ? `${name}’s Grove` : 'Your Grove'}</h1>
             <span>Understanding grows one Root at a time.</span>
           </div>
-          <div className="user-grove-progress" aria-label={`${completedRoots} of 3 open Roots completed`}>
-            <strong>{completedRoots}</strong><span>of 3 open Roots completed</span><small>Progress is saved on this device.</small>
+          <div className="user-grove-progress" aria-label={`${completedRoots} of 4 open Roots completed`}>
+            <strong>{completedRoots}</strong><span>of 4 open Roots completed</span><small>Progress is saved on this device.</small>
           </div>
         </section>
 
@@ -136,7 +140,7 @@ export default function Grove({ profile, go, view = 'welcome' }) {
           <div className="grove-path-heading">
             <p>The Seven Roots</p>
             <h2 id="root-paths-title">Choose the Root you want to strengthen.</h2>
-            <span>Roots One, Two, and Three are open. The remaining Roots will grow here as they become available.</span>
+            <span>Roots One through Four are open. The remaining Roots will grow here as they become available.</span>
           </div>
           <div className="grove-route-grid">
             {groveRoutes.map((route) => (
