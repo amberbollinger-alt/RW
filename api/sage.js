@@ -1,4 +1,5 @@
 import { rootOneDistricts } from '../src/root-one-data.js';
+import { rootTwoDistricts } from '../src/root-two-data.js';
 import { rootThreeDistricts } from '../src/root-three-data.js';
 
 const MAX_MESSAGE_LENGTH = 700;
@@ -9,6 +10,7 @@ const OPENAI_TIMEOUT_MS = 18_000;
 const requestWindows = new Map();
 
 const DISTRICTS = new Map(rootOneDistricts.map((district) => [district.key, district]));
+const ROOT_TWO_DISTRICTS = new Map(rootTwoDistricts.map((district) => [district.key, district]));
 const ROOT_THREE_DISTRICTS = new Map(rootThreeDistricts.map((district) => [district.key, district]));
 
 function cleanText(value, maxLength = MAX_MESSAGE_LENGTH) {
@@ -105,6 +107,33 @@ Never diagnose, label, or presume the learner's income, debt, family, knowledge,
 Keep most replies between 80 and 180 words. End with either one useful question or one small action—not a generic list.`;
 }
 
+function buildRootTwoInstructions(districtKey, lessonNumber) {
+  const district = ROOT_TWO_DISTRICTS.get(districtKey) || rootTwoDistricts[0];
+  const lesson = district.lessons.find((item) => item.number === lessonNumber) || district.lessons[0];
+  const story = lesson.story.map((block) => `${block.speaker ? `${block.speaker}: ` : ''}${block.text}`).join('\n');
+  const answers = lesson.check.options.map((option) => `${option.label} — ${option.feedback}`).join('\n');
+  return `You are Sage, RootWise's trusted financial-learning companion. You are walking beside a learner in Root Two: Value & Earning.
+
+Current district: ${district.title}
+Theme: ${district.theme}
+Current lesson: ${lesson.title}
+Lesson focus: ${lesson.focus}
+Ongoing Ivy and Eli story:
+${story}
+Financial parallel: ${lesson.concept.title}. ${lesson.concept.explanation}
+Consequence and tradeoff: ${lesson.tradeoff}
+The learner is considering: ${lesson.application.prompt}
+
+Approved knowledge-check explanations:
+${answers}
+
+Speak like a thoughtful friend, not a textbook or customer-service bot. Use direct, natural language at about a high-school reading level. Keep financial terms accurate and explain them immediately in everyday words. Be warm, curious, concise, and lightly witty when it fits. Connect answers to this lesson, Ivy and Eli's story, and a realistic earning decision. Show tradeoffs without shame and never confuse market price with human worth.
+
+Never diagnose, label, or presume the learner's income, employment, family, knowledge, or goals. Ask one clarifying question when personal facts would materially change the answer. RootWise provides education, not individualized financial, legal, tax, employment, investment, or credit-repair advice. For high-stakes decisions, explain the general principle and encourage verification with an appropriate qualified professional. Never request sensitive financial or identity information.
+
+Keep most replies between 80 and 180 words. End with either one useful question or one small action—not a generic list.`;
+}
+
 function clientKey(request) {
   const forwarded = request.headers?.['x-forwarded-for'];
   const raw = Array.isArray(forwarded) ? forwarded[0] : forwarded;
@@ -173,7 +202,9 @@ export default async function handler(request, response) {
         model: process.env.OPENAI_MODEL || 'gpt-5.6-luna',
         instructions: body.root === 'three'
           ? buildRootThreeInstructions(cleanText(body.district?.key, 40))
-          : buildRootOneInstructions(cleanText(body.district?.key, 40)),
+          : body.root === 'two'
+            ? buildRootTwoInstructions(cleanText(body.district?.key, 40), cleanText(body.district?.lesson, 10))
+            : buildRootOneInstructions(cleanText(body.district?.key, 40)),
         input,
         reasoning: { effort: 'low' },
         text: { verbosity: 'low' },

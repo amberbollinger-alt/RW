@@ -12,8 +12,6 @@ const groveRoutes = [
   { key: 'educators', number: '07', label: 'Educators', angle: '222deg' },
 ];
 
-const ROOT_TWO_URL = 'https://rootwise-root-two-value-earning.amber-bollinger.chatgpt.site';
-
 export default function Grove({ profile, go }) {
   const name = profile?.firstName || 'Friend';
 
@@ -47,7 +45,7 @@ export default function Grove({ profile, go }) {
             style={/** @type {import('react').CSSProperties} */ ({ '--route-angle': route.angle })}
             onClick={() => {
               if (!route.ready) return;
-              if (route.key === 'value') window.location.assign(ROOT_TWO_URL);
+              if (route.key === 'value') go('roots/two');
               else if (route.key === 'choice') go('roots/three');
               else go('roots/one');
             }}
