@@ -59,7 +59,7 @@
 }
 
 .grove-brand span { display: grid; text-align: left; }
-.grove-brand strong { font-family: Georgia, serif; font-size: 1.15rem; }
+.grove-brand strong { font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 1.15rem; }
 .grove-brand small { color: #a59d8c; font-size: 0.64rem; letter-spacing: 0.08em; text-transform: uppercase; }
 
 .grove-profile {
@@ -99,7 +99,7 @@
 .grove-intro h1 {
   margin: 15px 0 10px;
   color: var(--grove-cream);
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
   font-size: clamp(2.6rem, 5vw, 5.2rem);
   font-weight: 500;
   letter-spacing: -0.05em;
@@ -160,7 +160,7 @@
   text-align: center;
 }
 
-.grove-tree strong { font-family: Georgia, serif; font-size: 1.2rem; }
+.grove-tree strong { font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 1.2rem; }
 .grove-tree span { color: #c9b879; font-size: 0.62rem; font-weight: 850; letter-spacing: 0.08em; text-transform: uppercase; }
 
 .grove-route {
@@ -229,7 +229,7 @@
 
 .grove-next > svg { color: var(--grove-gold); }
 .grove-next > div { display: grid; }
-.grove-next strong { font-family: Georgia, serif; }
+.grove-next strong { font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
 .grove-next span { color: #a59e8f; font-size: 0.72rem; }
 .grove-next button {
   display: inline-flex;
