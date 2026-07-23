@@ -1,16 +1,22 @@
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   ArrowRight,
   BookOpen,
-  Check,
-  HeartHandshake,
   LockKeyhole,
+  Map,
+  Sun,
   ShieldCheck,
   Sparkles,
   Sprout,
-  Trees,
+  X,
 } from 'lucide-react';
-import { ApprovedArtwork } from './approved-artwork';
+import { rootOneDistricts } from './root-one-data';
+import { rootTwoDistricts } from './root-two-data';
+import { rootThreeDistricts } from './root-three-data';
 import './grove.css';
+
+const WELCOME_KEY = 'rootwise_grove_welcome_seen_v1';
+const cssVar = (name, value) => ({ [name]: value });
 
 const groveRoutes = [
   { key: 'literacy', number: '01', label: 'Foundations', description: 'Learn the language beneath every money decision.', ready: true },
@@ -22,14 +28,81 @@ const groveRoutes = [
   { key: 'educators', number: '07', label: 'Educators', description: 'Help financial wisdom take root in others.', ready: false },
 ];
 
-const principles = [
-  'Knowledge before judgment.',
-  'Options before instructions.',
-  'Understanding before action.',
-  'No shame, fear, or false urgency.',
-  'Money is a tool—not a measure of human worth.',
-  'The learner remains the author of their life.',
+const welcomeSections = [
+  {
+    heading: 'The Heart of Root$Wise',
+    subheading: 'Welcome to the Grove',
+    paragraphs: [
+      'Every tree begins as a seed.',
+      'The Grove is a reminder that growth is never instant, never identical, and never finished. Every tree represents a journey. Every journey begins with a choice.',
+      'Your tree begins today.',
+      'It will not grow because time passes.',
+      'It will grow because understanding does.',
+    ],
+  },
 ];
+
+const monumentContent = {
+  principles: {
+    label: 'The Root$Wise Principles',
+    icon: BookOpen,
+    sections: [
+      { heading: 'What We Believe', paragraphs: ['Money is important.', 'It pays bills.', 'Creates opportunities.', 'Removes barriers.', 'Supports families.', 'Builds communities.', 'But money has never been the destination.', 'Money is a tool.', 'The destination is choice.'] },
+      { heading: 'Our Promise', paragraphs: ['Root$Wise will never tell you what to buy.', 'We will never tell you what to invest in.', 'We will never tell you what decision is "right."', 'Those decisions belong to you.', 'Our responsibility is different.', 'We explain principles.', 'We explore consequences.', 'We compare possibilities.', 'We ask better questions.', 'Because independent thinking is more valuable than borrowed opinions.'] },
+      { heading: 'The Seven Roots', paragraphs: ['Wisdom does not grow all at once.', 'It grows one root at a time.', 'Each Root strengthens the next.', 'Each lesson builds on the one before it.', 'Not to create experts.', 'To create understanding.', 'Because strong trees are not built from taller branches.', 'They are built from deeper roots.'] },
+      { heading: 'Our Standard', paragraphs: ['Every lesson should answer three questions.', 'What is this?', 'Why does it matter?', 'How does it change the choices available to me?', 'If it cannot answer all three, it is not finished.'] },
+      { heading: 'The Measure of Success', paragraphs: ['Success is not measured by how much someone earns.', 'It is measured by how clearly they understand the decisions in front of them.', 'Knowledge creates confidence.', 'Confidence creates better choices.', 'Better choices create more options.', 'That is the growth we measure.'] },
+      { heading: 'The Heart of Root$Wise', paragraphs: ['Our roots are planted in ideas.', 'Our purpose is understanding.', 'Our measure is wisdom.', 'Our promise is independence.', 'Our goal is choice.', 'Welcome to the Grove.', "Let's plant your tree."] },
+    ],
+  },
+  mission: {
+    label: 'Our Mission',
+    icon: Sun,
+    sections: [
+      { heading: 'Why Root$Wise Exists', paragraphs: ['Most people were expected to understand money long before anyone taught them how it works.', "That isn't a personal failure. It is an educational gap.", 'Root$Wise exists to close that gap.', 'Not by giving answers to memorize.', 'By building understanding that lasts.', 'Because knowledge can be forgotten.', 'Understanding becomes part of how you think.'] },
+      { heading: 'What Financial Freedom Really Means', paragraphs: ['Financial freedom is not a number.', 'Financial freedom is options.', 'The option to stay.', 'The option to leave.', 'The option to build.', 'The option to recover.', 'The option to help.', 'The option to begin again.', 'Money simply expands those options.'] },
+      { heading: 'The Script You Never Wrote', paragraphs: ['Every person inherits a financial story.', 'Some inherit confidence.', 'Some inherit fear.', 'Some inherit scarcity.', 'Some inherit abundance.', 'Most inherit beliefs they never chose.', 'Root$Wise cannot change your past.', 'It can help you examine it.', 'Understanding your story is the first step toward writing the next chapter yourself.'] },
+      { heading: 'Our Mission', paragraphs: ['Root$Wise exists to level the financial playing field through understanding.', 'To teach financial concepts without fear.', 'To encourage independent thinking without influence.', 'To replace confusion with clarity.', 'To replace helplessness with possibility.', 'To help people grow beyond the script they never wrote.'] },
+    ],
+  },
+  ads: {
+    label: 'Why You’ll Never See Ads',
+    icon: ShieldCheck,
+    sections: [
+      { heading: 'Why There Are No Advertisements', paragraphs: ['Attention is valuable.', 'Trust is even more valuable.', 'Advertising creates competing interests.', 'Root$Wise was built to serve one audience:', 'The learner.', 'We do not sell attention.', 'We do not sell influence.', 'We do not accept payment to recommend financial products or shape educational content.', 'If a concept belongs here, it belongs because it helps you understand the world—not because someone paid for the space.'] },
+      { heading: 'Why We Never Endorse Financial Products', paragraphs: ['Every financial decision depends on the person making it.', 'Their goals.', 'Their circumstances.', 'Their values.', 'One answer cannot fit every life.', 'Root$Wise teaches frameworks, not prescriptions.', 'The decision will always remain yours.'] },
+    ],
+  },
+  premium: {
+    label: 'Why Premium Exists',
+    icon: Sprout,
+    sections: [
+      { heading: 'Why Premium Exists', paragraphs: ['Education has a cost.', 'Servers.', 'Development.', 'Research.', 'Writers.', 'Designers.', 'Teachers.', 'Accessibility.', 'Security.', 'Premium allows Root$Wise to be supported by the people it serves instead of advertisers, sponsors, or paid influence.', 'That independence protects the integrity of everything you learn here.'] },
+    ],
+  },
+};
+
+function safeCompleted(key, validKeys) {
+  try {
+    const parsed = JSON.parse(window.localStorage.getItem(key) || '{}');
+    if (!Array.isArray(parsed.completed)) return 0;
+    return new Set(parsed.completed.filter((item) => validKeys.has(item))).size;
+  } catch {
+    return 0;
+  }
+}
+
+function readRootProgress() {
+  const rootOneKeys = new Set(rootOneDistricts.map((district) => district.key));
+  const rootTwoKeys = new Set(rootTwoDistricts.flatMap((district) => district.lessons.map((lesson) => lesson.progressKey)));
+  const rootThreeKeys = new Set(rootThreeDistricts.map((district) => district.key));
+  const completed = [
+    safeCompleted('rootwise_root_one_city_progress', rootOneKeys) === rootOneKeys.size,
+    safeCompleted('rootwise_root_two_journey_v3', rootTwoKeys) === rootTwoKeys.size,
+    safeCompleted('rootwise_root_three_city_progress_v1', rootThreeKeys) === rootThreeKeys.size,
+  ];
+  return completed.filter(Boolean).length;
+}
 
 function enterRoot(route, go) {
   if (route.key === 'value') go('roots/two');
@@ -37,148 +110,191 @@ function enterRoot(route, go) {
   else go('roots/one');
 }
 
+function MonumentDialog({ monument, onClose }) {
+  const closeRef = useRef(null);
+  const dialogRef = useRef(null);
+  const content = monumentContent[monument];
+
+  useEffect(() => {
+    closeRef.current?.focus();
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') onClose();
+      if (event.key !== 'Tab') return;
+      const focusable = dialogRef.current?.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])');
+      if (!focusable?.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [onClose]);
+
+  return (
+    <div className="grove-dialog-backdrop" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
+      <section ref={dialogRef} className="grove-dialog" role="dialog" aria-modal="true" aria-labelledby="grove-dialog-title">
+        <header>
+          <p>From the Heart of Root$Wise</p>
+          <h2 id="grove-dialog-title">{content.label}</h2>
+          <button ref={closeRef} type="button" onClick={onClose} aria-label={`Close ${content.label}`}><X /></button>
+        </header>
+        <div className="grove-dialog-copy">
+          {content.sections.map((section) => (
+            <article key={section.heading}>
+              <h3>{section.heading}</h3>
+              {section.paragraphs.map((paragraph, index) => <p key={`${section.heading}-${index}`}>{paragraph}</p>)}
+            </article>
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function SunriseValley({ compact = false }) {
+  return (
+    <div className={compact ? 'sunrise-valley is-compact' : 'sunrise-valley'} aria-hidden="true">
+      <span className="grove-sun" />
+      <span className="grove-rays" />
+      <span className="grove-birds">⌁  ⌁      ⌁</span>
+      <span className="grove-mountain mountain-far" />
+      <span className="grove-mountain mountain-near" />
+      <span className="grove-valley-floor" />
+      <span className="grove-particles" />
+    </div>
+  );
+}
+
+function SageWelcome({ onFinish }) {
+  const [phase, setPhase] = useState('arrival');
+  useEffect(() => {
+    const timer = window.setTimeout(() => setPhase('speaking'), 2600);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  return (
+    <section className={`grove-intro is-${phase}`} aria-label="Welcome to the Grove">
+      <SunriseValley />
+      <div className="grove-intro-sage"><img src="/rootwise-sage.webp" alt="Sage, your RootWise guide" /></div>
+      {phase === 'speaking' && (
+        <div className="grove-intro-copy">
+          {welcomeSections.map((section) => (
+            <div key={section.heading}>
+              <p className="grove-intro-kicker">{section.heading}</p>
+              <h1>{section.subheading}</h1>
+              {section.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+            </div>
+          ))}
+          <button type="button" onClick={onFinish}>Whenever you’re ready, let’s plant your tree. <ArrowRight /></button>
+        </div>
+      )}
+    </section>
+  );
+}
+
 export default function Grove({ profile, go }) {
-  const name = profile?.firstName || 'friend';
+  const [showWelcome, setShowWelcome] = useState(() => window.localStorage.getItem(WELCOME_KEY) !== 'true');
+  const [activeMonument, setActiveMonument] = useState(null);
+  const [completedRoots, setCompletedRoots] = useState(readRootProgress);
+  const previousFocus = useRef(null);
+  const name = profile?.firstName || 'Your';
+  const treeLabel = profile?.firstName ? `${profile.firstName}’s tree` : 'Your tree';
+  const treeLeaves = useMemo(() => 7 + completedRoots * 6, [completedRoots]);
+
+  useEffect(() => {
+    const refresh = () => setCompletedRoots(readRootProgress());
+    window.addEventListener('focus', refresh);
+    window.addEventListener('storage', refresh);
+    return () => { window.removeEventListener('focus', refresh); window.removeEventListener('storage', refresh); };
+  }, []);
+
+  const finishWelcome = () => {
+    window.localStorage.setItem(WELCOME_KEY, 'true');
+    setShowWelcome(false);
+  };
+  const openMonument = (key) => {
+    previousFocus.current = document.activeElement;
+    setActiveMonument(key);
+  };
+  const closeMonument = () => {
+    setActiveMonument(null);
+    window.setTimeout(() => previousFocus.current?.focus(), 0);
+  };
+
+  if (showWelcome) return <SageWelcome onFinish={finishWelcome} />;
 
   return (
     <main className="grove-page">
+      <SunriseValley />
       <header className="grove-header">
         <button type="button" onClick={() => go('home')} className="grove-brand" aria-label="RootWise home">
-          <ApprovedArtwork variant="tree" />
-          <span><strong>Root$Wise</strong><small>The Grove</small></span>
+          <Sprout /><span><strong>Root$Wise</strong><small>The Grove</small></span>
         </button>
-        <nav aria-label="Grove navigation">
-          <a href="#roots">Explore roots</a>
-          <a href="#principles">Our principles</a>
-          <a href="#why-paid">Why subscriptions</a>
-        </nav>
-        <button type="button" onClick={() => go('my-journey')} className="grove-profile">My journey</button>
+        <p>A place for understanding to take root.</p>
+        <div><button type="button" onClick={() => setShowWelcome(true)}>Replay Sage’s welcome</button><button type="button" onClick={() => go('my-journey')}>My journey</button></div>
       </header>
 
-      <section className="grove-welcome" aria-labelledby="grove-title">
-        <div className="grove-forest" aria-hidden="true">
-          {Array.from({ length: 18 }, (_, index) => <span key={index}><Trees /></span>)}
+      <section className="grove-clearing" aria-labelledby="grove-title">
+        <div className="grove-clearing-heading">
+          <p><Sparkles /> The Heart of Root$Wise</p>
+          <h1 id="grove-title">Welcome to the Grove.</h1>
+          <span>Every tree begins as a seed. Your understanding gives it roots.</span>
         </div>
-        <div className="grove-sage-arrival">
-          <img src="/rootwise-sage.webp" alt="Sage, the RootWise guide, walking into the Grove" />
-          <div className="grove-sage-shadow" />
+
+        <div className="grove-landscape" id="roots">
+          <div className={`grove-user-tree growth-${completedRoots}`} aria-label={`${treeLabel}: ${completedRoots} of 3 available Roots complete. Progress is saved on this device.`}>
+            <div className="tree-crown">
+              {Array.from({ length: treeLeaves }, (_, index) => <i key={index} style={cssVar('--leaf', index)} />)}
+            </div>
+            <span className="tree-trunk" />
+            <span className="tree-roots" />
+            <div className="tree-plaque"><strong>{treeLabel}</strong><span>{completedRoots} of 3 open Roots complete</span></div>
+          </div>
+
+          <div className="symbolic-forest" aria-hidden="true">
+            {Array.from({ length: 13 }, (_, index) => <span key={index} style={cssVar('--tree', index)}><i /></span>)}
+          </div>
+
+          <div className="grove-monuments" aria-label="The heart of RootWise">
+            {Object.entries(monumentContent).map(([key, monument]) => {
+              const Icon = monument.icon;
+              return <button type="button" key={key} className={`monument monument-${key}`} onClick={() => openMonument(key)}><Icon /><span>{monument.label}</span><small>Open monument</small></button>;
+            })}
+          </div>
         </div>
-        <div className="grove-welcome-copy">
-          <p className="grove-eyebrow"><Sparkles size={15} /> Sage welcomes you</p>
-          <h1 id="grove-title">Welcome to the Grove, {name}.</h1>
-          <blockquote>
-            <p>&ldquo;Every tree you see represents another person learning, questioning, and growing. No two trees take the same shape, because no two lives begin in the same soil.</p>
-            <p>RootWise exists for one purpose: to level the financial playing field with knowledge of financial concepts, a deeper understanding of the relationship you have with money, and&mdash;most importantly&mdash;the ability to grow beyond the script you never wrote.</p>
-            <p>Financial freedom is having options. Money is simply a tool we use to exchange value. RootWise exists to help fill the gap between living a life that gets chosen for you and becoming the person you choose to be. Our roots are planted in ideas. The fruit of understanding is wisdom.&rdquo;</p>
-          </blockquote>
-          <p>
-            The Grove is a visual picture of many learners growing side by side, not a live community roster. The tree you are planting is your own: one root, one lesson, and one reclaimed choice at a time.
-          </p>
-          <div className="grove-welcome-actions">
-            <button type="button" onClick={() => document.querySelector('#roots')?.scrollIntoView({ behavior: 'smooth' })}>
-              Plant your next root <ArrowRight size={17} />
+
+        <p className="grove-truth-note">The surrounding trees symbolize possibility—not live member accounts. Your tree reflects completed Roots, with progress saved only on this device.</p>
+      </section>
+
+      <section className="grove-root-paths" aria-labelledby="root-paths-title">
+        <div className="grove-path-heading"><p><Map /> The Seven Roots</p><h2 id="root-paths-title">Choose the root you want to strengthen.</h2><span>Each Root strengthens the next. Open Roots remember your progress on this device.</span></div>
+        <div className="grove-route-ring">
+          <div className="route-ring-center"><Sprout /><strong>{name} tree</strong><span>{completedRoots ? `${completedRoots} Root${completedRoots === 1 ? '' : 's'} grown` : 'Ready to grow'}</span></div>
+          {groveRoutes.map((route, index) => (
+            <button
+              type="button"
+              className={route.ready ? 'grove-route is-ready' : 'grove-route'}
+              onClick={() => route.ready && enterRoot(route, go)}
+              disabled={!route.ready}
+              key={route.key}
+              style={cssVar('--route', index)}
+            >
+              <span>{route.number}</span>
+              <div><strong>{route.label}</strong><small>{route.description}</small></div>
+              {route.ready ? <ArrowRight /> : <LockKeyhole />}
             </button>
-            <a href="#mission">Why RootWise exists</a>
-          </div>
-        </div>
-      </section>
-
-      <section className="grove-mission" id="mission" aria-labelledby="mission-title">
-        <div className="grove-section-label"><Sprout size={17} /> Our purpose</div>
-        <h2 id="mission-title">Financial freedom is having options.</h2>
-        <p className="grove-mission-lead">
-          RootWise exists for one purpose: to level the financial playing field through knowledge of financial concepts, a deeper understanding of the relationship we have with money, and—most importantly—the ability to grow beyond the script we never wrote.
-        </p>
-        <div className="grove-belief-grid">
-          <article>
-            <span>01</span>
-            <h3>Money is a tool</h3>
-            <p>Money is something we use to exchange value. It can create access and choices, but it does not define intelligence, dignity, character, or worth.</p>
-          </article>
-          <article>
-            <span>02</span>
-            <h3>Knowledge creates options</h3>
-            <p>Understanding the system makes more paths visible. RootWise teaches the map so each person can decide which road fits their life.</p>
-          </article>
-          <article>
-            <span>03</span>
-            <h3>You choose who you become</h3>
-            <p>We work to fill the gap between living a life that gets chosen for you and becoming the person you choose to be.</p>
-          </article>
-        </div>
-      </section>
-
-      <section className="grove-roots" id="roots" aria-labelledby="roots-title">
-        <div className="grove-roots-heading">
-          <div>
-            <div className="grove-section-label"><Trees size={17} /> Your growing tree</div>
-            <h2 id="roots-title">Choose the root you want to strengthen.</h2>
-          </div>
-          <p>There is no single correct order. Begin where understanding would give you the most useful options today.</p>
-        </div>
-        <div className="grove-root-system">
-          <div className="grove-personal-tree">
-            <ApprovedArtwork variant="tree" />
-            <div><strong>{profile?.firstName ? `${profile.firstName}’s tree` : 'Your tree'}</strong><span>Growing one lesson at a time</span></div>
-          </div>
-          <div className="grove-route-grid">
-            {groveRoutes.map((route) => (
-              <button
-                type="button"
-                className={route.ready ? 'grove-route is-ready' : 'grove-route'}
-                onClick={() => route.ready && enterRoot(route, go)}
-                disabled={!route.ready}
-                key={route.key}
-              >
-                <span>{route.number}</span>
-                <div><strong>{route.label}</strong><small>{route.description}</small></div>
-                {route.ready ? <ArrowRight size={17} /> : <LockKeyhole size={15} />}
-              </button>
-            ))}
-          </div>
-        </div>
-        <p className="grove-progress-note">Roots One, Two, and Three are open. Lesson progress is saved on this device.</p>
-      </section>
-
-      <section className="grove-principles" id="principles" aria-labelledby="principles-title">
-        <div className="grove-principles-copy">
-          <div className="grove-section-label"><BookOpen size={17} /> The RootWise principles</div>
-          <h2 id="principles-title">The roots beneath everything we teach.</h2>
-          <p>
-            These principles are our working Bible. They protect the learner’s agency and keep every lesson focused on clarity, dignity, context, and choice.
-          </p>
-        </div>
-        <div className="grove-principle-list">
-          {principles.map((principle) => <div key={principle}><Check size={16} /><span>{principle}</span></div>)}
-        </div>
-      </section>
-
-      <section className="grove-trust" id="why-paid" aria-labelledby="trust-title">
-        <div className="grove-section-label"><ShieldCheck size={17} /> How we sustain the work</div>
-        <h2 id="trust-title">Paid by learners. Never steered by advertisers.</h2>
-        <div className="grove-trust-grid">
-          <article>
-            <HeartHandshake size={25} />
-            <h3>Why RootWise has paid subscriptions</h3>
-            <p>
-              Thoughtful curriculum, accessible tools, private progress, and responsible guidance take people and resources to build. Subscriptions allow RootWise to serve the learner—not a sponsor—and to keep improving the education itself.
-            </p>
-          </article>
-          <article className="grove-no-ads">
-            <ShieldCheck size={25} />
-            <h3>Our permanent no-ads promise</h3>
-            <p>
-              RootWise will never sell attention, endorse financial products for payment, or fill lessons with advertising. Financial education should not quietly become a sales funnel. Your learning will never be shaped by who paid to be placed in front of you.
-            </p>
-          </article>
+          ))}
         </div>
       </section>
 
       <footer className="grove-footer">
-        <ApprovedArtwork variant="tree" />
-        <p><strong>Our roots are planted in ideas.</strong><span>The fruit of understanding is wisdom. The freedom it creates is choice.</span></p>
-        <button type="button" onClick={() => go('roots/one')}>Begin with Root One <ArrowRight size={16} /></button>
+        <Sprout />
+        <p><strong>Our roots are planted in ideas.</strong><span>Our purpose is understanding. Our goal is choice.</span></p>
+        <button type="button" onClick={() => go('roots/one')}>Begin with Root One <ArrowRight /></button>
       </footer>
+
+      {activeMonument && <MonumentDialog monument={activeMonument} onClose={closeMonument} />}
     </main>
   );
 }
