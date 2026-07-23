@@ -5,7 +5,7 @@ import './grove.css';
 const groveRoutes = [
   { key: 'literacy', number: '01', label: 'Foundations', angle: '-90deg', ready: true },
   { key: 'value', number: '02', label: 'Value & Earning', angle: '-38deg', ready: true },
-  { key: 'debt', number: '03', label: 'Debt', angle: '14deg' },
+  { key: 'choice', number: '03', label: 'Choice & Cash Flow', angle: '14deg', ready: true },
   { key: 'investing', number: '04', label: 'Investing', angle: '66deg' },
   { key: 'business', number: '05', label: 'Business', angle: '118deg' },
   { key: 'family', number: '06', label: 'Family', angle: '170deg' },
@@ -48,6 +48,7 @@ export default function Grove({ profile, go }) {
             onClick={() => {
               if (!route.ready) return;
               if (route.key === 'value') window.location.assign(ROOT_TWO_URL);
+              else if (route.key === 'choice') go('roots/three');
               else go('roots/one');
             }}
             disabled={!route.ready}
@@ -62,8 +63,8 @@ export default function Grove({ profile, go }) {
 
       <footer className="grove-next">
         <Map size={18} />
-        <div><strong>Roots One and Two are open</strong><span>Continue from Foundations into Value &amp; Earning.</span></div>
-        <button type="button" onClick={() => window.location.assign(ROOT_TWO_URL)}>Enter Root Two <ArrowRight size={16} /></button>
+        <div><strong>Roots One, Two, and Three are open</strong><span>Continue into Choice, Cash Flow &amp; Spending.</span></div>
+        <button type="button" onClick={() => go('roots/three')}>Enter Root Three <ArrowRight size={16} /></button>
       </footer>
     </main>
   );

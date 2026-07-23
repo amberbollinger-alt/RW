@@ -19,6 +19,7 @@
 .root-enter-button{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:22px;border:1px solid #12351f;background:#12351f;color:#f7ebd4;border-radius:16px;padding:15px 18px;font-family:Arial,sans-serif;font-weight:900;cursor:pointer;box-shadow:0 10px 24px rgba(18,53,31,.18)}
 .root-enter-button:hover{background:#1b472d;transform:translateY(-1px)}
 .root-enter-button:focus-visible{outline:3px solid rgba(217,180,91,.7);outline-offset:3px}
+.root-open-routes{display:grid;grid-template-columns:1fr 1fr;gap:12px}.root-three-enter{background:#315f52;border-color:#315f52}@media(max-width:700px){.root-open-routes{grid-template-columns:1fr}}
 .drawer{visibility:hidden;transition:right .25s ease,visibility 0s linear .25s}
 .drawer.show{visibility:visible;transition-delay:0s}
 

@@ -1,4 +1,5 @@
 import { rootOneDistricts } from '../src/root-one-data.js';
+import { rootThreeDistricts } from '../src/root-three-data.js';
 
 const MAX_MESSAGE_LENGTH = 700;
 const MAX_HISTORY_ITEMS = 10;
@@ -8,6 +9,7 @@ const OPENAI_TIMEOUT_MS = 18_000;
 const requestWindows = new Map();
 
 const DISTRICTS = new Map(rootOneDistricts.map((district) => [district.key, district]));
+const ROOT_THREE_DISTRICTS = new Map(rootThreeDistricts.map((district) => [district.key, district]));
 
 function cleanText(value, maxLength = MAX_MESSAGE_LENGTH) {
   return typeof value === 'string' ? value.trim().slice(0, maxLength) : '';
@@ -36,7 +38,7 @@ function extractOutputText(response) {
     .join('\n\n');
 }
 
-function buildInstructions(districtKey) {
+function buildRootOneInstructions(districtKey) {
   const district = DISTRICTS.get(districtKey) || rootOneDistricts[0];
   const concepts = district.concepts
     .map((concept) => `${concept.title}: ${concept.body} In real life: ${concept.recognize}`)
@@ -72,6 +74,35 @@ Never shame, diagnose, label, or presume the learner's income, debt, family, kno
 RootWise provides education, not individualized financial, legal, tax, investment, or credit-repair advice. For high-stakes personal decisions, explain the general principle and encourage the learner to verify details with an appropriate qualified professional. Do not request account numbers, passwords, Social Security numbers, or other sensitive information.
 
 Keep most replies between 80 and 180 words. End with either one useful question or one small action—not a list of generic follow-ups.`;
+}
+
+function buildRootThreeInstructions(districtKey) {
+  const district = ROOT_THREE_DISTRICTS.get(districtKey) || rootThreeDistricts[0];
+  const concepts = district.concepts.map(([title, body]) => `${title}: ${body}`).join('\n');
+  const choices = district.scenario.options.map((option) => `${option.label} — consequence: ${option.consequence} Course correction: ${option.correction}`).join('\n');
+  const story = district.story.map((block) => `${block.speaker ? `${block.speaker}: ` : ''}${block.text}`).join('\n');
+  return `You are Sage, RootWise's trusted financial-learning companion. You are walking beside a learner in Root Three: Choice, Cash Flow & Spending.
+
+Current district: ${district.title}
+Theme: ${district.theme}
+District promise: ${district.promise}
+Story setting: ${district.setting}
+Ongoing Ivy and Eli story:
+${story}
+Financial parallel: ${district.parallel}
+The learner is considering: ${district.scenario.prompt}
+
+Approved concept breakdowns:
+${concepts}
+
+Approved choices and recovery paths:
+${choices}
+
+Speak like a thoughtful friend, not a textbook or customer-service bot. Use direct, natural language at about a high-school reading level. Keep financial terms accurate and explain them in everyday words. Be warm, curious, concise, and lightly witty when it fits. Connect answers to this district, Ivy and Eli's story, and a realistic choice. Show tradeoffs without shame and never prescribe one universal spending choice.
+
+Never diagnose, label, or presume the learner's income, debt, family, knowledge, or goals. Ask one clarifying question when personal facts would materially change the answer. RootWise provides education, not individualized financial, legal, tax, investment, or credit-repair advice. For high-stakes decisions, explain the principle and encourage verification with an appropriate qualified professional. Never request sensitive financial or identity information.
+
+Keep most replies between 80 and 180 words. End with either one useful question or one small action—not a generic list.`;
 }
 
 function clientKey(request) {
@@ -140,7 +171,9 @@ export default async function handler(request, response) {
       },
       body: JSON.stringify({
         model: process.env.OPENAI_MODEL || 'gpt-5.6-luna',
-        instructions: buildInstructions(cleanText(body.district?.key, 40)),
+        instructions: body.root === 'three'
+          ? buildRootThreeInstructions(cleanText(body.district?.key, 40))
+          : buildRootOneInstructions(cleanText(body.district?.key, 40)),
         input,
         reasoning: { effort: 'low' },
         text: { verbosity: 'low' },

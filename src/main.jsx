@@ -8,6 +8,7 @@ import {
 import { ApprovedArtwork, ApprovedLandingArtwork } from './approved-artwork';
 import Grove from './grove';
 import RootOneCity from './root-one-city';
+import RootThreeCity from './root-three-city';
 import './styles.css';
 
 const STORAGE_KEY = 'rootwise_sprint_003_profile';
@@ -183,14 +184,14 @@ function saveProfile(data) { localStorage.setItem(STORAGE_KEY, JSON.stringify(da
 function loadProfile() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null'); } catch { return null; } }
 function routeFromLocation() {
   const path = window.location.pathname.replace(/^\/+|\/+$/g, '');
-  if (path === 'roots/one') return 'roots/one';
+  if (path === 'roots/one' || path === 'roots/three') return path;
   const hashRoute = window.location.hash.replace(/^#\/?/, '');
   return hashRoute || (path || 'home');
 }
 function go(page) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
-  const destination = page === 'roots/one'
-    ? '/roots/one'
+  const destination = page === 'roots/one' || page === 'roots/three'
+    ? `/${page}`
     : page === 'home'
       ? '/'
       : `/#/${page}`;
@@ -224,7 +225,8 @@ function App() {
       {route === 'schools' && <Schools />}
       {route === 'my-journey' && <MyJourney profile={profile} />}
       {route === 'roots/one' && <RootOneCity go={go} />}
-      {!['home', 'roots/one', 'dashboard'].includes(route) && <StickyNav />}
+      {route === 'roots/three' && <RootThreeCity go={go} />}
+      {!['home', 'roots/one', 'roots/three', 'dashboard'].includes(route) && <StickyNav />}
     </>
   );
 }
@@ -420,7 +422,7 @@ function Learn() {
         <h3>Free starter lessons</h3>
         <div className="free-lesson-row">{root.free.map((lesson) => <div key={lesson} className="free-lesson"><BookOpen size={18}/><span>{lesson}</span></div>)}</div>
         {root.key === 'literacy'
-          ? <button type="button" className="root-enter-button" onClick={() => go('roots/one')}>Enter Root One: The City of Foundations <ArrowRight size={17}/></button>
+          ? <div className="root-open-routes"><button type="button" className="root-enter-button" onClick={() => go('roots/one')}>Enter Root One: The City of Foundations <ArrowRight size={17}/></button><button type="button" className="root-enter-button root-three-enter" onClick={() => go('roots/three')}>Enter Root Three: Choice, Cash Flow &amp; Spending <ArrowRight size={17}/></button></div>
           : <div className="premium-preview"><Lock size={18}/><span>This path is still taking shape. Root One is the current teaching experience.</span></div>}
       </article>
     </div>
