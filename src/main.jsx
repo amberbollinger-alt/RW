@@ -220,6 +220,7 @@ function App() {
       {route === 'journey' && <Journey updateProfile={updateProfile} />}
       {route === 'signup' && <Signup profile={profile} updateProfile={updateProfile} />}
       {route === 'assessment' && <AssessmentFlow profile={profile} updateProfile={updateProfile} />}
+      {route === 'heart' && <Grove profile={null} go={go} view="welcome" />}
       {route === 'dashboard' && <Dashboard profile={profile} />}
       {route === 'learn' && <Learn />}
       {route === 'tools' && <Tools />}
@@ -228,7 +229,7 @@ function App() {
       {route === 'roots/one' && <RootOneCity go={go} />}
       {route === 'roots/two' && <RootTwoCity go={go} />}
       {route === 'roots/three' && <RootThreeCity go={go} />}
-      {!['home', 'roots/one', 'roots/two', 'roots/three', 'dashboard'].includes(route) && <StickyNav />}
+      {!['home', 'roots/one', 'roots/two', 'roots/three', 'heart', 'dashboard'].includes(route) && <StickyNav />}
     </>
   );
 }
@@ -273,7 +274,7 @@ function Home() {
             RootWise teaches what money is, what it does, the concepts behind it,
             and how to apply that knowledge to the choices you make in real life.
           </p>
-          <button type="button" className="landing-primary-cta" onClick={() => go('dashboard')}>
+          <button type="button" className="landing-primary-cta" onClick={() => go('heart')}>
             Begin Your Journey <ArrowRight size={17} aria-hidden="true" />
           </button>
         </div>
@@ -405,7 +406,7 @@ function inferRoots(answers, path) {
 }
 
 function Dashboard({ profile }) {
-  return <Grove profile={profile} go={go} />;
+  return <Grove profile={profile} go={go} view="user" />;
 }
 
 function Learn() {
