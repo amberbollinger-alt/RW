@@ -21,6 +21,7 @@ import {
   X,
 } from 'lucide-react';
 import { ApprovedArtwork } from './approved-artwork';
+import { queueSageVoice } from './sage-voice-events';
 import { rootOneDistricts, rootOneQuickPrompts } from './root-one-data';
 import './root-one.css';
 
@@ -465,6 +466,7 @@ function SageCompanion({ district }) {
 
       const payload = await response.json().catch(() => ({}));
       if (!response.ok || !payload.reply) throw new Error('Sage is unavailable');
+      queueSageVoice(payload.reply, 'Sage answered your question.');
 
       setConversations((current) => ({
         ...current,

@@ -11,6 +11,7 @@ import RootOneCity from './root-one-city';
 import RootTwoCity from './root-two-city';
 import RootThreeCity from './root-three-city';
 import RootFourValley from './root-four-valley';
+import SageVoice from './sage-voice';
 import './styles.css';
 
 const STORAGE_KEY = 'rootwise_sprint_003_profile';
@@ -232,6 +233,7 @@ function App() {
       {route === 'roots/three' && <RootThreeCity go={go} />}
       {route === 'roots/four' && <RootFourValley go={go} />}
       {!['home', 'roots/one', 'roots/two', 'roots/three', 'roots/four', 'heart', 'dashboard'].includes(route) && <StickyNav />}
+      <SageVoice key={route} />
     </>
   );
 }

@@ -5,6 +5,7 @@ import {
   MessageCircle, Route, Send, Sparkles, Target, CarTaxiFront, X,
 } from 'lucide-react';
 import { ApprovedArtwork } from './approved-artwork';
+import { queueSageVoice } from './sage-voice-events';
 import { rootThreeDistricts, rootThreeQuickPrompts } from './root-three-data';
 import './root-three.css';
 
@@ -167,6 +168,7 @@ function AskSage({ district }) {
       const response = await fetch('/api/sage', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ root: 'three', message: clean, district: { key: district.key }, history: messages.slice(-9) }), signal: controller.signal });
       const payload = await response.json().catch(() => ({}));
       if (!response.ok || !payload.reply) throw new Error('unavailable');
+      queueSageVoice(payload.reply, 'Sage answered your question.');
       setThreads((current) => ({ ...current, [district.key]: [...next, { role: 'assistant', content: payload.reply }] }));
     } catch (error) {
       setThreads((current) => ({ ...current, [district.key]: [...next, { role: 'assistant', unavailable: true, content: error?.name === 'AbortError' ? 'That took too long. Your question is saved here—please try again in a moment.' : 'I can’t reach the conversation service right now. Use the district’s financial parallel as your guide, and try me again shortly.' }] }));

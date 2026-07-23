@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import {
   ArrowLeft, ArrowRight, Check, CheckCircle2, ChevronRight, CircleHelp,
-  CloudRain, Menu, MessageCircle, Pause, Play, RefreshCw, Sparkles,
-  Sprout, Target, Volume2, VolumeX, Waves, X,
+  CloudRain, Menu, MessageCircle, Play, Sparkles, Sprout, Target, Waves, X,
 } from 'lucide-react';
 import { ApprovedArtwork } from './approved-artwork';
 import { reservoirYearEvents, rootFourChapters, rootFourOpening } from './root-four-data';
+import { queueSageVoice } from './sage-voice-events';
 import './root-four.css';
 
 export const ROOT_FOUR_PROGRESS_KEY = 'rootwise_root_four_reservoir_progress_v1';
@@ -34,28 +34,9 @@ function ReservoirBackdrop({ stage }) {
 }
 
 function Narration({ lines }) {
-  const [state, setState] = useState('idle'); const [muted, setMuted] = useState(false); const [index, setIndex] = useState(0);
-  const supported = typeof window !== 'undefined' && 'speechSynthesis' in window;
-  const stop = () => { if (supported) window.speechSynthesis.cancel(); setState('idle'); };
-  useEffect(() => () => { if (supported) window.speechSynthesis.cancel(); }, [supported]);
-  const speakFrom = (start) => {
-    if (!supported || muted) return;
-    window.speechSynthesis.cancel(); setIndex(start); setState('playing');
-    const speakLine = (lineIndex) => {
-      if (lineIndex >= lines.length) { setState('idle'); setIndex(0); return; }
-      setIndex(lineIndex); const utterance = new SpeechSynthesisUtterance(lines[lineIndex]);
-      utterance.rate = 0.92; utterance.pitch = 0.95; utterance.onend = () => speakLine(lineIndex + 1); utterance.onerror = () => setState('idle');
-      window.speechSynthesis.speak(utterance);
-    }; speakLine(start);
-  };
-  const pause = () => { window.speechSynthesis.pause(); setState('paused'); };
-  const resume = () => { window.speechSynthesis.resume(); setState('playing'); };
-  if (!supported) return <p className="r4-audio-note">Narration is unavailable in this browser. Every spoken line is visible below.</p>;
   return <div className="r4-narration" aria-label="Sage narration controls">
-    <button type="button" onClick={() => state === 'playing' ? pause() : state === 'paused' ? resume() : speakFrom(index)}>{state === 'playing' ? <Pause /> : <Play />} {state === 'playing' ? 'Pause' : state === 'paused' ? 'Resume' : 'Listen to Sage'}</button>
-    <button type="button" onClick={() => speakFrom(0)}><RefreshCw /> Replay</button>
-    <button type="button" aria-pressed={muted} onClick={() => { stop(); setMuted((value) => !value); }}>{muted ? <VolumeX /> : <Volume2 />} {muted ? 'Muted' : 'Mute'}</button>
-    <span aria-live="polite">{state === 'playing' ? `Playing line ${index + 1} of ${lines.length}` : 'Audio waits for you to start it.'}</span>
+    <button type="button" onClick={() => queueSageVoice(lines.join(' '), 'Root Four narration is ready.')}><Play /> Listen to Sage</button>
+    <span>Opens the shared Sage player. Audio waits for you to start it.</span>
   </div>;
 }
 
