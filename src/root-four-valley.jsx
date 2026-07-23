@@ -27,15 +27,9 @@ function readProgress() {
 }
 
 function ReservoirBackdrop({ stage }) {
-  const level = 25 + stage * 6;
   return <div className={`r4-landscape r4-stage-${stage}`} aria-hidden="true">
-    <div className="r4-cloud r4-cloud-a" /><div className="r4-cloud r4-cloud-b" />
-    <div className="r4-mountains"><i /><i /><i /></div><div className="r4-sunlight" />
-    <div className="r4-ridge"><span className="r4-tower" /><span className="r4-shed" /></div>
-    <div className="r4-reservoir"><span style={{ height: `${level}%` }} /><b /><em /></div>
-    <div className="r4-stream" /><div className="r4-bank r4-bank-left" /><div className="r4-bank r4-bank-right" />
-    <div className="r4-tree"><span /><i /><b /><em /></div><div className="r4-roots"><i /><i /><i /></div>
-    <div className="r4-path"><span /><span /><span /></div><div className="r4-birds">⌁⌁</div>
+    <img src="/root-four-reservoir-valley.png" alt="" />
+    <div className="r4-landscape-shade" />
   </div>;
 }
 
