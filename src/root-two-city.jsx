@@ -6,7 +6,7 @@ import {
 } from 'lucide-react';
 import { ApprovedArtwork } from './approved-artwork';
 import { queueSageVoice } from './sage-voice-events';
-import { rootTwoDistricts, rootTwoQuickPrompts } from './root-two-data';
+import { rootTwoCanonicalDistricts as rootTwoDistricts, rootTwoCanonicalQuickPrompts as rootTwoQuickPrompts } from './root-two-canonical-data';
 import './root-two.css';
 
 const PROGRESS_KEY = 'rootwise_root_two_journey_v3';
