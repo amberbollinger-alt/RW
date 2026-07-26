@@ -22,7 +22,7 @@ import {
 } from 'lucide-react';
 import { ApprovedArtwork } from './approved-artwork';
 import { queueSageVoice } from './sage-voice-events';
-import { rootOneDistricts, rootOneQuickPrompts } from './root-one-data';
+import { rootOneRootsData as rootOneDistricts, rootOneRootsQuickPrompts as rootOneQuickPrompts } from './root-one-roots-data';
 import './root-one.css';
 
 const PROGRESS_KEY = 'rootwise_root_one_city_progress';
