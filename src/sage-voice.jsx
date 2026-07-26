@@ -8,20 +8,20 @@ function pageNarrationText() {
   if (!main) return '';
   const parts = [...main.querySelectorAll('h1, h2, h3, p, blockquote')]
     .filter((node) => !node.closest('nav, form, [aria-hidden="true"], .sage-voice-dock'))
-    .map((node) => node.textContent.replace(/\s+/g, ' ').trim())
+    .filter((node) => !node.matches('.city-eyebrow, .r2-eyebrow, .rt-eyebrow, .r4-eyebrow'))
+    .filter((node) => !(node.matches('p') && node.closest('blockquote')))
+    .map((node) => {
+      const text = node.matches('blockquote') ? node.querySelector('p')?.textContent : node.textContent;
+      return String(text || '').replace(/\s+/g, ' ').trim();
+    })
     .filter((text, index, all) => text && all.indexOf(text) === index);
   return parts.join('\n\n');
 }
 
 function sageFirstPerson(text) {
   return String(text)
+    .replace(/[^.!?\n]*\bSage\s+(?:asks|asked|says|said|explains|explained|tells|told|leads|led|stops|stopped)\b[^.!?\n]*[.!?]/gi, '')
     .replace(/\bSage[’']s\b/g, 'my')
-    .replace(/\bSage\s+(asks|asked)\b/g, (_, verb) => verb === 'asked' ? 'I asked' : 'I ask')
-    .replace(/\bSage\s+(says|said)\b/g, (_, verb) => verb === 'said' ? 'I said' : 'I say')
-    .replace(/\bSage\s+(explains|explained)\b/g, (_, verb) => verb === 'explained' ? 'I explained' : 'I explain')
-    .replace(/\bSage\s+(tells|told)\b/g, (_, verb) => verb === 'told' ? 'I told' : 'I tell')
-    .replace(/\bSage\s+(leads|led)\b/g, (_, verb) => verb === 'led' ? 'I led' : 'I lead')
-    .replace(/\bSage\s+(stops|stopped)\b/g, (_, verb) => verb === 'stopped' ? 'I stopped' : 'I stop')
     .replace(/\bSage\s+(is|was)\b/g, (_, verb) => verb === 'was' ? 'I was' : 'I am')
     .replace(/\bwith Sage\b/g, 'with me')
     .replace(/\bto Sage\b/g, 'to me')

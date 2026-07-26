@@ -200,25 +200,6 @@ function JourneyScene({ district }) {
   );
 }
 
-function FinancialParallel({ district }) {
-  return (
-    <section className="city-concepts city-root-revealed">
-      <header>
-        <p className="city-eyebrow"><Lightbulb size={15} /> The Financial Parallel</p>
-        <h2>{district.rootRevealed.title}</h2>
-        <p>{district.rootRevealed.intro || 'Here is what the story was really showing you—and how the same pattern works with money.'}</p>
-      </header>
-      <div>
-        <section>
-          <span aria-hidden="true">01</span>
-          <p className="city-story-link">{district.rootRevealed.storyLink || 'Here is what the story showed us about money.'}</p>
-          <p>{district.rootRevealed.body}</p>
-        </section>
-      </div>
-    </section>
-  );
-}
-
 function ConceptBreakdown({ district }) {
   return (
     <section className="city-concepts">
@@ -665,7 +646,6 @@ export default function RootOneCity({ go }) {
         <article className="city-lesson" key={district.key}>
           <ChapterPromise district={district} />
           <JourneyScene district={district} />
-          <FinancialParallel district={district} />
 
           <ConceptBreakdown district={district} />
 

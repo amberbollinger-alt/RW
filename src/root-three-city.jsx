@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   ArrowLeft, ArrowRight, Building2, Bus, CarFront, Check, CheckCircle2,
-  ChevronRight, CircleHelp, Landmark, Lightbulb, LoaderCircle, Menu,
+  ChevronRight, CircleHelp, Landmark, LoaderCircle, Menu,
   MessageCircle, Route, Send, Sparkles, Target, CarTaxiFront, X,
 } from 'lucide-react';
 import { ApprovedArtwork } from './approved-artwork';
@@ -89,11 +89,6 @@ function Story({ district }) {
 function Learning({ district }) {
   return (
     <>
-      <section className="rt-card rt-parallel">
-        <p className="rt-eyebrow"><Lightbulb size={15} /> The financial parallel</p>
-        <h2>What the district reveals about money</h2>
-        <p>{district.parallel}</p>
-      </section>
       <section className="rt-card rt-deep-dive">
         <header><p className="rt-eyebrow"><Route size={15} /> Deeper explanation</p><h2>How to recognize and use the idea</h2></header>
         <div>{district.concepts.map(([title, body], index) => <article key={title}><span>{String(index + 1).padStart(2, '0')}</span><h3>{title}</h3><p>{body}</p></article>)}</div>

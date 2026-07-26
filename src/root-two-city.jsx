@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   ArrowLeft, ArrowRight, BookOpen, Building2, Bus, CarFront, Check,
-  CheckCircle2, ChevronRight, CircleHelp, Landmark, Lightbulb, LoaderCircle,
+  CheckCircle2, ChevronRight, CircleHelp, Landmark, LoaderCircle,
   Menu, MessageCircle, Route, Send, Sparkles, Target, Users, X,
 } from 'lucide-react';
 import { ApprovedArtwork } from './approved-artwork';
@@ -90,7 +90,6 @@ function Story({ lesson }) {
 function Learning({ lesson }) {
   return (
     <>
-      <section className="r2-card r2-parallel"><p className="r2-eyebrow"><Lightbulb size={15} /> Financial parallel</p><h2>{lesson.concept.title}</h2><p>{lesson.concept.explanation}</p></section>
       <section className="r2-card r2-deep-dive"><p className="r2-eyebrow"><Route size={15} /> Deeper explanation</p><h2>What changes when you use the full picture</h2><div><article><span>01</span><h3>Consequence &amp; tradeoff</h3><p>{lesson.tradeoff}</p></article><article><span>02</span><h3>Recognize it in your life</h3><p>{lesson.connection}</p></article></div></section>
     </>
   );
