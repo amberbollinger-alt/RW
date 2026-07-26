@@ -46,7 +46,7 @@ export default async function handler(req, res) {
         model: process.env.OPENAI_TTS_MODEL || 'gpt-4o-mini-tts',
         voice: process.env.OPENAI_TTS_VOICE || 'coral',
         input: text,
-        instructions: 'Speak as Sage: a warm, grounded adult woman and trusted financial-learning guide. Sound natural and human, never robotic. Use calm confidence, conversational pacing, gentle emphasis, and brief natural pauses. Avoid theatrical performance, sales energy, or judgment.',
+        instructions: 'Speak as Sage: a warm, grounded adult woman in her mature middle years and a trusted financial-learning guide. Use a slightly deeper, richer register than a typical bright assistant voice, while remaining clearly feminine and energeticâ€”mature, but not elderly. Sound natural and human, never robotic. Use calm confidence, measured conversational pacing, gentle emphasis, and brief natural pauses. Avoid theatrical performance, exaggerated age, sales energy, or judgment.',
         response_format: 'mp3',
       }),
       signal: controller.signal,

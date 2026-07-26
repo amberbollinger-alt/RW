@@ -216,6 +216,11 @@ function App() {
     };
   }, []);
   const updateProfile = (next) => { const merged = { ...(profile || {}), ...next }; setProfile(merged); saveProfile(merged); };
+  const groveNarration = route === 'heart'
+    ? 'Welcome to the Grove, the heart of RootWise. Every tree begins as a seed. Growth is never instant, never identical, and never finished. Every tree represents a journey, and every journey begins with a choice. Your tree begins today. It will not grow simply because time passes. It will grow because understanding does. When you are ready, continue into your Grove and choose the Root you want to explore.'
+    : route === 'dashboard'
+      ? `Welcome${profile?.firstName ? `, ${profile.firstName}` : ''}, to your Grove. This is where your RootWise journey connects. Your progress is not a grade, and the order is not a judgment. Choose an available Root when you are ready. Each Root will return you here with a stronger understanding of how money, choices, and life connect.`
+      : '';
   return (
     <>
       {route === 'home' && <Home />}
@@ -233,7 +238,7 @@ function App() {
       {route === 'roots/three' && <RootThreeCity go={go} />}
       {route === 'roots/four' && <RootFourValley go={go} />}
       {!['home', 'roots/one', 'roots/two', 'roots/three', 'roots/four', 'heart', 'dashboard'].includes(route) && <StickyNav />}
-      <SageVoice key={route} />
+      <SageVoice key={route} pageText={groveNarration} />
     </>
   );
 }

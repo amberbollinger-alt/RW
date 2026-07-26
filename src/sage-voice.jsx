@@ -14,7 +14,7 @@ function visiblePageText() {
   return parts.join(' ').slice(0, 3000);
 }
 
-export default function SageVoice() {
+export default function SageVoice({ pageText = '' }) {
   const audioRef = useRef(null);
   const urlRef = useRef('');
   const [open, setOpen] = useState(false);
@@ -73,11 +73,11 @@ export default function SageVoice() {
   const play = () => {
     if (status === 'paused' && audioRef.current) return audioRef.current.play();
     if (status === 'playing') return audioRef.current?.pause();
-    return loadAndPlay(queuedText || visiblePageText());
+    return loadAndPlay(queuedText || pageText || visiblePageText());
   };
   const replay = () => {
     if (audioRef.current) { audioRef.current.currentTime = 0; return audioRef.current.play(); }
-    return loadAndPlay(queuedText || visiblePageText());
+    return loadAndPlay(queuedText || pageText || visiblePageText());
   };
   const toggleMute = () => {
     const next = !muted;
