@@ -6,7 +6,7 @@ import {
 } from 'lucide-react';
 import { ApprovedArtwork } from './approved-artwork';
 import { queueSageVoice } from './sage-voice-events';
-import { rootThreeDistricts, rootThreeQuickPrompts } from './root-three-data';
+import { rootThreeCanonicalDistricts as rootThreeDistricts, rootThreeCanonicalQuickPrompts as rootThreeQuickPrompts } from './root-three-canonical-data';
 import './root-three.css';
 
 const PROGRESS_KEY = 'rootwise_root_three_city_progress_v1';
@@ -66,7 +66,7 @@ function DistrictNav({ activeIndex, completed, visited, onSelect, onClose, close
           </button>
         ))}
       </nav>
-      <footer><span>{completed.length} of 12 districts complete</span><i><b style={{ width: `${completed.length / 12 * 100}%` }} /></i></footer>
+      <footer><span>{completed.length} of {rootThreeDistricts.length} lessons complete</span><i><b style={{ width: `${completed.length / rootThreeDistricts.length * 100}%` }} /></i></footer>
     </aside>
   );
 }
@@ -219,12 +219,12 @@ export default function RootThreeCity({ go }) {
   return <main className="root-three-city">
     <CityBackdrop />
     <header className="rt-topbar"><button type="button" onClick={() => go('dashboard')}><ArrowLeft size={17} /> The Grove</button><button type="button" className="rt-brand" onClick={() => go('home')} aria-label="RootWise home"><ApprovedArtwork variant="tree" /><span><strong>Root$Wise</strong><small>Root Three · Choice, Cash Flow &amp; Spending</small></span></button><button ref={menuRef} type="button" onClick={() => setNavOpen(true)} aria-expanded={navOpen} aria-controls="rt-district-navigation"><Menu size={18} /> Districts</button></header>
-    <div className="rt-progress" role="progressbar" aria-label="Root Three progress" aria-valuemin={0} aria-valuemax={12} aria-valuenow={completed.length}><i style={{ width: `${completed.length / 12 * 100}%` }} /></div>
+    <div className="rt-progress" role="progressbar" aria-label="Root Three progress" aria-valuemin={0} aria-valuemax={rootThreeDistricts.length} aria-valuenow={completed.length}><i style={{ width: `${completed.length / rootThreeDistricts.length * 100}%` }} /></div>
     {navOpen && <button type="button" className="rt-nav-scrim" aria-label="Close district menu" onClick={() => { setNavOpen(false); menuRef.current?.focus(); }} />}
     <div className="rt-layout">
       <div id="rt-district-navigation" className={navOpen ? 'rt-nav-wrap is-open' : 'rt-nav-wrap'}><DistrictNav activeIndex={activeIndex} completed={completed} visited={visited} onSelect={select} onClose={() => { setNavOpen(false); menuRef.current?.focus(); }} closeRef={closeRef} /></div>
       <article className="rt-lesson" key={district.key}>
-        <section className="rt-promise"><p className="rt-eyebrow"><Target size={15} /> District promise</p><h1>{district.promise}</h1><span>District {district.number} of 12 · {district.theme}</span></section>
+        <section className="rt-promise"><p className="rt-eyebrow"><Target size={15} /> Lesson promise</p><h1>{district.promise}</h1><span>Lesson {district.number} of {rootThreeDistricts.length} · {district.theme}</span></section>
         <Story district={district} /><Learning district={district} />
         <Practice district={district} choice={choices[district.key]} answer={answers[district.key]} reflection={reflections[district.key]} onChoice={(choice) => setChoices((current) => ({ ...current, [district.key]: choice }))} onAnswer={(answer) => setAnswers((current) => ({ ...current, [district.key]: answer }))} onReflection={(reflection) => setReflections((current) => ({ ...current, [district.key]: reflection }))} />
         <section className="rt-next"><Route size={18} /><div><p className="rt-eyebrow">The road continues</p><p>{district.next}</p></div></section>
