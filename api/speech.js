@@ -5,7 +5,9 @@ const OPENAI_TIMEOUT_MS = 25_000;
 const requestWindows = new Map();
 
 function cleanText(value) {
-  return typeof value === 'string' ? value.replace(/\s+/g, ' ').trim().slice(0, MAX_TEXT_LENGTH) : '';
+  return typeof value === 'string'
+    ? value.replace(/\r\n/g, '\n').replace(/[ \t]+/g, ' ').replace(/\n{3,}/g, '\n\n').trim().slice(0, MAX_TEXT_LENGTH)
+    : '';
 }
 
 function parseBody(body) {
@@ -46,7 +48,7 @@ export default async function handler(req, res) {
         model: process.env.OPENAI_TTS_MODEL || 'gpt-4o-mini-tts',
         voice: process.env.OPENAI_TTS_VOICE || 'coral',
         input: text,
-        instructions: 'Speak as Sage: a warm, grounded adult woman in her mature middle years and a trusted financial-learning guide. Use a slightly deeper, richer register than a typical bright assistant voice, while remaining clearly feminine and energeticâ€”mature, but not elderly. Sound natural and human, never robotic. Use calm confidence, measured conversational pacing, gentle emphasis, and brief natural pauses. Avoid theatrical performance, exaggerated age, sales energy, or judgment.',
+        instructions: 'You are Sage speaking directly to one learner in first person. Never describe Sage as a third person or sound like a narrator reading about yourself. Use I, me, my, and mine naturally. Speak as a warm, grounded adult woman in her mature middle years and a trusted financial-learning mentor. Use a slightly deeper, richer register than a bright assistant voice while remaining clearly feminine and energeticâ€”mature, not elderly. Sound human, present, and thoughtful, never robotic. Treat every paragraph break as a distinct thought: pause long enough for the learner to reflect before beginning the next paragraph. Use shorter natural pauses between sentences, varied cadence, and gentle emphasis. Do not rush to fill silence. Avoid theatrical performance, exaggerated age, sales energy, or judgment.',
         response_format: 'mp3',
       }),
       signal: controller.signal,
