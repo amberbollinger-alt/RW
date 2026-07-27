@@ -200,10 +200,12 @@ function AskSage({ district }) {
   </>;
 }
 
-export default function RootThreeCity({ go }) {
+export default function RootThreeCity({ go, initialLessonKey, onLessonChange }) {
   const saved = useMemo(() => readProgress(), []);
-  const [activeIndex, setActiveIndex] = useState(saved.activeIndex || 0);
-  const [visited, setVisited] = useState(saved.visited?.length ? saved.visited : [rootThreeDistricts[0].key]);
+  const requestedIndex = rootThreeDistricts.findIndex((district) => district.key === initialLessonKey);
+  const startingIndex = requestedIndex >= 0 ? requestedIndex : saved.activeIndex || 0;
+  const [activeIndex, setActiveIndex] = useState(startingIndex);
+  const [visited, setVisited] = useState(() => [...new Set([...(saved.visited || []), rootThreeDistricts[startingIndex].key])]);
   const [completed, setCompleted] = useState(saved.completed || []);
   const [choices, setChoices] = useState(saved.choices || {});
   const [answers, setAnswers] = useState(saved.answers || {});
@@ -223,6 +225,7 @@ export default function RootThreeCity({ go }) {
   }, [navOpen]);
   const select = (index) => {
     const next = Math.max(0, Math.min(index, rootThreeDistricts.length - 1));
+    if (onLessonChange && next !== activeIndex) { onLessonChange(rootThreeDistricts[next].key); return; }
     setActiveIndex(next); setVisited((current) => current.includes(rootThreeDistricts[next].key) ? current : [...current, rootThreeDistricts[next].key]);
     setNavOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' });
   };

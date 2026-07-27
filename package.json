@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit -p jsconfig.json"
+    "typecheck": "tsc --noEmit -p jsconfig.json",
+    "validate:roots": "node scripts/validate-root-registry.mjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "6.0.3",

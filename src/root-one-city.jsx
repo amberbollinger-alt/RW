@@ -543,10 +543,12 @@ function SageCompanion({ district }) {
   );
 }
 
-export default function RootOneCity({ go }) {
+export default function RootOneCity({ go, initialLessonKey, onLessonChange }) {
   const saved = useMemo(() => readProgress(), []);
-  const [activeIndex, setActiveIndex] = useState(saved.activeIndex || 0);
-  const [visited, setVisited] = useState(saved.visited?.length ? saved.visited : [rootOneDistricts[0].key]);
+  const requestedIndex = rootOneDistricts.findIndex((district) => district.key === initialLessonKey);
+  const startingIndex = requestedIndex >= 0 ? requestedIndex : saved.activeIndex || 0;
+  const [activeIndex, setActiveIndex] = useState(startingIndex);
+  const [visited, setVisited] = useState(() => [...new Set([...(saved.visited || []), rootOneDistricts[startingIndex].key])]);
   const [completed, setCompleted] = useState(saved.completed || []);
   const [choices, setChoices] = useState(saved.choices || {});
   const [checkAnswers, setCheckAnswers] = useState(saved.checkAnswers || {});
@@ -561,6 +563,10 @@ export default function RootOneCity({ go }) {
 
   const selectDistrict = (index) => {
     const next = Math.max(0, Math.min(index, rootOneDistricts.length - 1));
+    if (onLessonChange && next !== activeIndex) {
+      onLessonChange(rootOneDistricts[next].key);
+      return;
+    }
     setActiveIndex(next);
     setVisited((current) => current.includes(rootOneDistricts[next].key) ? current : [...current, rootOneDistricts[next].key]);
     window.scrollTo({ top: 0, behavior: 'smooth' });

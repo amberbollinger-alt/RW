@@ -37,6 +37,9 @@ Copy `.env.example` only when a local, ignored environment file is needed. Do no
 - `/` — approved RootWise landing page
 - `/#/dashboard` — The Grove
 - `/roots/one` — Root One: The Story Beneath the Decision
-- `/#/learn` — seven-root overview and Root One entrance
+- `/#/learn` — eleven-Root overview
+- `/grove` — the complete eleven-Root learner map
+- `/roots/:root` — Root overview and lesson index
+- `/roots/:root/lessons/:lesson` — stable published lesson route
 
 Production deployment is intentionally outside this branch task. Verify through a preview before any production promotion.

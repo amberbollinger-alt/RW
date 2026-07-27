@@ -94,9 +94,9 @@ function Chapter({ chapter, choice, answer, reflection, applicationStatus, press
   </>;
 }
 
-export default function RootFourValley({ go }) {
-  const [saved] = useState(readProgress); const [activeIndex, setActiveIndex] = useState(saved.activeIndex || 0);
-  const [visited, setVisited] = useState(saved.visited?.length ? saved.visited : [rootFourChapters[0].key]); const [completed, setCompleted] = useState(saved.completed || []);
+export default function RootFourValley({ go, initialLessonKey, onLessonChange }) {
+  const [saved] = useState(readProgress); const requestedIndex = rootFourChapters.findIndex((chapter) => chapter.key === initialLessonKey); const startingIndex = requestedIndex >= 0 ? requestedIndex : saved.activeIndex || 0; const [activeIndex, setActiveIndex] = useState(startingIndex);
+  const [visited, setVisited] = useState(() => [...new Set([...(saved.visited || []), rootFourChapters[startingIndex].key])]); const [completed, setCompleted] = useState(saved.completed || []);
   const [choices, setChoices] = useState(saved.choices || {}); const [answers, setAnswers] = useState(saved.answers || {}); const [reflections, setReflections] = useState(saved.reflections || {});
   const [applicationStatus, setApplicationStatus] = useState(saved.applicationStatus || {}); const [pressure, setPressure] = useState(saved.pressure || ''); const [yearSteps, setYearSteps] = useState(saved.yearSteps || {}); const [navOpen, setNavOpen] = useState(false);
   const menuRef = useRef(null); const closeRef = useRef(null); const chapter = rootFourChapters[activeIndex]; const correct = chapter.check.options.find((item) => item.isCorrect)?.id;
@@ -104,7 +104,7 @@ export default function RootFourValley({ go }) {
   const ready = Boolean(choices[chapter.key] && answers[chapter.key] === correct && applicationDone && (chapter.activity.type !== 'year' || Object.keys(yearSteps).length === 12));
   useEffect(() => { localStorage.setItem(ROOT_FOUR_PROGRESS_KEY, JSON.stringify({ activeIndex, visited, completed, choices, answers, reflections, applicationStatus, pressure, yearSteps })); }, [activeIndex, visited, completed, choices, answers, reflections, applicationStatus, pressure, yearSteps]);
   useEffect(() => { if (!navOpen) return undefined; closeRef.current?.focus(); const onKey = (event) => { if (event.key === 'Escape') { setNavOpen(false); menuRef.current?.focus(); } }; window.addEventListener('keydown', onKey); return () => window.removeEventListener('keydown', onKey); }, [navOpen]);
-  const select = (index) => { const next = Math.max(0, Math.min(index, rootFourChapters.length - 1)); setActiveIndex(next); setVisited((items) => items.includes(rootFourChapters[next].key) ? items : [...items, rootFourChapters[next].key]); setNavOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+  const select = (index) => { const next = Math.max(0, Math.min(index, rootFourChapters.length - 1)); if (onLessonChange && next !== activeIndex) { onLessonChange(rootFourChapters[next].key); return; } setActiveIndex(next); setVisited((items) => items.includes(rootFourChapters[next].key) ? items : [...items, rootFourChapters[next].key]); setNavOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); };
   const toggleComplete = () => setCompleted((items) => items.includes(chapter.key) ? items.filter((key) => key !== chapter.key) : [...items, chapter.key]);
   return <main className="root-four-valley"><ReservoirBackdrop stage={Math.round(activeIndex * 9 / (rootFourChapters.length - 1))} /><header className="r4-topbar"><button type="button" onClick={() => go('dashboard')}><ArrowLeft /> The Grove</button><button type="button" className="r4-brand" onClick={() => go('home')} aria-label="RootWise home"><ApprovedArtwork variant="tree" /><span><strong>Root$Wise</strong><small>Root Four · Saving, Preparedness &amp; Resilience</small></span></button><button ref={menuRef} type="button" onClick={() => setNavOpen(true)} aria-expanded={navOpen} aria-controls="r4-chapter-navigation"><Menu /> Lessons</button></header><div className="r4-progress" role="progressbar" aria-label="Root Four progress" aria-valuemin={0} aria-valuemax={rootFourChapters.length} aria-valuenow={completed.length}><i style={{ width: `${completed.length / rootFourChapters.length * 100}%` }} /></div>
     <div className="r4-shell">

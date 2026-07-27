@@ -1,9 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
-  ArrowRight, BookOpen, BriefcaseBusiness, Calculator, ChevronLeft,
-  GraduationCap, Lock, Menu, Sparkles, Sprout, User, Users, X,
-  CreditCard, Landmark, TrendingUp, HomeIcon, School
+  ArrowRight, BookOpen, Calculator, ChevronLeft,
+  GraduationCap, Lock, Sparkles, Sprout, Users,
 } from 'lucide-react';
 import { ApprovedArtwork, ApprovedLandingArtwork } from './approved-artwork';
 import Grove from './grove';
@@ -12,85 +11,15 @@ import RootTwoCity from './root-two-city';
 import RootThreeCity from './root-three-city';
 import RootFourValley from './root-four-valley';
 import RootFiveBridge from './root-five-bridge';
+import RootOverview from './root-overview';
+import { getLessonById, getLessonBySlug, getRootBySlug, rootRegistry } from './root-registry';
+import { destinationForPage, routeFromPath } from './root-routing';
 import SageVoice from './sage-voice';
 import './styles.css';
 
 const STORAGE_KEY = 'rootwise_sprint_003_profile';
 
-const roots = [
-  {
-    key: 'literacy',
-    icon: Sprout,
-    title: 'The Story Beneath the Decision',
-    short: 'Understand what is influencing a financial choice while a choice is still available.',
-    audience: 'For adults who want to connect financial facts with the experiences, beliefs, pressures, and patterns operating in real decisions.',
-    promise: 'Sage helps you identify what is influencing the decision without choosing for you.',
-    topics: ['Money stories', 'Inherited rules', 'Needs and priorities', 'Scarcity and urgency', 'Control and avoidance', 'Comparison', 'Emotion', 'Decision patterns'],
-    free: ['Understand the concept', 'Recognize it in real life', 'Examine what is driving the decision'],
-  },
-  {
-    key: 'credit',
-    icon: CreditCard,
-    title: 'Credit',
-    short: 'Understand the system before trying to improve the score.',
-    audience: 'For users who want stronger borrowing power, cleaner reports, and less confusion.',
-    promise: 'We teach what credit means, how it works, and what options exist.',
-    topics: ['Credit reports', 'FICO', 'VantageScore', 'Utilization', 'Payment history', 'Collections', 'Disputes', 'Credit cards', 'Auto loans', 'Mortgages', 'Identity theft'],
-    free: ['Credit report tour', 'What affects a score', 'Utilization basics'],
-  },
-  {
-    key: 'debt',
-    icon: Landmark,
-    title: 'Debt',
-    short: 'Debt creates access, cost, obligation, and tradeoffs. Learn to examine the complete structure.',
-    audience: 'For users who feel trapped, overwhelmed, or unsure which debt decision comes next.',
-    promise: 'No shame. No panic. Just understanding and options.',
-    topics: ['Borrowing purpose', 'Interest', 'Minimum payments', 'Total repayment', 'Inventory before strategy', 'Repayment approach comparison', 'Consolidation', 'Settlements', 'Collections', 'Bankruptcy basics', 'Medical debt', 'Student loans'],
-    free: ['Debt vocabulary', 'Minimum-payment tunnel', 'Repayment approach comparison'],
-  },
-  {
-    key: 'investing',
-    icon: TrendingUp,
-    title: 'Investing',
-    short: 'Explore the avenues before choosing a road.',
-    audience: 'For users who want to grow but need the map before taking risk.',
-    promise: 'Sage explains choices and trade-offs without pretending to choose for the user.',
-    topics: ['Stocks', 'Bonds', 'ETFs', 'Mutual funds', 'Index funds', 'Dividends', 'Retirement accounts', 'Real estate', 'REITs', 'CDs', 'Treasuries', 'Crypto basics', 'Risk tolerance'],
-    free: ['What investing is', 'Risk vs reward', 'Index funds in plain language'],
-  },
-  {
-    key: 'business',
-    icon: BriefcaseBusiness,
-    title: 'Business',
-    short: 'A separate branch for owners, builders, and future entrepreneurs.',
-    audience: 'For users who own or want to own something bigger than a paycheck.',
-    promise: 'Business has different rules. Root$Wise treats it as its own branch.',
-    topics: ['Entity basics', 'EIN', 'LLCs', 'Business credit', 'Fundability', 'DUNS', 'Vendors', 'Cash flow', 'Bookkeeping', 'Taxes', 'Payroll', 'Commercial lending', 'SBA basics'],
-    free: ['Business vs hobby', 'Fundability checklist', 'DUNS before Net-30'],
-  },
-  {
-    key: 'family',
-    icon: HomeIcon,
-    title: 'Family Matters',
-    short: 'Money is never just math. It lives in relationships.',
-    audience: 'For parents, couples, caregivers, and anyone building a legacy.',
-    promise: 'We help families talk about money with clarity instead of fear.',
-    topics: ['Money conversations', 'Marriage', 'Children', 'Allowance', 'College planning', 'Aging parents', 'Estate planning', 'Wills', 'Trusts', 'Family meetings', 'Generational wealth'],
-    free: ['How to talk about money', 'Kids and money basics', 'Family money meeting'],
-  },
-  {
-    key: 'educators',
-    icon: School,
-    title: 'Educators',
-    short: 'A separate branch for teaching financial wisdom to others.',
-    audience: 'For teachers, schools, nonprofits, and programs that need curriculum support.',
-    promise: 'Educators are not just users. They are partners in the mission.',
-    topics: ['Classroom curriculum', 'Teacher guides', 'Student dashboards', 'Parent portal', 'Lesson plans', 'Assignments', 'Assessments', 'Standards alignment', 'Pilot programs'],
-    free: ['Curriculum overview', 'Sample lesson', 'Pilot interest form'],
-  },
-];
-
-const paths = roots.map((r) => ({ key: r.key, icon: r.icon, title: r.title, text: r.short }));
+const paths = rootRegistry.map((root) => ({ key: root.slug, title: root.displayTitle, text: root.purpose }));
 
 const assessmentQuestions = [
   {
@@ -187,22 +116,29 @@ const navItems = [
 function saveProfile(data) { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
 function loadProfile() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null'); } catch { return null; } }
 function routeFromLocation() {
-  const path = window.location.pathname.replace(/^\/+|\/+$/g, '');
-  if (path === 'roots/one' || path === 'roots/two' || path === 'roots/three' || path === 'roots/four' || path === 'roots/five') return path;
-  const hashRoute = window.location.hash.replace(/^#\/?/, '');
-  return hashRoute || (path || 'home');
+  return routeFromPath(window.location.pathname, window.location.hash);
 }
 function go(page) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
-  const destination = page === 'roots/one' || page === 'roots/two' || page === 'roots/three' || page === 'roots/four' || page === 'roots/five'
-    ? `/${page}`
-    : page === 'home'
-      ? '/'
-      : `/#/${page}`;
+  const destination = destinationForPage(page);
   window.history.pushState(null, '', destination);
   window.dispatchEvent(new PopStateEvent('popstate'));
 }
 function normalize(value) { return Array.isArray(value) ? value : value ? [value] : []; }
+
+function RootLessonExperience({ root, lesson }) {
+  const openLesson = (lessonId) => {
+    const next = getLessonById(root, lessonId);
+    if (next) go(next.route);
+  };
+  const shared = { go, initialLessonKey: lesson.id, onLessonChange: openLesson };
+  if (root.id === 1) return <RootOneCity key={lesson.id} {...shared} />;
+  if (root.id === 2) return <RootTwoCity key={lesson.id} {...shared} />;
+  if (root.id === 3) return <RootThreeCity key={lesson.id} {...shared} />;
+  if (root.id === 4) return <RootFourValley key={lesson.id} {...shared} />;
+  if (root.id === 5) return <RootFiveBridge key={lesson.id} {...shared} />;
+  return <RootOverview root={root} />;
+}
 
 function App() {
   const [route, setRoute] = useState(routeFromLocation());
@@ -216,6 +152,11 @@ function App() {
       window.removeEventListener('hashchange', onRoute);
     };
   }, []);
+  const [routeKind, rootSlug, lessonSlug] = route.split(':');
+  const currentRoot = routeKind === 'root-overview' || routeKind === 'root-lesson' ? getRootBySlug(rootSlug) : null;
+  const currentLesson = routeKind === 'root-lesson' && currentRoot ? getLessonBySlug(currentRoot, lessonSlug) : null;
+  const knownRoutes = ['home', 'journey', 'signup', 'assessment', 'heart', 'dashboard', 'learn', 'tools', 'schools', 'my-journey'];
+  const routeMissing = !knownRoutes.includes(route) && !currentRoot;
   const updateProfile = (next) => { const merged = { ...(profile || {}), ...next }; setProfile(merged); saveProfile(merged); };
   const groveNarration = route === 'heart'
     ? 'Before we enter the city, I want to ask you a question. When did money become real to you? Not when you learned what a dollar was. When did money begin to mean something? Most financial decisions look as though they begin with numbers. They rarely do. Before we examine where money goes, we have to understand who is making the decision. That is where Root One begins.'
@@ -228,49 +169,23 @@ function App() {
       {route === 'journey' && <Journey updateProfile={updateProfile} />}
       {route === 'signup' && <Signup profile={profile} updateProfile={updateProfile} />}
       {route === 'assessment' && <AssessmentFlow profile={profile} updateProfile={updateProfile} />}
-      {route === 'heart' && <Grove profile={null} go={go} view="welcome" />}
+      {route === 'heart' && <Grove profile={null} view="welcome" />}
       {route === 'dashboard' && <Dashboard profile={profile} />}
       {route === 'learn' && <Learn />}
       {route === 'tools' && <Tools />}
       {route === 'schools' && <Schools />}
       {route === 'my-journey' && <MyJourney profile={profile} />}
-      {route === 'roots/one' && <RootOneCity go={go} />}
-      {route === 'roots/two' && <RootTwoCity go={go} />}
-      {route === 'roots/three' && <RootThreeCity go={go} />}
-      {route === 'roots/four' && <RootFourValley go={go} />}
-      {route === 'roots/five' && <RootFiveBridge go={go} />}
-      {!['home', 'roots/one', 'roots/two', 'roots/three', 'roots/four', 'roots/five', 'heart', 'dashboard'].includes(route) && <StickyNav />}
+      {routeKind === 'root-overview' && currentRoot && <RootOverview root={currentRoot} />}
+      {routeKind === 'root-lesson' && currentRoot && currentLesson && <RootLessonExperience root={currentRoot} lesson={currentLesson} />}
+      {routeKind === 'root-lesson' && currentRoot && !currentLesson && <RootOverview root={currentRoot} />}
+      {routeMissing && <RouteNotFound />}
       <SageVoice key={route} pageText={groveNarration} />
     </>
   );
 }
 
-function StickyNav() {
-  const [open, setOpen] = useState(false);
-  const menuButtonRef = useRef(null);
-  const closeButtonRef = useRef(null);
-  React.useEffect(() => {
-    if (!open) return undefined;
-    closeButtonRef.current?.focus();
-    const closeOnEscape = (event) => {
-      if (event.key === 'Escape') {
-        setOpen(false);
-        menuButtonRef.current?.focus();
-      }
-    };
-    window.addEventListener('keydown', closeOnEscape);
-    return () => window.removeEventListener('keydown', closeOnEscape);
-  }, [open]);
-  return (
-    <>
-      <button ref={menuButtonRef} className="mobile-menu" onClick={() => setOpen(true)} aria-label="Open navigation" aria-expanded={open} aria-controls="rootwise-mobile-navigation"><Menu size={22}/></button>
-      <div id="rootwise-mobile-navigation" className={`drawer ${open ? 'show' : ''}`}>
-        <button ref={closeButtonRef} className="drawer-close" aria-label="Close navigation" onClick={() => { setOpen(false); menuButtonRef.current?.focus(); }}><X size={22}/></button>
-        {navItems.map(([label, page]) => <button key={page} onClick={() => { setOpen(false); go(page === 'journey' ? 'my-journey' : page); }}>{label}</button>)}
-        <button className="drawer-sign" onClick={() => { setOpen(false); go('signup'); }}><User size={18}/> Sign In</button>
-      </div>
-    </>
-  );
+function RouteNotFound() {
+  return <PageShell kicker="RootWise" title="This path is not part of the current Grove." lead="Return to the Grove to choose a published Root or review a Root still in development."><button type="button" onClick={() => go('dashboard')}>Return to the Grove <ArrowRight size={16} /></button></PageShell>;
 }
 
 function Home() {
@@ -333,7 +248,7 @@ function TopBar() {
 function Journey({ updateProfile }) {
   return <PageShell kicker="Meet Sage" title="Choose the root you most want to strengthen first." lead="This is not a box. It is a starting point. The assessment will still listen across every area.">
     <div className="principle-box"><strong>Root$Wise principle:</strong> We discover the user's starting point. We do not assume one.</div>
-    <div className="path-choice-grid seven">{paths.map(({ key, icon: Icon, title, text }) => <button className="choice-card" key={key} onClick={() => { updateProfile({ path: key, pathTitle: title }); go('signup'); }}><Icon size={28}/><h3>{title}</h3><p>{text}</p></button>)}</div>
+    <div className="path-choice-grid eleven">{paths.map(({ key, title, text }) => <button className="choice-card" key={key} onClick={() => { updateProfile({ path: key, pathTitle: title }); go('signup'); }}><Sprout size={28}/><h3>{title}</h3><p>{text}</p></button>)}</div>
   </PageShell>;
 }
 
@@ -390,7 +305,7 @@ function calculateScore(answers, path) {
   if (relationship.includes('thriving')) score += 21;
   if (answers.confidence) score += Math.round(Number(answers.confidence) / 8);
   if (answers.education && !answers.education.includes('None')) score += 6;
-  if (path === 'business') score += 4;
+  if (path === 'eleven') score += 4;
   if (normalize(answers.rootInterests).length > 2) score += 3;
   return Math.min(96, Math.max(28, score));
 }
@@ -398,13 +313,11 @@ function calculateScore(answers, path) {
 function inferRoots(answers, path) {
   const selected = new Set([path].filter(Boolean));
   const buckets = {
-    literacy: ['Financial literacy foundation', 'Not knowing where to begin', "I'm not sure yet", "I'm not sure"],
-    credit: ['Credit', 'Credit cards', 'credit'],
-    debt: ['Debt', 'Collections', 'Medical debt', 'Student loans', 'Debt payoff methods'],
-    investing: ['Investing', 'Stocks', 'ETFs or index funds', 'Retirement accounts', 'Real estate'],
-    business: ['Business', 'Business stability', 'Starting or growing a business', 'Business credit or funding'],
-    family: ['Family matters', 'My children or family', 'Teaching my children', 'Family legacy planning'],
-    educators: ['Educators or classroom', 'Classroom or school curriculum'],
+    one: ['Financial literacy foundation', 'Not knowing where to begin', "I'm not sure yet", "I'm not sure"],
+    five: ['Credit', 'Credit cards', 'Debt', 'Collections', 'Medical debt', 'Student loans', 'Debt payoff methods'],
+    nine: ['Investing', 'Stocks', 'ETFs or index funds', 'Retirement accounts', 'Real estate'],
+    eleven: ['Business', 'Business stability', 'Starting or growing a business', 'Business credit or funding'],
+    ten: ['Family matters', 'My children or family', 'Teaching my children', 'Family legacy planning'],
   };
   Object.entries(answers).forEach(([, value]) => {
     normalize(value).forEach((v) => {
@@ -417,27 +330,22 @@ function inferRoots(answers, path) {
 }
 
 function Dashboard({ profile }) {
-  return <Grove profile={profile} go={go} view="user" />;
+  return <Grove profile={profile} view="user" />;
 }
 
 function Learn() {
-  const [active, setActive] = useState(roots[0].key);
-  const root = roots.find((r) => r.key === active) || roots[0];
-  const Icon = root.icon;
-  return <PageShell kicker="Learn" title="The Seven Roots of Financial Wisdom" lead="This is the curriculum foundation. Each root becomes a full branch of lessons, tools, and Sage-guided understanding.">
+  const [active, setActive] = useState(rootRegistry[0].slug);
+  const root = getRootBySlug(active) || rootRegistry[0];
+  const publishedLessons = root.lessons.filter((lesson) => lesson.published);
+  return <PageShell kicker="Learn" title="The Eleven Roots of Financial Decision Capacity" lead="Each Root builds on the capacity developed before it. The Grove is the central map; this view lets you examine one Root at a time.">
     <div className="root-layout">
-      <div className="root-list">{roots.map((r) => { const RIcon = r.icon; return <button key={r.key} className={active === r.key ? 'active' : ''} onClick={() => setActive(r.key)}><RIcon size={20}/><span>{r.title}</span></button>; })}</div>
+      <div className="root-list">{rootRegistry.map((item) => <button key={item.slug} className={active === item.slug ? 'active' : ''} onClick={() => setActive(item.slug)}><Sprout size={20}/><span>{item.label}: {item.displayTitle}</span></button>)}</div>
       <article className="root-detail">
-        <div className="root-detail-head"><Icon size={34}/><div><h2>{root.title}</h2><p>{root.short}</p></div></div>
-        <div className="principle-box"><strong>Who this serves:</strong> {root.audience}</div>
-        <p className="root-promise"><strong>Sage's promise:</strong> {root.promise}</p>
-        <h3>Concepts inside this root</h3>
-        <div className="topic-cloud">{root.topics.map((topic) => <span key={topic}>{topic}</span>)}</div>
-        <h3>Free starter lessons</h3>
-        <div className="free-lesson-row">{root.free.map((lesson) => <div key={lesson} className="free-lesson"><BookOpen size={18}/><span>{lesson}</span></div>)}</div>
-        {root.key === 'literacy'
-          ? <div className="root-open-routes"><button type="button" className="root-enter-button" onClick={() => go('roots/one')}>Enter Root One: The Story Beneath the Decision <ArrowRight size={17}/></button><button type="button" className="root-enter-button" onClick={() => go('roots/two')}>Enter Root Two: Value &amp; Earning <ArrowRight size={17}/></button><button type="button" className="root-enter-button root-three-enter" onClick={() => go('roots/three')}>Enter Root Three: Choice, Cash Flow &amp; Spending <ArrowRight size={17}/></button><button type="button" className="root-enter-button" onClick={() => go('roots/four')}>Enter Root Four: Saving, Preparedness &amp; Resilience <ArrowRight size={17}/></button></div>
-          : <div className="premium-preview"><Lock size={18}/><span>This path is still taking shape. Root One is the current teaching experience.</span></div>}
+        <div className="root-detail-head"><Sprout size={34}/><div><h2>{root.displayTitle}</h2><p>{root.purpose}</p></div></div>
+        <div className="principle-box"><strong>Financial decision capacity:</strong> {root.capacity}</div>
+        <p className="root-promise">{root.description}</p>
+        {publishedLessons.length ? <><h3>Published lesson path</h3><div className="free-lesson-row">{publishedLessons.slice(0, 3).map((lesson) => <a href={lesson.route} key={lesson.id} className="free-lesson"><BookOpen size={18}/><span>{lesson.title}</span></a>)}</div><a className="root-enter-button" href={root.overviewRoute}>View {root.label} and all {root.lessonCount} lessons <ArrowRight size={17}/></a></>
+          : <><div className="premium-preview"><Lock size={18}/><span>Lessons are in development. The Root overview contains the canonical purpose and will add real lesson links automatically when publication begins.</span></div><a className="root-enter-button" href={root.overviewRoute}>View {root.label} overview <ArrowRight size={17}/></a></>}
       </article>
     </div>
   </PageShell>;
@@ -452,7 +360,7 @@ function Tools() {
 
 function Schools() {
   return <PageShell kicker="Educators Branch" title="Bring Root$Wise to the classroom." lead="Educators are a separate branch because teaching others has different needs than learning for yourself.">
-    <div className="split"><div className="school-card"><GraduationCap size={32}/><h3>School Curriculum Preview</h3><p>K–12 financial wisdom with age-appropriate language, Penny for younger learners, and Sage for older students.</p><button>Request Pilot Preview</button></div><div className="school-card"><Users size={32}/><h3>Parent + Home Study</h3><p>For families who want to talk about money at home without shame, fear, or confusion.</p><button>Join Family Preview</button></div></div>
+    <div className="split"><div className="school-card"><GraduationCap size={32}/><h3>School Curriculum Preview</h3><p>K–12 financial wisdom with age-appropriate language, Penny for younger learners, and Sage for older students.</p><span className="lock-pill"><Lock size={15}/> Information preview</span></div><div className="school-card"><Users size={32}/><h3>Parent + Home Study</h3><p>For families who want to talk about money at home without shame, fear, or confusion.</p><span className="lock-pill"><Lock size={15}/> Information preview</span></div></div>
   </PageShell>;
 }
 

@@ -10,6 +10,7 @@ import { rootTwoDistricts, rootTwoQuickPrompts } from './root-two-data';
 import './root-two.css';
 
 const PROGRESS_KEY = 'rootwise_root_two_journey_v4';
+const LEGACY_PROGRESS_KEY = 'rootwise_root_two_journey_v3';
 const allLessons = rootTwoDistricts.flatMap((district, districtIndex) =>
   district.lessons.map((lesson, lessonIndex) => ({ districtIndex, lessonIndex, lesson })),
 );
@@ -20,16 +21,23 @@ function object(value) {
 
 function readProgress() {
   try {
-    const saved = object(JSON.parse(localStorage.getItem(PROGRESS_KEY) || '{}'));
+    const current = object(JSON.parse(localStorage.getItem(PROGRESS_KEY) || '{}'));
+    const legacy = object(JSON.parse(localStorage.getItem(LEGACY_PROGRESS_KEY) || '{}'));
+    const currentHasProgress = Array.isArray(current.completed) && current.completed.length > 0
+      || Number.isInteger(current.chapter)
+      || Object.keys(object(current.answers)).length > 0
+      || Object.keys(object(current.reflections)).length > 0;
+    const saved = currentHasProgress ? current : legacy;
     const active = allLessons.findIndex(({ lesson }) =>
       lesson.sourceChapterIndex === saved.chapter && lesson.sourceLessonIndex === saved.lesson,
     );
     const validKeys = new Set(allLessons.map(({ lesson }) => lesson.progressKey));
+    const completed = [...new Set([...(Array.isArray(legacy.completed) ? legacy.completed : []), ...(Array.isArray(current.completed) ? current.completed : [])])];
     return {
       active: active >= 0 ? active : 0,
-      completed: Array.isArray(saved.completed) ? saved.completed.filter((key) => validKeys.has(key)) : [],
-      answers: object(saved.answers),
-      reflections: object(saved.reflections),
+      completed: completed.filter((key) => validKeys.has(key)),
+      answers: { ...object(legacy.answers), ...object(current.answers) },
+      reflections: { ...object(legacy.reflections), ...object(current.reflections) },
     };
   } catch {
     return { active: 0, completed: [], answers: {}, reflections: {} };
@@ -222,9 +230,10 @@ function GuideRail({ district, lesson, completed, activeIndex, onNext }) {
   );
 }
 
-export default function RootTwoCity({ go }) {
+export default function RootTwoCity({ go, initialLessonKey, onLessonChange }) {
   const saved = useMemo(() => readProgress(), []);
-  const [activeIndex, setActiveIndex] = useState(saved.active || 0);
+  const requestedIndex = allLessons.findIndex(({ lesson }) => lesson.progressKey === initialLessonKey);
+  const [activeIndex, setActiveIndex] = useState(requestedIndex >= 0 ? requestedIndex : saved.active || 0);
   const [completed, setCompleted] = useState(saved.completed || []);
   const [answers, setAnswers] = useState(saved.answers || {});
   const [reflections, setReflections] = useState(saved.reflections || {});
@@ -245,7 +254,7 @@ export default function RootTwoCity({ go }) {
     window.addEventListener('keydown', onKey); return () => window.removeEventListener('keydown', onKey);
   }, [navOpen]);
 
-  const selectGlobal = (index) => { setActiveIndex(Math.max(0, Math.min(index, allLessons.length - 1))); setNavOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+  const selectGlobal = (index) => { const next = Math.max(0, Math.min(index, allLessons.length - 1)); if (onLessonChange && next !== activeIndex) { onLessonChange(allLessons[next].lesson.progressKey); return; } setActiveIndex(next); setNavOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); };
   const selectDistrict = (districtIndex) => selectGlobal(allLessons.findIndex((item) => item.districtIndex === districtIndex));
   const selectLesson = (lessonIndex) => selectGlobal(allLessons.findIndex((item) => item.districtIndex === current.districtIndex && item.lessonIndex === lessonIndex));
   const toggleComplete = () => setCompleted((items) => items.includes(lesson.progressKey) ? items.filter((key) => key !== lesson.progressKey) : [...items, lesson.progressKey]);
