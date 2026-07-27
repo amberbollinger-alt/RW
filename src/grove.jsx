@@ -1,7 +1,7 @@
 import { ArrowRight, LockKeyhole, Sprout } from 'lucide-react';
 import { rootOneIntroduction, rootOneRootsData as rootOneLessons } from './root-one-roots-data';
 import { rootTwoDistricts } from './root-two-data';
-import { rootThreeDistricts } from './root-three-data';
+import { rootThreeRootsData as rootThreeDistricts } from './root-three-roots-data';
 import { rootFourChapters } from './root-four-data';
 import './grove.css';
 
@@ -33,7 +33,7 @@ function readRootProgress() {
   return [
     safeCompleted('rootwise_root_one_city_progress', rootOneKeys) === rootOneKeys.size,
     safeCompleted('rootwise_root_two_journey_v3', rootTwoKeys) === rootTwoKeys.size,
-    safeCompleted('rootwise_root_three_city_progress_v1', rootThreeKeys) === rootThreeKeys.size,
+    safeCompleted('rootwise_root_three_city_progress_v2', rootThreeKeys) === rootThreeKeys.size,
     safeCompleted('rootwise_root_four_reservoir_progress_v1', rootFourKeys) === rootFourKeys.size,
   ].filter(Boolean).length;
 }

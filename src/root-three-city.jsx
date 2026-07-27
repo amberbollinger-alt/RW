@@ -6,10 +6,10 @@ import {
 } from 'lucide-react';
 import { ApprovedArtwork } from './approved-artwork';
 import { queueSageVoice } from './sage-voice-events';
-import { rootThreeCanonicalDistricts as rootThreeDistricts, rootThreeCanonicalQuickPrompts as rootThreeQuickPrompts } from './root-three-canonical-data';
+import { rootThreeRootsData as rootThreeDistricts, rootThreeQuickPrompts } from './root-three-roots-data';
 import './root-three.css';
 
-const PROGRESS_KEY = 'rootwise_root_three_city_progress_v1';
+const PROGRESS_KEY = 'rootwise_root_three_city_progress_v2';
 
 function readProgress() {
   try {
@@ -19,10 +19,11 @@ function readProgress() {
     const object = (candidate) => candidate && typeof candidate === 'object' && !Array.isArray(candidate) ? candidate : {};
     const choices = object(value.choices);
     const answers = object(value.answers);
+    const reflections = object(value.reflections);
     const completed = Array.isArray(value.completed) ? value.completed.filter((key) => {
       const district = rootThreeDistricts.find((item) => item.key === key);
       const correct = district?.check.options.find((option) => option.isCorrect)?.id;
-      return keys.has(key) && choices[key] && answers[key] === correct;
+      return keys.has(key) && choices[key] && answers[key] === correct && String(reflections[key] || '').trim();
     }) : [];
     return {
       activeIndex: Number.isInteger(value.activeIndex) ? Math.max(0, Math.min(value.activeIndex, rootThreeDistricts.length - 1)) : 0,
@@ -30,7 +31,7 @@ function readProgress() {
       completed,
       choices,
       answers,
-      reflections: object(value.reflections),
+      reflections,
     };
   } catch {
     return {};
@@ -74,7 +75,7 @@ function DistrictNav({ activeIndex, completed, visited, onSelect, onClose, close
 function Story({ district }) {
   return (
     <section className="rt-card rt-story" aria-labelledby={`rt-story-${district.key}`}>
-      <p className="rt-eyebrow"><Sparkles size={15} /> Sage’s story</p>
+      <p className="rt-eyebrow"><Sparkles size={15} /> Ivy, Eli &amp; Sage</p>
       <h2 id={`rt-story-${district.key}`}>{district.title}</h2>
       <p className="rt-setting">{district.setting}</p>
       <div className="rt-story-flow">
@@ -88,12 +89,28 @@ function Story({ district }) {
 
 function Learning({ district }) {
   return (
-    <>
-      <section className="rt-card rt-deep-dive">
-        <header><p className="rt-eyebrow"><Route size={15} /> Deeper explanation</p><h2>How to recognize and use the idea</h2></header>
-        <div>{district.concepts.map(([title, body], index) => <article key={title}><span>{String(index + 1).padStart(2, '0')}</span><h3>{title}</h3><p>{body}</p></article>)}</div>
-      </section>
-    </>
+    <section className="rt-card rt-deep-dive">
+      <header>
+        <p className="rt-eyebrow"><Route size={15} /> Three levels of adult understanding</p>
+        <h2>Keep the lesson. Deepen how you use it.</h2>
+        <p>The original Cash Flow City lesson now moves through three connected layers: understand what is happening, recognize it in adult life, then examine what is directing the decision.</p>
+      </header>
+      <div>
+        {district.adultLevels.map((level) => (
+          <article className="rt-understanding-level" key={level.number}>
+            <span>{level.number}</span>
+            <div>
+              <p className="rt-level-question">Level {Number(level.number)} · {level.name} · {level.question}</p>
+              <h3>{level.title}</h3>
+              {level.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+              {level.details?.length ? <div className="rt-level-details">{level.details.map((detail) => <section key={detail.title}><strong>{detail.title}</strong><p>{detail.body}</p></section>)}</div> : null}
+              {level.examples?.length ? <ul className="rt-level-list">{level.examples.map((item) => <li key={item}>{item}</li>)}</ul> : null}
+              {level.prompts?.length ? <ol className="rt-level-list rt-level-prompts">{level.prompts.map((item) => <li key={item}>{item}</li>)}</ol> : null}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -102,20 +119,20 @@ function Practice({ district, choice, answer, reflection, onChoice, onAnswer, on
   const checked = district.check.options.find((option) => option.id === answer);
   return (
     <>
-      <section className="rt-card rt-scenario">
-        <p className="rt-eyebrow"><Target size={15} /> Interactive scenario</p>
-        <h2>{district.scenario.prompt}</h2><p>{district.scenario.setup}</p>
-        <div className="rt-options">{district.scenario.options.map((option) => <button type="button" className={choice === option.id ? 'is-selected' : ''} aria-pressed={choice === option.id} onClick={() => onChoice(option.id)} key={option.id}><span>{choice === option.id ? <Check size={15} /> : <ArrowRight size={15} />}</span>{option.label}</button>)}</div>
-        {chosen && <div className="rt-consequence" aria-live="polite"><div><strong>What follows</strong><p>{chosen.consequence}</p></div><blockquote><strong>Sage</strong><p>“{chosen.sage}”</p></blockquote><div><strong>Course correction</strong><p>{chosen.correction}</p></div></div>}
-      </section>
       <section className="rt-card rt-check">
-        <p className="rt-eyebrow"><CircleHelp size={15} /> Knowledge check</p>
+        <p className="rt-eyebrow"><CircleHelp size={15} /> Practical Check</p>
         <h2>{district.check.prompt}</h2>
         <div className="rt-options">{district.check.options.map((option) => <button type="button" className={answer === option.id ? 'is-selected' : ''} aria-pressed={answer === option.id} onClick={() => onAnswer(option.id)} key={option.id}><span>{answer === option.id ? <Check size={15} /> : <ArrowRight size={15} />}</span>{option.label}</button>)}</div>
         {checked && <div className={checked.isCorrect ? 'rt-feedback is-correct' : 'rt-feedback'} aria-live="polite"><strong>{checked.isCorrect ? 'You’ve got it' : 'Look one step deeper'}</strong><p>{checked.isCorrect ? 'You identified the idea and can now carry it into the scenario.' : 'Return to the financial parallel, then try again. The strongest answer uses the full decision—not a shortcut or universal rule.'}</p></div>}
       </section>
+      <section className="rt-card rt-scenario">
+        <p className="rt-eyebrow"><Target size={15} /> Apply It Now</p>
+        <h2>{district.scenario.prompt}</h2><p>{district.scenario.setup}</p>
+        <div className="rt-options">{district.scenario.options.map((option) => <button type="button" className={choice === option.id ? 'is-selected' : ''} aria-pressed={choice === option.id} onClick={() => onChoice(option.id)} key={option.id}><span>{choice === option.id ? <Check size={15} /> : <ArrowRight size={15} />}</span>{option.label}</button>)}</div>
+        {chosen && <div className="rt-consequence" aria-live="polite"><div><strong>What follows</strong><p>{chosen.consequence}</p></div><blockquote><strong>Sage</strong><p>“{chosen.sage}”</p></blockquote><div><strong>Course correction</strong><p>{chosen.correction}</p></div></div>}
+      </section>
       <section className="rt-card rt-reflection">
-        <div><p className="rt-eyebrow"><MessageCircle size={15} /> Reflection</p><h2>Make this district yours</h2><ul>{district.reflection.map((prompt) => <li key={prompt}>{prompt}</li>)}</ul><label htmlFor={`rt-reflection-${district.key}`}>Your private reflection<textarea id={`rt-reflection-${district.key}`} rows={5} value={reflection || ''} onChange={(event) => onReflection(event.target.value)} placeholder="This stays on this device." /></label></div>
+        <div><p className="rt-eyebrow"><MessageCircle size={15} /> Apply It Now · Private reflection</p><h2>Make this district yours</h2><ul>{district.reflection.map((prompt) => <li key={prompt}>{prompt}</li>)}</ul><label htmlFor={`rt-reflection-${district.key}`}>Your private reflection<textarea id={`rt-reflection-${district.key}`} rows={5} value={reflection || ''} onChange={(event) => onReflection(event.target.value)} placeholder="Write as much or as little as is useful. This stays on this device." /></label></div>
         <aside><p className="rt-eyebrow"><CheckCircle2 size={15} /> Apply it today</p><p>{district.action}</p></aside>
       </section>
     </>
@@ -195,7 +212,7 @@ export default function RootThreeCity({ go }) {
   const menuRef = useRef(null); const closeRef = useRef(null);
   const district = rootThreeDistricts[activeIndex];
   const correct = district.check.options.find((option) => option.isCorrect)?.id;
-  const ready = Boolean(choices[district.key] && answers[district.key] === correct);
+  const ready = Boolean(choices[district.key] && answers[district.key] === correct && String(reflections[district.key] || '').trim());
 
   useEffect(() => { localStorage.setItem(PROGRESS_KEY, JSON.stringify({ activeIndex, visited, completed, choices, answers, reflections })); }, [activeIndex, visited, completed, choices, answers, reflections]);
   useEffect(() => {
@@ -215,15 +232,16 @@ export default function RootThreeCity({ go }) {
     <CityBackdrop />
     <header className="rt-topbar"><button type="button" onClick={() => go('dashboard')}><ArrowLeft size={17} /> The Grove</button><button type="button" className="rt-brand" onClick={() => go('home')} aria-label="RootWise home"><ApprovedArtwork variant="tree" /><span><strong>Root$Wise</strong><small>Root Three · Choice, Cash Flow &amp; Spending</small></span></button><button ref={menuRef} type="button" onClick={() => setNavOpen(true)} aria-expanded={navOpen} aria-controls="rt-district-navigation"><Menu size={18} /> Districts</button></header>
     <div className="rt-progress" role="progressbar" aria-label="Root Three progress" aria-valuemin={0} aria-valuemax={rootThreeDistricts.length} aria-valuenow={completed.length}><i style={{ width: `${completed.length / rootThreeDistricts.length * 100}%` }} /></div>
-    {navOpen && <button type="button" className="rt-nav-scrim" aria-label="Close district menu" onClick={() => { setNavOpen(false); menuRef.current?.focus(); }} />}
     <div className="rt-layout">
+      {navOpen && <button type="button" className="rt-nav-scrim" aria-label="Close district menu" onClick={() => { setNavOpen(false); menuRef.current?.focus(); }} />}
       <div id="rt-district-navigation" className={navOpen ? 'rt-nav-wrap is-open' : 'rt-nav-wrap'}><DistrictNav activeIndex={activeIndex} completed={completed} visited={visited} onSelect={select} onClose={() => { setNavOpen(false); menuRef.current?.focus(); }} closeRef={closeRef} /></div>
       <article className="rt-lesson" key={district.key}>
         <section className="rt-promise"><p className="rt-eyebrow"><Target size={15} /> Lesson promise</p><h1>{district.promise}</h1><span>Lesson {district.number} of {rootThreeDistricts.length} · {district.theme}</span></section>
         <Story district={district} /><Learning district={district} />
         <Practice district={district} choice={choices[district.key]} answer={answers[district.key]} reflection={reflections[district.key]} onChoice={(choice) => setChoices((current) => ({ ...current, [district.key]: choice }))} onAnswer={(answer) => setAnswers((current) => ({ ...current, [district.key]: answer }))} onReflection={(reflection) => setReflections((current) => ({ ...current, [district.key]: reflection }))} />
+        <section className="rt-card rt-root-growth" aria-labelledby={`rt-growth-${district.key}`}><p className="rt-eyebrow"><CheckCircle2 size={15} /> Root Growth</p><h2 id={`rt-growth-${district.key}`}>{district.growth}</h2><p>{district.action}</p></section>
         <section className="rt-next"><Route size={18} /><div><p className="rt-eyebrow">The road continues</p><p>{district.next}</p></div></section>
-        <footer className="rt-lesson-footer"><button type="button" onClick={() => select(activeIndex - 1)} disabled={activeIndex === 0}><ArrowLeft size={17} /> Previous</button><button type="button" className={completed.includes(district.key) ? 'is-complete' : ''} onClick={toggleComplete} disabled={!completed.includes(district.key) && !ready} aria-pressed={completed.includes(district.key)}>{completed.includes(district.key) ? <Check size={17} /> : <CheckCircle2 size={17} />}{completed.includes(district.key) ? 'District complete' : ready ? 'Complete district' : 'Finish scenario & check'}</button><button type="button" onClick={() => activeIndex === 11 ? go('dashboard') : select(activeIndex + 1)}>{activeIndex === 11 ? 'Return to Grove' : 'Next district'} <ArrowRight size={17} /></button></footer>
+        <footer className="rt-lesson-footer"><button type="button" onClick={() => select(activeIndex - 1)} disabled={activeIndex === 0}><ArrowLeft size={17} /> Previous</button><button type="button" className={completed.includes(district.key) ? 'is-complete' : ''} onClick={toggleComplete} disabled={!completed.includes(district.key) && !ready} aria-pressed={completed.includes(district.key)}>{completed.includes(district.key) ? <Check size={17} /> : <CheckCircle2 size={17} />}{completed.includes(district.key) ? 'District complete' : ready ? 'Complete district' : 'Finish check, choice & reflection'}</button><button type="button" onClick={() => activeIndex === rootThreeDistricts.length - 1 ? go('dashboard') : select(activeIndex + 1)}>{activeIndex === rootThreeDistricts.length - 1 ? 'Return to Grove' : 'Next district'} <ArrowRight size={17} /></button></footer>
       </article>
       <div className="rt-sage-rail"><AskSage district={district} /></div>
     </div>

@@ -1,6 +1,6 @@
 import { rootOneRootsData as rootOneDistricts } from '../src/root-one-roots-data.js';
 import { rootTwoDistricts } from '../src/root-two-data.js';
-import { rootThreeCanonicalDistricts as rootThreeDistricts } from '../src/root-three-canonical-data.js';
+import { rootThreeRootsData as rootThreeDistricts } from '../src/root-three-roots-data.js';
 
 const MAX_MESSAGE_LENGTH = 700;
 const MAX_HISTORY_ITEMS = 10;
@@ -79,6 +79,14 @@ Keep most replies between 80 and 180 words. End with one useful question that he
 function buildRootThreeInstructions(districtKey) {
   const district = ROOT_THREE_DISTRICTS.get(districtKey) || rootThreeDistricts[0];
   const concepts = district.concepts.map(([title, body]) => `${title}: ${body}`).join('\n');
+  const levels = district.adultLevels.map((level) => {
+    const details = [
+      ...(level.details || []).map((item) => `${item.title}: ${item.body}`),
+      ...(level.examples || []),
+      ...(level.prompts || []),
+    ].join(' | ');
+    return `Level ${level.number} — ${level.name}: ${level.title}. ${level.body.join(' ')} ${details}`;
+  }).join('\n');
   const choices = district.scenario.options.map((option) => `${option.label} — consequence: ${option.consequence} Course correction: ${option.correction}`).join('\n');
   const story = district.story.map((block) => `${block.speaker ? `${block.speaker}: ` : ''}${block.text}`).join('\n');
   return `You are Sage, RootWise's trusted financial-learning companion. You are walking beside a learner in Root Three: Choice, Cash Flow & Spending.
@@ -94,6 +102,9 @@ The learner is considering: ${district.scenario.prompt}
 
 Approved concept breakdowns:
 ${concepts}
+
+Approved adult-understanding layers:
+${levels}
 
 Approved choices and recovery paths:
 ${choices}
