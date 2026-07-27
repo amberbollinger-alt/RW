@@ -9,7 +9,7 @@ import { queueSageVoice } from './sage-voice-events';
 import { rootTwoDistricts, rootTwoQuickPrompts } from './root-two-data';
 import './root-two.css';
 
-const PROGRESS_KEY = 'rootwise_root_two_journey_v3';
+const PROGRESS_KEY = 'rootwise_root_two_journey_v4';
 const allLessons = rootTwoDistricts.flatMap((district, districtIndex) =>
   district.lessons.map((lesson, lessonIndex) => ({ districtIndex, lessonIndex, lesson })),
 );

@@ -1,5 +1,5 @@
 import { rootOneRootsData as rootOneDistricts } from '../src/root-one-roots-data.js';
-import { rootTwoCanonicalDistricts as rootTwoDistricts } from '../src/root-two-canonical-data.js';
+import { rootTwoDistricts } from '../src/root-two-data.js';
 import { rootThreeCanonicalDistricts as rootThreeDistricts } from '../src/root-three-canonical-data.js';
 
 const MAX_MESSAGE_LENGTH = 700;
