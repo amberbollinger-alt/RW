@@ -139,6 +139,17 @@ export default function SageVoice({ pageText = '' }) {
     window.speechSynthesis.speak(utterance);
   };
 
+  const queueDeviceVoice = (text, chunkIndex, token) => {
+    if (token !== playbackTokenRef.current) return;
+    audioRef.current = null;
+    if (urlRef.current) URL.revokeObjectURL(urlRef.current);
+    urlRef.current = '';
+    playbackModeRef.current = 'device';
+    chunkIndexRef.current = chunkIndex;
+    setStatus('ready');
+    setMessage('Sage is ready with your device voice. Select Play Sage to begin.');
+  };
+
   const loadAndPlay = async (text, chunkIndex = 0) => {
     if (!text || muted) return;
     releaseAudio();
@@ -181,15 +192,18 @@ export default function SageVoice({ pageText = '' }) {
         }
       };
       audio.onerror = () => {
-        if (token !== playbackTokenRef.current) return;
-        audioRef.current = null;
-        if (urlRef.current) URL.revokeObjectURL(urlRef.current);
-        urlRef.current = '';
-        speakWithDeviceVoice(text, chunkIndex, token);
+        queueDeviceVoice(text, chunkIndex, token);
       };
-      await audio.play();
+      try {
+        await audio.play();
+      } catch {
+        if (token === playbackTokenRef.current) {
+          setStatus('ready');
+          setMessage('Sage is ready. Select Play Sage to begin.');
+        }
+      }
     } catch {
-      if (token === playbackTokenRef.current) speakWithDeviceVoice(text, chunkIndex, token);
+      queueDeviceVoice(text, chunkIndex, token);
     }
   };
 
@@ -206,6 +220,11 @@ export default function SageVoice({ pageText = '' }) {
   };
 
   const play = () => {
+    if (status === 'ready' && playbackModeRef.current === 'api' && audioRef.current) return audioRef.current.play();
+    if (status === 'ready' && playbackModeRef.current === 'device') {
+      const token = playbackTokenRef.current;
+      return speakWithDeviceVoice(chunksRef.current[chunkIndexRef.current], chunkIndexRef.current, token);
+    }
     if (status === 'paused' && playbackModeRef.current === 'api' && audioRef.current) return audioRef.current.play();
     if (status === 'paused' && playbackModeRef.current === 'device') {
       window.speechSynthesis.resume();
@@ -252,7 +271,7 @@ export default function SageVoice({ pageText = '' }) {
     <img src="/rootwise-sage-cutout.png" alt="Sage, the RootWise guide" />
     <div className="sage-voice-copy"><strong>Sage</strong><small>AI voice · device voice backup</small><p aria-live="polite">{message}</p></div>
     <div className="sage-voice-actions">
-      <button type="button" onClick={play} disabled={status === 'loading' || muted}>{status === 'playing' ? <Pause /> : <Play />} {status === 'playing' ? 'Pause' : status === 'paused' ? 'Resume' : 'Hear Sage'}</button>
+      <button type="button" onClick={play} disabled={status === 'loading' || muted}>{status === 'playing' ? <Pause /> : <Play />} {status === 'playing' ? 'Pause' : status === 'paused' ? 'Resume' : status === 'ready' ? 'Play Sage' : 'Hear Sage'}</button>
       <button type="button" onClick={replay} disabled={status === 'loading' || muted} aria-label="Replay Sage"><RefreshCw /></button>
       <button type="button" onClick={toggleMute} aria-pressed={muted} aria-label={muted ? 'Unmute Sage' : 'Mute Sage'}>{muted ? <VolumeX /> : <Volume2 />}</button>
     </div>
