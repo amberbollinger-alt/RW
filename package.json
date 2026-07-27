@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit -p jsconfig.json",
-    "validate:roots": "node scripts/validate-root-registry.mjs"
+    "validate:roots": "node scripts/validate-root-registry.mjs",
+    "validate:tools": "node scripts/validate-tools.mjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "6.0.3",

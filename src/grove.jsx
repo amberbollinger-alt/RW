@@ -1,4 +1,4 @@
-import { ArrowRight, BookOpen, Check, Construction, Sprout } from 'lucide-react';
+import { ArrowRight, BookOpen, Calculator, Check, Construction, Sprout } from 'lucide-react';
 import { useMemo } from 'react';
 import { ApprovedArtwork } from './approved-artwork';
 import { rootOneIntroduction } from './root-one-roots-data';
@@ -6,6 +6,7 @@ import {
   findJourneyContinuation, readGroveProgress, ROOT_GROUPS, rootActionForProgress,
 } from './root-registry';
 import './grove.css';
+import './grove-tools-patch.css';
 
 function GroveHeader({ label, action }) {
   return (
@@ -14,7 +15,7 @@ function GroveHeader({ label, action }) {
         <Sprout /><span><strong>Root$Wise</strong><small>{label}</small></span>
       </a>
       <p>{label === 'The Grove' ? 'Before We Enter the City' : 'Your learning journey'}</p>
-      <a href={action.href}>{action.label}</a>
+      <a href={action.href}>{action.icon}{action.label}</a>
     </header>
   );
 }
@@ -51,7 +52,7 @@ function UserGrove({ profile }) {
   const name = profile?.firstName;
   return (
     <main className="grove-page grove-user-page">
-      <GroveHeader label="Your Grove" action={{ label: 'The Heart of Root$Wise', href: '/#heart' }} />
+      <GroveHeader label="Your Grove" action={{ label: 'Tools', href: '/tools', icon: <Calculator /> }} />
       <section className="user-grove-hero" aria-labelledby="user-grove-title">
         <img className="user-grove-photo" src="/grove-sunrise-valley.jpg" alt="" />
         <div className="user-grove-shade" />
@@ -86,7 +87,7 @@ function UserGrove({ profile }) {
 function WelcomeGrove() {
   return (
     <main className="grove-page">
-      <GroveHeader label="The Grove" action={{ label: 'My journey', href: '/#my-journey' }} />
+      <GroveHeader label="The Grove" action={{ label: 'Tools', href: '/tools', icon: <Calculator /> }} />
       <section className="grove-photo-hero" aria-labelledby="grove-title">
         <img className="grove-valley-photo" src="/grove-sunrise-valley.jpg" alt="" />
         <div className="grove-photo-shade" />

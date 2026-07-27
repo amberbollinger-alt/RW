@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
-  ArrowRight, BookOpen, Calculator, ChevronLeft,
+  ArrowRight, BookOpen, ChevronLeft,
   GraduationCap, Lock, Sparkles, Sprout, Users,
 } from 'lucide-react';
 import { ApprovedArtwork, ApprovedLandingArtwork } from './approved-artwork';
+import ContextualDefinition from './contextual-definition';
 import Grove from './grove';
 import RootOneCity from './root-one-city';
 import RootTwoCity from './root-two-city';
@@ -15,6 +16,7 @@ import RootOverview from './root-overview';
 import { getLessonById, getLessonBySlug, getRootBySlug, rootRegistry } from './root-registry';
 import { destinationForPage, routeFromPath } from './root-routing';
 import SageVoice from './sage-voice';
+import { MoneyDictionary, ToolDetail, ToolsCenter } from './tools-center';
 import './styles.css';
 
 const STORAGE_KEY = 'rootwise_sprint_003_profile';
@@ -110,7 +112,7 @@ const assessmentQuestions = [
 ];
 
 const navItems = [
-  ['Dashboard', 'dashboard'], ['Learn', 'learn'], ['Assessment', 'assessment'], ['Tools', 'tools'], ['Schools', 'schools'], ['My Journey', 'journey']
+  ['Dashboard', 'dashboard'], ['Learn', 'learn'], ['Assessment', 'assessment'], ['Tools', 'tools'], ['Schools', 'schools']
 ];
 
 function saveProfile(data) { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
@@ -152,11 +154,17 @@ function App() {
       window.removeEventListener('hashchange', onRoute);
     };
   }, []);
+  React.useEffect(() => {
+    if (route !== 'legacy-my-journey' && route !== 'legacy-tools') return;
+    const destination = route === 'legacy-my-journey' ? '/grove' : '/tools';
+    window.history.replaceState(null, '', destination);
+    window.dispatchEvent(new PopStateEvent('popstate'));
+  }, [route]);
   const [routeKind, rootSlug, lessonSlug] = route.split(':');
   const currentRoot = routeKind === 'root-overview' || routeKind === 'root-lesson' ? getRootBySlug(rootSlug) : null;
   const currentLesson = routeKind === 'root-lesson' && currentRoot ? getLessonBySlug(currentRoot, lessonSlug) : null;
-  const knownRoutes = ['home', 'journey', 'signup', 'assessment', 'heart', 'dashboard', 'learn', 'tools', 'schools', 'my-journey'];
-  const routeMissing = !knownRoutes.includes(route) && !currentRoot;
+  const knownRoutes = ['home', 'journey', 'signup', 'assessment', 'heart', 'dashboard', 'learn', 'tools', 'tool-dictionary', 'schools', 'legacy-my-journey', 'legacy-tools'];
+  const routeMissing = !knownRoutes.includes(route) && !currentRoot && routeKind !== 'tool';
   const updateProfile = (next) => { const merged = { ...(profile || {}), ...next }; setProfile(merged); saveProfile(merged); };
   const groveNarration = route === 'heart'
     ? 'Before we enter the city, I want to ask you a question. When did money become real to you? Not when you learned what a dollar was. When did money begin to mean something? Most financial decisions look as though they begin with numbers. They rarely do. Before we examine where money goes, we have to understand who is making the decision. That is where Root One begins.'
@@ -172,11 +180,13 @@ function App() {
       {route === 'heart' && <Grove profile={null} view="welcome" />}
       {route === 'dashboard' && <Dashboard profile={profile} />}
       {route === 'learn' && <Learn />}
-      {route === 'tools' && <Tools />}
+      {route === 'tools' && <ToolsCenter />}
+      {route === 'tool-dictionary' && <MoneyDictionary />}
+      {routeKind === 'tool' && <ToolDetail slug={rootSlug} />}
       {route === 'schools' && <Schools />}
-      {route === 'my-journey' && <MyJourney profile={profile} />}
       {routeKind === 'root-overview' && currentRoot && <RootOverview root={currentRoot} />}
       {routeKind === 'root-lesson' && currentRoot && currentLesson && <RootLessonExperience root={currentRoot} lesson={currentLesson} />}
+      {routeKind === 'root-lesson' && currentRoot?.id === 5 && currentLesson && <ContextualDefinition lesson={currentLesson} />}
       {routeKind === 'root-lesson' && currentRoot && !currentLesson && <RootOverview root={currentRoot} />}
       {routeMissing && <RouteNotFound />}
       <SageVoice key={route} pageText={groveNarration} />
@@ -242,7 +252,7 @@ function PageShell({ kicker, title, lead, children, back = true }) {
 }
 
 function TopBar() {
-  return <header className="topbar"><button className="wordmark" onClick={() => go('home')}><ApprovedArtwork variant="tree" className="topbar-approved-tree"/><span>Root$Wise</span></button><nav>{navItems.map(([label, page]) => <button key={page} onClick={() => go(page === 'journey' ? 'my-journey' : page)}>{label}</button>)}</nav><button className="signin" onClick={() => go('signup')}>Sign In</button></header>;
+  return <header className="topbar"><button className="wordmark" onClick={() => go('home')}><ApprovedArtwork variant="tree" className="topbar-approved-tree"/><span>Root$Wise</span></button><nav>{navItems.map(([label, page]) => <button key={page} onClick={() => go(page)}>{label}</button>)}</nav><button className="signin" onClick={() => go('signup')}>Sign In</button></header>;
 }
 
 function Journey({ updateProfile }) {
@@ -351,22 +361,9 @@ function Learn() {
   </PageShell>;
 }
 
-function Tools() {
-  const tools = ['Budget Builder', 'Debt Approach Comparison', 'Credit Readiness', 'Emergency Fund Planner', 'Business Fundability Tracker', 'Goal Planner'];
-  return <PageShell kicker="Tools" title="Useful tools, not noisy widgets." lead="Each tool will help users make one clearer decision. For this sprint, these are wired placeholders ready for buildout.">
-    <div className="card-grid lessons">{tools.map(t => <article className="image-card" key={t}><Calculator/><h3>{t}</h3><p>Coming next: interactive calculator and saved results.</p></article>)}</div>
-  </PageShell>;
-}
-
 function Schools() {
   return <PageShell kicker="Educators Branch" title="Bring Root$Wise to the classroom." lead="Educators are a separate branch because teaching others has different needs than learning for yourself.">
     <div className="split"><div className="school-card"><GraduationCap size={32}/><h3>School Curriculum Preview</h3><p>K–12 financial wisdom with age-appropriate language, Penny for younger learners, and Sage for older students.</p><span className="lock-pill"><Lock size={15}/> Information preview</span></div><div className="school-card"><Users size={32}/><h3>Parent + Home Study</h3><p>For families who want to talk about money at home without shame, fear, or confusion.</p><span className="lock-pill"><Lock size={15}/> Information preview</span></div></div>
-  </PageShell>;
-}
-
-function MyJourney({ profile }) {
-  return <PageShell kicker="My Journey" title="Your Root$Wise profile starts here." lead="This replaces a generic profile with a living record of the person the user is becoming.">
-    <div className="profile-card"><h3>{profile?.firstName || 'Your'} Root System</h3><p><strong>Path:</strong> {profile?.pathTitle || 'Not selected yet'}</p><p><strong>Assessment:</strong> {profile?.completedAssessment ? 'Complete' : 'Not complete'}</p><p><strong>Root Score:</strong> {profile?.rootScore || 'Pending'}</p><button onClick={() => go('journey')}>Update My Path</button></div>
   </PageShell>;
 }
 

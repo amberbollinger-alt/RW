@@ -7,7 +7,7 @@ function pageNarrationText() {
   const main = document.querySelector('main');
   if (!main) return '';
   const parts = [...main.querySelectorAll('h1, h2, h3, p, blockquote')]
-    .filter((node) => !node.closest('nav, form, [aria-hidden="true"], .sage-voice-dock'))
+    .filter((node) => !node.closest('nav, form, [aria-hidden="true"], [data-narration-exclude], .sage-voice-dock'))
     .filter((node) => !node.matches('.city-eyebrow, .r2-eyebrow, .rt-eyebrow, .r4-eyebrow'))
     .filter((node) => !(node.matches('p') && node.closest('blockquote')))
     .map((node) => {
