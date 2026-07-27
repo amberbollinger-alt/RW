@@ -1,20 +1,83 @@
-const lesson = ({ key, number, title, theme, promise, setting, sage, story, question, parallel, concepts, check, application, reflection, action, transition, connection }) => ({
-  key, number, title, shortTitle: title, theme, promise, districtNote: setting, sageOpening: sage,
-  journey: { arrival: story[0]?.text || '', sageDialogue: [], event: story.at(-1)?.text || '', story, transition },
-  question,
-  rootRevealed: { title: parallel.title, intro: parallel.intro, storyLink: parallel.storyLink, body: parallel.body },
-  concepts,
-  recognitionCheck: {
-    prompt: check.prompt,
-    options: check.options.map((option) => ({ ...option, feedback: option.feedback || check.explanation })),
-  },
-  scenario: application,
-  reflect: reflection.intro,
-  reflectionPrompts: reflection.prompts,
-  action,
-  connection,
-  rootCheckRecap: check.recap,
-});
+export const ROOT_ONE_PROGRESS_KEY = 'rootwise_root_one_city_progress';
+export const ROOT_ONE_LEGACY_PROGRESS_KEY = 'rootwise_root_one_city_progress_legacy';
+
+export const rootOneIntroduction = {
+  eyebrow: 'Before We Enter the City',
+  title: 'Root One — The Story Beneath the Decision',
+  question: 'When did money become real to you?',
+  sage: [
+    'Before we enter the city, I want to ask you a question:',
+    'When did money become real to you?',
+    'Not when you learned what a dollar was. Not when someone explained that things cost money.',
+    'When did money begin to mean something?',
+    'Those moments do more than teach us what money buys. They begin teaching us what money means.',
+    'Most financial decisions look as though they begin with numbers. They rarely do.',
+    'Before we examine where money goes, how credit works, how debt grows, how savings create options, or how wealth is built, we have to understand who is making the decision.',
+    'That is where Root One begins.',
+  ],
+  method: [
+    { title: 'Understand It', question: 'What is it?', body: 'Learn what is happening financially.' },
+    { title: 'Recognize It', question: 'Where does this appear in real life?', body: 'See where it appears in your life.' },
+    { title: 'Examine It', question: 'What is driving the decision?', body: 'Identify what is influencing the decision.' },
+  ],
+  principle: 'Knowledge becomes useful when you can recognize it inside your own life and use it while a decision is still being made.',
+};
+
+const lesson = ({ key, number, title, theme, promise, setting, sage, story, question, parallel, concepts, check, application, reflection, action, transition, connection }) => {
+  const recognitionExamples = concepts.map((item) => item.recognize);
+  const examinePrompts = reflection.prompts;
+
+  return {
+    key, number, title, shortTitle: title, theme, promise, districtNote: setting, sageOpening: sage,
+    journey: { arrival: story[0]?.text || '', sageDialogue: [], event: story.at(-1)?.text || '', story, transition },
+    question,
+    rootRevealed: { title: parallel.title, intro: parallel.intro, storyLink: parallel.storyLink, body: parallel.body },
+    concepts,
+    adultLevels: [
+      {
+        number: '01',
+        name: 'Understand',
+        question: 'What is it?',
+        title: parallel.title,
+        body: [parallel.intro, parallel.body],
+        details: concepts.map((item) => ({ title: item.title, body: item.body })),
+      },
+      {
+        number: '02',
+        name: 'Recognize',
+        question: 'Where does this appear in real life?',
+        title: `Where ${title.toLowerCase()} appears in adult financial life.`,
+        body: [parallel.storyLink, 'The same idea can appear through different behaviors. The behavior is evidence to examine, not a complete explanation of the person.'],
+        examples: recognitionExamples,
+      },
+      {
+        number: '03',
+        name: 'Examine',
+        question: 'What is driving the decision?',
+        title: question,
+        body: ['Separate what is financially true now from what the situation represents, protects, or pressures you to do. Use the questions below to create awareness while a choice is still available.'],
+        prompts: examinePrompts,
+      },
+    ],
+    recognitionCheck: {
+      prompt: check.prompt,
+      options: check.options.map((option) => ({ ...option, feedback: option.feedback || check.explanation })),
+    },
+    scenario: application,
+    applicationActivity: {
+      title: title === 'Carrying the Roots Into the City' ? 'Build your Money Roots Map' : `Bring ${title.toLowerCase()} into one current decision`,
+      intro: reflection.intro,
+      prompts: reflection.prompts,
+      action,
+    },
+    reflect: reflection.intro,
+    reflectionPrompts: reflection.prompts,
+    action,
+    growth: connection.newGrowth,
+    connection,
+    rootCheckRecap: check.recap,
+  };
+};
 
 const concept = (title, storyLink, body, recognize) => ({ title, storyLink, body, recognize });
 const option = (id, label, consequence, sage, correction = 'Pause and examine what happened before deciding what the pattern means.') => ({ id, label, consequence, sage, correction });
@@ -67,11 +130,11 @@ export const rootOneRootsData = [
     parallel: { title: 'Inherited rules can quietly make present decisions', intro: 'Money scripts are absorbed through language and repeated experience.', storyLink: 'Ivy and Eli both received conflicting spoken and demonstrated messages.', body: 'A script may sound like money never stays, asking for help is weakness, or expensive means better. Its influence becomes easier to examine once it is named.' },
     concepts: [
       concept('Words teach rules', 'The district signs turn familiar phrases into visible instructions.', 'Repeated phrases can become default explanations for what responsible, successful, safe, or generous people do.', 'Listen for absolute words such as always, never, people like us, or responsible people.'),
-      concept('Behavior teaches expectations', 'Ivy and Eli trusted repeated conduct when it contradicted stated values.', 'Children observe secrecy, conflict, giving, saving, working, borrowing, and status. Those patterns can carry more force than advice.', 'Compare what was said with what happened repeatedly.'),
+      concept('Behavior teaches expectations', 'Ivy and Eli trusted repeated conduct when it contradicted stated values.', 'Adults often carry forward what they repeatedly observed around secrecy, conflict, giving, saving, working, borrowing, and status. Those patterns can carry more force than advice.', 'Compare what was said with what happened repeatedly.'),
     ],
-    check: { prompt: 'What is most likely to shape a childâ€™s money beliefs?', explanation: 'Beliefs are shaped through the combination of words, behavior, emotion, and repeated experience.', recap: 'You identified inherited money messages without treating them as permanent instructions.', options: [
+    check: { prompt: 'What most strongly shapes the money beliefs an adult may carry forward?', explanation: 'Beliefs are shaped through the combination of words, behavior, emotion, silence, and repeated experience.', recap: 'You identified inherited money messages without treating them as permanent instructions.', options: [
       { id: 'combination', isCorrect: true, label: 'Words, behavior, emotion, and repeated experience together' },
-      { id: 'words', label: 'Only what adults say' }, { id: 'salary', label: 'Only the childâ€™s future salary' },
+      { id: 'words', label: 'Only the words that were spoken' }, { id: 'salary', label: 'Only the income the person earns later' },
     ] },
     application: { setup: 'You recognize the phrase “Money does not grow on trees.”', prompt: 'What is the most useful next question?', options: [
       option('meaning', 'What did that phrase mean where I heard it?', 'The same phrase can teach limits, fear, shame, planning, or something else depending on context.', 'The phrase is an echo. The environment gives it meaning.'),
@@ -99,7 +162,7 @@ export const rootOneRootsData = [
     parallel: { title: 'Specific behavior creates usable information', intro: 'Identity labels compress many situations into one verdict.', storyLink: 'Ivy and Eli each used a flattering or condemning label that hid the cause of their actions.', body: '“I ignored two notices because I feared what I might find” contains timing, behavior, and context. “I am irresponsible” contains none of those details.' },
     concepts: [
       concept('Describe before interpreting', 'Sage writes actions instead of character traits.', 'Observable language identifies what happened, when, and under what conditions.', 'Replace always, never, good, bad, disciplined, or careless with a specific action.'),
-      concept('A useful result can still have a complicated driver', 'Eliâ€™s control produces order and anxiety.', 'A behavior is not automatically healthy because the outcome looks organized, or harmful because it looks disorganized.', 'Ask what happened before the behavior and what it cost afterward.'),
+      concept('A useful result can still have a complicated driver', 'Eli’s control produces order and anxiety.', 'A behavior is not automatically healthy because the outcome looks organized, or harmful because it looks disorganized.', 'Ask what happened before the behavior and what it cost afterward.'),
     ],
     check: { prompt: 'Which statement gives the learner more useful information?', explanation: 'The specific behavior reveals what can be examined without defining the person.', recap: 'You converted identity labels into observable patterns.', options: [
       { id: 'specific', isCorrect: true, label: 'I missed two payment dates because I avoided opening the notices' },

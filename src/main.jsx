@@ -20,12 +20,12 @@ const roots = [
   {
     key: 'literacy',
     icon: Sprout,
-    title: 'Financial Literacy Foundation',
-    short: 'Start by learning the language of money.',
-    audience: 'For anyone who wants money explained clearly before being asked to make bigger decisions.',
-    promise: 'Sage discovers your starting point instead of assuming one.',
-    topics: ['How money works', 'Banking', 'Budgeting', 'Saving', 'Spending', 'Interest', 'Inflation', 'Taxes', 'Insurance', 'Consumer rights'],
-    free: ['What money really does', 'Budgeting without shame', 'Interest in plain English'],
+    title: 'The Story Beneath the Decision',
+    short: 'Understand what is influencing a financial choice while a choice is still available.',
+    audience: 'For adults who want to connect financial facts with the experiences, beliefs, pressures, and patterns operating in real decisions.',
+    promise: 'Sage helps you identify what is influencing the decision without choosing for you.',
+    topics: ['Money stories', 'Inherited rules', 'Needs and priorities', 'Scarcity and urgency', 'Control and avoidance', 'Comparison', 'Emotion', 'Decision patterns'],
+    free: ['Understand the concept', 'Recognize it in real life', 'Examine what is driving the decision'],
   },
   {
     key: 'credit',
@@ -217,7 +217,7 @@ function App() {
   }, []);
   const updateProfile = (next) => { const merged = { ...(profile || {}), ...next }; setProfile(merged); saveProfile(merged); };
   const groveNarration = route === 'heart'
-    ? 'Welcome to the Grove, the heart of RootWise. Every tree begins as a seed. Growth is never instant, never identical, and never finished. Every tree represents a journey, and every journey begins with a choice. Your tree begins today. It will not grow simply because time passes. It will grow because understanding does. When you are ready, continue into your Grove and choose the Root you want to explore.'
+    ? 'Before we enter the city, I want to ask you a question. When did money become real to you? Not when you learned what a dollar was. When did money begin to mean something? Most financial decisions look as though they begin with numbers. They rarely do. Before we examine where money goes, we have to understand who is making the decision. That is where Root One begins.'
     : route === 'dashboard'
       ? `Welcome${profile?.firstName ? `, ${profile.firstName}` : ''}, to your Grove. This is where your RootWise journey connects. Your progress is not a grade, and the order is not a judgment. Choose an available Root when you are ready. Each Root will return you here with a stronger understanding of how money, choices, and life connect.`
       : '';
@@ -434,7 +434,7 @@ function Learn() {
         <h3>Free starter lessons</h3>
         <div className="free-lesson-row">{root.free.map((lesson) => <div key={lesson} className="free-lesson"><BookOpen size={18}/><span>{lesson}</span></div>)}</div>
         {root.key === 'literacy'
-          ? <div className="root-open-routes"><button type="button" className="root-enter-button" onClick={() => go('roots/one')}>Enter Root One: The City of Foundations <ArrowRight size={17}/></button><button type="button" className="root-enter-button" onClick={() => go('roots/two')}>Enter Root Two: Value &amp; Earning <ArrowRight size={17}/></button><button type="button" className="root-enter-button root-three-enter" onClick={() => go('roots/three')}>Enter Root Three: Choice, Cash Flow &amp; Spending <ArrowRight size={17}/></button><button type="button" className="root-enter-button" onClick={() => go('roots/four')}>Enter Root Four: Preparedness, Protection &amp; Future Choice <ArrowRight size={17}/></button></div>
+          ? <div className="root-open-routes"><button type="button" className="root-enter-button" onClick={() => go('roots/one')}>Enter Root One: The Story Beneath the Decision <ArrowRight size={17}/></button><button type="button" className="root-enter-button" onClick={() => go('roots/two')}>Enter Root Two: Value &amp; Earning <ArrowRight size={17}/></button><button type="button" className="root-enter-button root-three-enter" onClick={() => go('roots/three')}>Enter Root Three: Choice, Cash Flow &amp; Spending <ArrowRight size={17}/></button><button type="button" className="root-enter-button" onClick={() => go('roots/four')}>Enter Root Four: Preparedness, Protection &amp; Future Choice <ArrowRight size={17}/></button></div>
           : <div className="premium-preview"><Lock size={18}/><span>This path is still taking shape. Root One is the current teaching experience.</span></div>}
       </article>
     </div>

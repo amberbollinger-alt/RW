@@ -1,17 +1,17 @@
-# RootWise — City Experience
+# RootWise — Adult Financial Decision Journey
 
-Root One now lives in its own teaching area at `/roots/one`. The main user area is **The Grove**: a quiet, tree-centered place for choosing a path, with no lessons or chapter content mixed into it.
+Root One lives in its existing teaching area at `/roots/one`. The Grove introduces the RootWise method, and the Root continues through the eight original connected lessons.
 
 ## Root One includes
 
-- Six connected city districts
-- Chapter 3-style district navigation
-- The Chapter Promise before every lesson
-- Conversational Sage openings and contextual Ask Sage support
-- Choice-and-consequence scenarios without test-style scoring
-- Reflection, real-world action, and a four-part Root Connection
-- Saved on-device progress
-- Mobile-first district and Sage drawers
+- The eight original adult lessons following Ivy, Eli, and Sage
+- Understand, Recognize, and Examine layers inside every lesson
+- Saved and editable Apply It Now workbook responses
+- Practical knowledge checks and choice-and-consequence scenarios
+- Contextual Ask Sage support that preserves the learner’s judgment
+- Completion based on application plus both lesson activities
+- Saved on-device progress and editable private reflections
+- Responsive lesson-map navigation without a hamburger drawer
 - The approved Sage and tree artwork already established for RootWise
 
 ## Local checks
@@ -36,7 +36,7 @@ Copy `.env.example` only when a local, ignored environment file is needed. Do no
 
 - `/` — approved RootWise landing page
 - `/#/dashboard` — The Grove
-- `/roots/one` — The City of Foundations
+- `/roots/one` — Root One: The Story Beneath the Decision
 - `/#/learn` — seven-root overview and Root One entrance
 
 Production deployment is intentionally outside this branch task. Verify through a preview before any production promotion.

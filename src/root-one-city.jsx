@@ -11,7 +11,6 @@ import {
   Lightbulb,
   LoaderCircle,
   Map,
-  Menu,
   MessageCircle,
   Route,
   Send,
@@ -66,13 +65,14 @@ function readProgress() {
       completed: Array.isArray(value.completed)
         ? value.completed.filter((key) => {
           const district = rootOneDistricts.find((item) => item.key === key);
-          return district && choices[key] && hasPassedCheck(district);
+          return district && choices[key] && hasPassedCheck(district) && ['completed', 'skipped'].includes(value.applicationStatus?.[key]);
         })
         : [],
       choices,
       checkAnswers,
       knowledgeAnswers,
       reflections: value.reflections && typeof value.reflections === 'object' && !Array.isArray(value.reflections) ? value.reflections : {},
+      applicationStatus: value.applicationStatus && typeof value.applicationStatus === 'object' && !Array.isArray(value.applicationStatus) ? value.applicationStatus : {},
     };
   } catch {
     return {};
@@ -90,17 +90,14 @@ function quickPromptFor(_mode, district) {
   return `Take me deeper into the main financial idea in ${district.title}. Use plain language, connect it directly to Ivy and Eli’s story, and explain one part the chapter has not covered yet.`;
 }
 
-function DistrictSidebar({ activeIndex, completed, visited, onSelect, onClose, closeButtonRef }) {
+function DistrictSidebar({ activeIndex, completed, visited, onSelect }) {
   return (
     <aside className="city-district-nav">
       <header>
         <div>
           <p>Root One</p>
-          <h2>The City of Foundations</h2>
+          <h2>The Story Beneath the Decision</h2>
         </div>
-        <button ref={closeButtonRef} type="button" className="city-nav-close" onClick={onClose} aria-label="Close chapter menu">
-          <X size={20} />
-        </button>
       </header>
 
       <nav aria-label="Root One chapters">
@@ -200,25 +197,28 @@ function JourneyScene({ district }) {
   );
 }
 
-function ConceptBreakdown({ district }) {
+function AdultUnderstanding({ district }) {
   return (
     <section className="city-concepts">
       <header>
-        <p className="city-eyebrow"><Lightbulb size={15} /> Deeper Dive</p>
-        <h2>How this one idea works with money</h2>
-        <p>Each section deepens the same financial idea so you can recognize it in a bank balance, a daily choice, and your own life.</p>
+        <p className="city-eyebrow"><Lightbulb size={15} /> Three levels of adult understanding</p>
+        <h2>Keep the lesson. Deepen how you use it.</h2>
+        <p>The original lesson moves through three connected layers: understand what is happening, recognize it in real life, then examine what is directing the decision.</p>
       </header>
       <div>
-        {district.concepts.map((concept, index) => (
-          <section key={concept.title}>
-            <span>{String(index + 1).padStart(2, '0')}</span>
-            <p className="city-story-link">{concept.storyLink}</p>
-            <h3>{concept.title}</h3>
-            <p>{concept.body}</p>
-            <aside>
-              <strong>Where this may show up in your life</strong>
-              <p>{concept.recognize}</p>
-            </aside>
+        {district.adultLevels.map((level) => (
+          <section className="city-understanding-level" key={level.number}>
+            <span>{level.number}</span>
+            <p className="city-level-question">Level {Number(level.number)} · {level.name} · {level.question}</p>
+            <h3>{level.title}</h3>
+            {level.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+            {level.details?.length ? (
+              <div className="city-level-details">
+                {level.details.map((detail) => <article key={detail.title}><strong>{detail.title}</strong><p>{detail.body}</p></article>)}
+              </div>
+            ) : null}
+            {level.examples?.length ? <ul className="city-level-list">{level.examples.map((item) => <li key={item}>{item}</li>)}</ul> : null}
+            {level.prompts?.length ? <ol className="city-level-list city-level-prompts">{level.prompts.map((item) => <li key={item}>{item}</li>)}</ol> : null}
           </section>
         ))}
       </div>
@@ -552,34 +552,17 @@ export default function RootOneCity({ go }) {
   const [checkAnswers, setCheckAnswers] = useState(saved.checkAnswers || {});
   const [knowledgeAnswers, setKnowledgeAnswers] = useState(saved.knowledgeAnswers || {});
   const [reflections, setReflections] = useState(saved.reflections || {});
-  const [navOpen, setNavOpen] = useState(false);
-  const menuButtonRef = useRef(null);
-  const navCloseButtonRef = useRef(null);
+  const [applicationStatus, setApplicationStatus] = useState(saved.applicationStatus || {});
   const district = rootOneDistricts[activeIndex];
 
   useEffect(() => {
-    localStorage.setItem(PROGRESS_KEY, JSON.stringify({ activeIndex, visited, completed, choices, checkAnswers, knowledgeAnswers, reflections }));
-  }, [activeIndex, visited, completed, choices, checkAnswers, knowledgeAnswers, reflections]);
-
-  useEffect(() => {
-    if (!navOpen) return undefined;
-    navCloseButtonRef.current?.focus();
-    const closeOnEscape = (event) => {
-      if (event.key === 'Escape') {
-        setNavOpen(false);
-        menuButtonRef.current?.focus();
-      }
-    };
-    window.addEventListener('keydown', closeOnEscape);
-    return () => window.removeEventListener('keydown', closeOnEscape);
-  }, [navOpen]);
+    localStorage.setItem(PROGRESS_KEY, JSON.stringify({ activeIndex, visited, completed, choices, checkAnswers, knowledgeAnswers, reflections, applicationStatus }));
+  }, [activeIndex, visited, completed, choices, checkAnswers, knowledgeAnswers, reflections, applicationStatus]);
 
   const selectDistrict = (index) => {
     const next = Math.max(0, Math.min(index, rootOneDistricts.length - 1));
     setActiveIndex(next);
     setVisited((current) => current.includes(rootOneDistricts[next].key) ? current : [...current, rootOneDistricts[next].key]);
-    setNavOpen(false);
-    if (navOpen) menuButtonRef.current?.focus();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -594,6 +577,8 @@ export default function RootOneCity({ go }) {
     ? district.knowledgeCheck.every((question) => question.options.find((option) => option.id === knowledgeAnswers[district.key]?.[question.id])?.isCorrect)
     : selectedRecognition?.isCorrect;
   const rootCheckComplete = Boolean(choices[district.key] && knowledgeComplete);
+  const applicationReady = ['completed', 'skipped'].includes(applicationStatus[district.key]);
+  const lessonReady = rootCheckComplete && applicationReady;
 
   return (
     <main className="city-experience">
@@ -603,18 +588,9 @@ export default function RootOneCity({ go }) {
         </button>
         <button type="button" className="city-wordmark" onClick={() => go('home')} aria-label="RootWise home">
           <ApprovedArtwork variant="tree" className="city-wordmark-tree" />
-          <span><strong>Root$Wise</strong><small>Root One · The City of Foundations</small></span>
+          <span><strong>Root$Wise</strong><small>Root One · The Story Beneath the Decision</small></span>
         </button>
-        <button
-          ref={menuButtonRef}
-          type="button"
-          className="city-menu"
-          onClick={() => setNavOpen(true)}
-          aria-expanded={navOpen}
-          aria-controls="city-district-navigation"
-        >
-          <Menu size={18} /> Chapters
-        </button>
+        <span className="city-topbar-progress">{completed.length}/{rootOneDistricts.length} complete</span>
       </header>
 
       <div
@@ -629,17 +605,20 @@ export default function RootOneCity({ go }) {
         <i style={{ width: `${(completed.length / rootOneDistricts.length) * 100}%` }} />
       </div>
 
-      {navOpen && <button type="button" className="city-nav-scrim" aria-label="Close chapter menu" onClick={() => { setNavOpen(false); menuButtonRef.current?.focus(); }} />}
+      <label className="city-mobile-chapter-select">
+        <span><Map size={16} /> Current lesson</span>
+        <select value={activeIndex} onChange={(event) => selectDistrict(Number(event.target.value))}>
+          {rootOneDistricts.map((item, index) => <option value={index} key={item.key}>{item.number} · {item.shortTitle}</option>)}
+        </select>
+      </label>
 
       <div className="city-layout">
-        <div id="city-district-navigation" className={navOpen ? 'city-nav-wrap is-open' : 'city-nav-wrap'}>
+        <div id="city-district-navigation" className="city-nav-wrap">
           <DistrictSidebar
             activeIndex={activeIndex}
             completed={completed}
             visited={visited}
             onSelect={selectDistrict}
-            onClose={() => { setNavOpen(false); menuButtonRef.current?.focus(); }}
-            closeButtonRef={navCloseButtonRef}
           />
         </div>
 
@@ -647,7 +626,7 @@ export default function RootOneCity({ go }) {
           <ChapterPromise district={district} />
           <JourneyScene district={district} />
 
-          <ConceptBreakdown district={district} />
+          <AdultUnderstanding district={district} />
 
           <RootCheck
             district={district}
@@ -664,9 +643,9 @@ export default function RootOneCity({ go }) {
 
           <section className="city-apply">
             <div>
-              <p className="city-eyebrow"><MessageCircle size={15} /> Make it yours</p>
-              <h2>What do you notice in your own life?</h2>
-              <p>{district.reflect}</p>
+              <p className="city-eyebrow"><MessageCircle size={15} /> Apply It Now</p>
+              <h2>{district.applicationActivity.title}</h2>
+              <p>{district.applicationActivity.intro}</p>
               {district.reflectionPrompts?.length ? (
                 <ul className="city-reflection-prompts">
                   {district.reflectionPrompts.map((prompt) => <li key={prompt}>{prompt}</li>)}
@@ -682,6 +661,26 @@ export default function RootOneCity({ go }) {
                   placeholder="Write as much or as little as is useful. This stays on this device."
                 />
               </label>
+              <div className="city-application-actions">
+                <button
+                  type="button"
+                  className="city-application-save"
+                  disabled={!String(reflections[district.key] || '').trim()}
+                  onClick={() => setApplicationStatus((current) => ({ ...current, [district.key]: 'completed' }))}
+                >
+                  <CheckCircle2 size={17} /> Save this application
+                </button>
+                <button type="button" className="city-application-skip" onClick={() => setApplicationStatus((current) => ({ ...current, [district.key]: 'skipped' }))}>
+                  Intentionally skip for now
+                </button>
+              </div>
+              <p className="city-application-status" aria-live="polite">
+                {applicationStatus[district.key] === 'completed'
+                  ? 'Saved on this device. You can return and deepen it later.'
+                  : applicationStatus[district.key] === 'skipped'
+                    ? 'Skipped intentionally. You can return when the timing is useful.'
+                    : 'Your writing saves as you type. Save it—or intentionally skip—to complete this lesson.'}
+              </p>
             </div>
             <aside>
               <p className="city-eyebrow"><CheckCircle2 size={15} /> Apply it today</p>
@@ -690,6 +689,12 @@ export default function RootOneCity({ go }) {
           </section>
 
           <ChapterConnection connection={district.connection} />
+
+          <section className="city-root-growth" aria-labelledby={`growth-${district.key}`}>
+            <p className="city-eyebrow"><CheckCircle2 size={15} /> Root Growth</p>
+            <h2 id={`growth-${district.key}`}>{district.growth}</h2>
+            <p>{district.action}</p>
+          </section>
 
           <section className="city-journey-transition" aria-label="The road ahead">
             <Route size={18} aria-hidden="true" />
@@ -707,11 +712,11 @@ export default function RootOneCity({ go }) {
               type="button"
               className={completed.includes(district.key) ? 'city-complete is-complete' : 'city-complete'}
               onClick={toggleComplete}
-              disabled={!completed.includes(district.key) && !rootCheckComplete}
+              disabled={!completed.includes(district.key) && !lessonReady}
               aria-pressed={completed.includes(district.key)}
             >
               {completed.includes(district.key) ? <Check size={17} /> : <CheckCircle2 size={17} />}
-              {completed.includes(district.key) ? 'Chapter complete' : rootCheckComplete ? 'Complete this chapter' : 'Complete Knowledge Check'}
+              {completed.includes(district.key) ? 'Lesson complete' : lessonReady ? 'Confirm this growth' : 'Complete Apply It Now and both activities'}
             </button>
             <button
               type="button"
