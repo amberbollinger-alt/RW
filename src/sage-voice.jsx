@@ -272,7 +272,7 @@ export default function SageVoice({ pageText = '' }) {
   };
 
   if (!open) {
-    return <button type="button" className="sage-voice-launch" onClick={() => setOpen(true)} aria-label="Open Sage voice controls"><img src="/rootwise-sage-cutout.png" alt="" /><span><Sparkles /> Hear Sage</span></button>;
+    return <button type="button" className="sage-voice-launch" onClick={() => { setOpen(true); startNarration(); }} aria-label="Open Sage voice controls"><img src="/rootwise-sage-cutout.png" alt="" /><span><Sparkles /> Hear Sage</span></button>;
   }
 
   return <aside className="sage-voice-dock" aria-label="Sage voice controls">
