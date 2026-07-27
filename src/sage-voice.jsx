@@ -28,7 +28,7 @@ function sageFirstPerson(text) {
     .replace(/\bSage\b/g, 'I');
 }
 
-function narrationChunks(text, limit = 2700) {
+function narrationChunks(text, limit = 800) {
   const sentences = sageFirstPerson(text).match(/[^.!?\n]+[.!?]+(?:\n\n)?|[^.!?\n]+(?:\n\n|$)/g) || [];
   const chunks = [];
   let current = '';
