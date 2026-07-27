@@ -11,6 +11,7 @@ import RootOneCity from './root-one-city';
 import RootTwoCity from './root-two-city';
 import RootThreeCity from './root-three-city';
 import RootFourValley from './root-four-valley';
+import RootFiveBridge from './root-five-bridge';
 import SageVoice from './sage-voice';
 import './styles.css';
 
@@ -187,13 +188,13 @@ function saveProfile(data) { localStorage.setItem(STORAGE_KEY, JSON.stringify(da
 function loadProfile() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null'); } catch { return null; } }
 function routeFromLocation() {
   const path = window.location.pathname.replace(/^\/+|\/+$/g, '');
-  if (path === 'roots/one' || path === 'roots/two' || path === 'roots/three' || path === 'roots/four') return path;
+  if (path === 'roots/one' || path === 'roots/two' || path === 'roots/three' || path === 'roots/four' || path === 'roots/five') return path;
   const hashRoute = window.location.hash.replace(/^#\/?/, '');
   return hashRoute || (path || 'home');
 }
 function go(page) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
-  const destination = page === 'roots/one' || page === 'roots/two' || page === 'roots/three' || page === 'roots/four'
+  const destination = page === 'roots/one' || page === 'roots/two' || page === 'roots/three' || page === 'roots/four' || page === 'roots/five'
     ? `/${page}`
     : page === 'home'
       ? '/'
@@ -237,7 +238,8 @@ function App() {
       {route === 'roots/two' && <RootTwoCity go={go} />}
       {route === 'roots/three' && <RootThreeCity go={go} />}
       {route === 'roots/four' && <RootFourValley go={go} />}
-      {!['home', 'roots/one', 'roots/two', 'roots/three', 'roots/four', 'heart', 'dashboard'].includes(route) && <StickyNav />}
+      {route === 'roots/five' && <RootFiveBridge go={go} />}
+      {!['home', 'roots/one', 'roots/two', 'roots/three', 'roots/four', 'roots/five', 'heart', 'dashboard'].includes(route) && <StickyNav />}
       <SageVoice key={route} pageText={groveNarration} />
     </>
   );

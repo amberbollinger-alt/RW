@@ -471,7 +471,7 @@ const transitions = [
   'Rebuilding shows that resilience is larger than a balance. The next lesson names the other resources that protect a decision.',
   'Cash, access, information, maintenance, coverage, skills, and support become most useful when their connections and limits are mapped.',
   'The map is ready. One final year will test how preparedness behaves beside uncertainty, tradeoffs, use, and recovery.',
-  'The Reservoir Valley remains available whenever life changes. Root Five will examine Business: how value can be built beyond a paycheck.',
+  'The Reservoir Valley remains available whenever life changes. Root Five continues into the Bridge District, where credit, debt, and future income are examined together.',
 ];
 
 export const rootFourRootsData = sequence.map(([shortTitle, canonicalTruth], index) => {
