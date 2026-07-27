@@ -42,11 +42,11 @@ const roots = [
     key: 'debt',
     icon: Landmark,
     title: 'Debt',
-    short: 'Debt is a tool, a burden, or both. Learn the difference.',
+    short: 'Debt creates access, cost, obligation, and tradeoffs. Learn to examine the complete structure.',
     audience: 'For users who feel trapped, overwhelmed, or unsure which debt decision comes next.',
     promise: 'No shame. No panic. Just understanding and options.',
-    topics: ['Good debt vs bad debt', 'Interest', 'Minimum payments', 'Debt snowball', 'Debt avalanche', 'Consolidation', 'Settlements', 'Collections', 'Bankruptcy basics', 'Medical debt', 'Student loans'],
-    free: ['Debt vocabulary', 'Minimum payment trap', 'Snowball vs avalanche'],
+    topics: ['Borrowing purpose', 'Interest', 'Minimum payments', 'Total repayment', 'Inventory before strategy', 'Repayment approach comparison', 'Consolidation', 'Settlements', 'Collections', 'Bankruptcy basics', 'Medical debt', 'Student loans'],
+    free: ['Debt vocabulary', 'Minimum-payment tunnel', 'Repayment approach comparison'],
   },
   {
     key: 'investing',
@@ -444,7 +444,7 @@ function Learn() {
 }
 
 function Tools() {
-  const tools = ['Budget Builder', 'Debt Snowball', 'Credit Readiness', 'Emergency Fund Planner', 'Business Fundability Tracker', 'Goal Planner'];
+  const tools = ['Budget Builder', 'Debt Approach Comparison', 'Credit Readiness', 'Emergency Fund Planner', 'Business Fundability Tracker', 'Goal Planner'];
   return <PageShell kicker="Tools" title="Useful tools, not noisy widgets." lead="Each tool will help users make one clearer decision. For this sprint, these are wired placeholders ready for buildout.">
     <div className="card-grid lessons">{tools.map(t => <article className="image-card" key={t}><Calculator/><h3>{t}</h3><p>Coming next: interactive calculator and saved results.</p></article>)}</div>
   </PageShell>;

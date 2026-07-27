@@ -120,7 +120,7 @@ const scenarioPrompts = [
   ['A minimum payment is affordable this month. What else belongs in view?', 'Repayment time, interest, new charges, and total cost', 'Only whether the payment posts', 'A moral judgment about the balance'],
   ['A dealer reaches the desired payment by changing the term. What should Eli compare?', 'Cash price, financed amount, term, add-ons, and total repayment', 'Payment size alone', 'Whether approval feels exciting'],
   ['A balance can be borrowed again after repayment. Which structure is this?', 'Revolving credit', 'A fixed-term installment loan', 'Income'],
-  ['A fixed schedule leads to a planned ending. Which question matters?', 'Whether the payment and end date remain workable', 'Whether every installment loan is good debt', 'Whether the balance can be reused automatically'],
+  ['A fixed schedule leads to a planned ending. Which question matters?', 'Whether the payment and end date remain workable', 'Whether every installment loan is automatically beneficial', 'Whether the balance can be reused automatically'],
   ['A vehicle is pledged to a loan. What changes?', 'The creditor may have rights in the collateral under the agreement and law', 'The borrower has no other obligations', 'The loan becomes affordable'],
   ['Five “small” plans overlap. Which view is most honest?', 'One calendar showing every due date and combined amount', 'Five separate checkout screens', 'Only the smallest installment'],
   ['A short-term loan charges a dollar fee. What should be translated?', 'Dollar cost, term, annualized rate, rollover, and available alternatives', 'Only the speed of approval', 'A universal conclusion about the borrower'],
