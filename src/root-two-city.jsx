@@ -6,7 +6,7 @@ import {
 } from 'lucide-react';
 import { ApprovedArtwork } from './approved-artwork';
 import { queueSageVoice } from './sage-voice-events';
-import { rootTwoCanonicalDistricts as rootTwoDistricts, rootTwoCanonicalQuickPrompts as rootTwoQuickPrompts } from './root-two-canonical-data';
+import { rootTwoDistricts, rootTwoQuickPrompts } from './root-two-data';
 import './root-two.css';
 
 const PROGRESS_KEY = 'rootwise_root_two_journey_v3';
@@ -89,9 +89,33 @@ function Story({ lesson }) {
 
 function Learning({ lesson }) {
   return (
-    <>
-      <section className="r2-card r2-deep-dive"><p className="r2-eyebrow"><Route size={15} /> Deeper explanation</p><h2>What changes when you use the full picture</h2><div><article><span>01</span><h3>Consequence &amp; tradeoff</h3><p>{lesson.tradeoff}</p></article><article><span>02</span><h3>Recognize it in your life</h3><p>{lesson.connection}</p></article></div></section>
-    </>
+    <section className="r2-card r2-adult-levels">
+      <header>
+        <p className="r2-eyebrow"><Route size={15} /> Three levels of adult understanding</p>
+        <h2>Keep the lesson. Deepen how you use it.</h2>
+        <p>The story carries the teaching. These three levels help you understand what happened, recognize where it appears in adult financial life, and examine what the exchange requires.</p>
+      </header>
+      <div className="r2-adult-level-grid">
+        <article className="r2-adult-level">
+          <span>01</span>
+          <p className="r2-level-question">Level 1 · Understand · What is happening financially?</p>
+          <h3>{lesson.concept.title}</h3>
+          <p>{lesson.concept.explanation}</p>
+        </article>
+        <article className="r2-adult-level">
+          <span>02</span>
+          <p className="r2-level-question">Level 2 · Recognize · Where does this appear in real life?</p>
+          <h3>Recognize the exchange around you</h3>
+          <p>{lesson.connection}</p>
+        </article>
+        <article className="r2-adult-level">
+          <span>03</span>
+          <p className="r2-level-question">Level 3 · Examine · What is shaping the decision?</p>
+          <h3>Examine the conditions and tradeoffs</h3>
+          <p>{lesson.tradeoff}</p>
+        </article>
+      </div>
+    </section>
   );
 }
 
@@ -99,21 +123,36 @@ function Practice({ lesson, answer, reflection, onAnswer, onReflection }) {
   const selected = answer === undefined ? null : lesson.check.options[answer];
   return (
     <>
-      <section className="r2-card r2-scenario">
-        <p className="r2-eyebrow"><Target size={15} /> Interactive scenario</p>
-        <h2>{lesson.application.prompt}</h2>
-        <label htmlFor={`r2-reflection-${lesson.progressKey}`}>Your private response<textarea id={`r2-reflection-${lesson.progressKey}`} rows={5} value={reflection || ''} onChange={(event) => onReflection(event.target.value)} placeholder={lesson.application.placeholder} /></label>
-        <small>This response stays on this device.</small>
-      </section>
       <section className="r2-card r2-check">
-        <p className="r2-eyebrow"><CircleHelp size={15} /> Knowledge check</p><h2>{lesson.check.prompt}</h2>
+        <p className="r2-eyebrow"><CircleHelp size={15} /> Practical check</p>
+        <h2>Understand it. Then use it.</h2>
+        <p>Recognize what Ivy and Eli's experience demonstrated before applying the idea to a new decision.</p>
+        <h3>{lesson.check.prompt}</h3>
         <div className="r2-options">{lesson.check.options.map((option, index) => (
           <button type="button" className={answer === index ? 'is-selected' : ''} aria-pressed={answer === index} onClick={() => onAnswer(index)} key={`${lesson.progressKey}-answer-${index}`}><span>{answer === index ? <Check size={15} /> : <ArrowRight size={15} />}</span>{option.label}</button>
         ))}</div>
         {selected && <div className={selected.correct ? 'r2-feedback is-correct' : 'r2-feedback'} aria-live="polite"><strong>{selected.correct ? 'Rooted' : 'Look one step deeper'}</strong><p>{selected.feedback}</p></div>}
       </section>
-      <section className="r2-card r2-carry"><p className="r2-eyebrow"><CheckCircle2 size={15} /> What you carry forward</p><blockquote>{lesson.takeaway}</blockquote></section>
+      <section className="r2-card r2-scenario">
+        <p className="r2-eyebrow"><Target size={15} /> Apply it now</p>
+        <h2>{lesson.application.prompt}</h2>
+        <p>Use the full exchange: what the work provides, what it costs, what it requires, what it risks, and what it leaves possible.</p>
+        <label htmlFor={`r2-reflection-${lesson.progressKey}`}>Your private response<textarea id={`r2-reflection-${lesson.progressKey}`} rows={5} value={reflection || ''} onChange={(event) => onReflection(event.target.value)} placeholder={lesson.application.placeholder} /></label>
+        <small>This response stays on this device.</small>
+      </section>
     </>
+  );
+}
+
+function RootGrowth({ district, lesson, next }) {
+  return (
+    <section className="r2-card r2-root-growth">
+      <p className="r2-eyebrow"><CheckCircle2 size={15} /> Root growth</p>
+      <h2>What you carry forward</h2>
+      <blockquote>{lesson.takeaway}</blockquote>
+      <div className="r2-growth-capability"><strong>Growing capability</strong><p>{district.capability}</p></div>
+      {next && <div className="r2-story-transition"><strong>The story continues</strong><p>Next, Ivy, Eli, and Sage move into <em>{next.title}</em>: {next.opening}</p></div>}
+    </section>
   );
 }
 
@@ -192,7 +231,10 @@ export default function RootTwoCity({ go }) {
   const [navOpen, setNavOpen] = useState(false);
   const menuRef = useRef(null); const closeRef = useRef(null);
   const current = allLessons[activeIndex]; const district = rootTwoDistricts[current.districtIndex]; const lesson = current.lesson;
+  const nextLesson = allLessons[activeIndex + 1]?.lesson;
   const selectedAnswer = answers[lesson.progressKey]; const correct = selectedAnswer !== undefined && lesson.check.options[selectedAnswer]?.correct;
+  const applicationComplete = Boolean(reflections[lesson.progressKey]?.trim());
+  const lessonReady = correct && applicationComplete;
 
   useEffect(() => {
     localStorage.setItem(PROGRESS_KEY, JSON.stringify({ chapter: lesson.sourceChapterIndex, lesson: lesson.sourceLessonIndex, completed, answers, reflections }));
@@ -221,7 +263,8 @@ export default function RootTwoCity({ go }) {
           <LessonNavigation district={district} lessonIndex={current.lessonIndex} completed={completed} onSelect={selectLesson} />
           <Story lesson={lesson} /><Learning lesson={lesson} />
           <Practice lesson={lesson} answer={selectedAnswer} reflection={reflections[lesson.progressKey]} onAnswer={(answer) => setAnswers((items) => ({ ...items, [lesson.progressKey]: answer }))} onReflection={(reflection) => setReflections((items) => ({ ...items, [lesson.progressKey]: reflection }))} />
-          <footer className="r2-lesson-footer"><button type="button" onClick={() => selectGlobal(activeIndex - 1)} disabled={activeIndex === 0}><ArrowLeft size={17} /> Previous</button><button type="button" className={completed.includes(lesson.progressKey) ? 'is-complete' : ''} onClick={toggleComplete} disabled={!completed.includes(lesson.progressKey) && !correct} aria-pressed={completed.includes(lesson.progressKey)}>{completed.includes(lesson.progressKey) ? <Check size={17} /> : <CheckCircle2 size={17} />}{completed.includes(lesson.progressKey) ? 'Lesson rooted' : correct ? 'Root this lesson' : 'Complete the check'}</button><button type="button" onClick={() => activeIndex === allLessons.length - 1 ? go('dashboard') : selectGlobal(activeIndex + 1)}>{activeIndex === allLessons.length - 1 ? 'Return to Grove' : 'Next lesson'} <ArrowRight size={17} /></button></footer>
+          <RootGrowth district={district} lesson={lesson} next={nextLesson} />
+          <footer className="r2-lesson-footer"><button type="button" onClick={() => selectGlobal(activeIndex - 1)} disabled={activeIndex === 0}><ArrowLeft size={17} /> Previous</button><button type="button" className={completed.includes(lesson.progressKey) ? 'is-complete' : ''} onClick={toggleComplete} disabled={!completed.includes(lesson.progressKey) && !lessonReady} aria-pressed={completed.includes(lesson.progressKey)}>{completed.includes(lesson.progressKey) ? <Check size={17} /> : <CheckCircle2 size={17} />}{completed.includes(lesson.progressKey) ? 'Lesson rooted' : !correct ? 'Complete the check' : !applicationComplete ? 'Apply it now' : 'Root this lesson'}</button><button type="button" onClick={() => activeIndex === allLessons.length - 1 ? go('dashboard') : selectGlobal(activeIndex + 1)}>{activeIndex === allLessons.length - 1 ? 'Return to Grove' : 'Next lesson'} <ArrowRight size={17} /></button></footer>
         </article>
         <aside className="r2-right-rail"><GuideRail district={district} lesson={lesson} completed={completed} activeIndex={activeIndex} onNext={() => selectGlobal(activeIndex + 1)} /><AskSage district={district} lesson={lesson} /></aside>
       </div>
