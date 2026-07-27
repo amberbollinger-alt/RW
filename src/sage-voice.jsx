@@ -219,13 +219,22 @@ export default function SageVoice({ pageText = '' }) {
     return loadAndPlay(chunks[0], 0);
   };
 
+  const playPreparedAudio = async () => {
+    try {
+      await audioRef.current?.play();
+    } catch {
+      const chunkIndex = chunkIndexRef.current;
+      queueDeviceVoice(chunksRef.current[chunkIndex], chunkIndex, playbackTokenRef.current);
+    }
+  };
+
   const play = () => {
-    if (status === 'ready' && playbackModeRef.current === 'api' && audioRef.current) return audioRef.current.play();
+    if (status === 'ready' && playbackModeRef.current === 'api' && audioRef.current) return playPreparedAudio();
     if (status === 'ready' && playbackModeRef.current === 'device') {
       const token = playbackTokenRef.current;
       return speakWithDeviceVoice(chunksRef.current[chunkIndexRef.current], chunkIndexRef.current, token);
     }
-    if (status === 'paused' && playbackModeRef.current === 'api' && audioRef.current) return audioRef.current.play();
+    if (status === 'paused' && playbackModeRef.current === 'api' && audioRef.current) return playPreparedAudio();
     if (status === 'paused' && playbackModeRef.current === 'device') {
       window.speechSynthesis.resume();
       setStatus('playing');
