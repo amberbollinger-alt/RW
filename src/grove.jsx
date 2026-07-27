@@ -2,14 +2,14 @@ import { ArrowRight, LockKeyhole, Sprout } from 'lucide-react';
 import { rootOneIntroduction, rootOneRootsData as rootOneLessons } from './root-one-roots-data';
 import { rootTwoDistricts } from './root-two-data';
 import { rootThreeRootsData as rootThreeDistricts } from './root-three-roots-data';
-import { rootFourChapters } from './root-four-data';
+import { rootFourRootsData as rootFourChapters } from './root-four-roots-data';
 import './grove.css';
 
 const groveRoutes = [
   { key: 'literacy', number: '01', label: 'The Story Beneath the Decision', description: 'Recognize what is influencing a financial choice while a choice is still available.', ready: true },
   { key: 'value', number: '02', label: 'Value & Earning', description: 'Understand work, income, value, and opportunity.', ready: true },
   { key: 'choice', number: '03', label: 'Choice, Cash Flow & Spending', description: 'Practice spending, tradeoffs, and conscious choice.', ready: true },
-  { key: 'preparedness', number: '04', label: 'Preparedness, Protection & Future Choice', description: 'Use today’s money to protect tomorrow’s freedom.', ready: true },
+  { key: 'preparedness', number: '04', label: 'Saving, Preparedness & Resilience', description: 'Use today’s money to protect tomorrow’s freedom.', ready: true },
   { key: 'business', number: '05', label: 'Business', description: 'Build value beyond a paycheck.', ready: false },
   { key: 'family', number: '06', label: 'Family', description: 'Grow wisdom across relationships and generations.', ready: false },
   { key: 'educators', number: '07', label: 'Educators', description: 'Help financial wisdom take root in others.', ready: false },
@@ -34,7 +34,7 @@ function readRootProgress() {
     safeCompleted('rootwise_root_one_city_progress', rootOneKeys) === rootOneKeys.size,
     safeCompleted('rootwise_root_two_journey_v3', rootTwoKeys) === rootTwoKeys.size,
     safeCompleted('rootwise_root_three_city_progress_v2', rootThreeKeys) === rootThreeKeys.size,
-    safeCompleted('rootwise_root_four_reservoir_progress_v1', rootFourKeys) === rootFourKeys.size,
+    safeCompleted('rootwise_root_four_reservoir_progress_v2', rootFourKeys) === rootFourKeys.size,
   ].filter(Boolean).length;
 }
 
