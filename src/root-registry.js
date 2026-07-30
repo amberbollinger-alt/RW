@@ -21,7 +21,7 @@ const rootTwoLessons = rootTwoDistricts.flatMap((district) => district.lessons.m
 rootTwoLessons.forEach((lesson, index) => { lesson.order = index + 1; });
 
 const lessonSources = {
-  one: rootOneRootsData.map((lesson, index) => ({ id: lesson.key, order: index + 1, number: lesson.number, title: lesson.title, group: lesson.theme, published: true })),
+  one: rootOneRootsData.map((lesson, index) => ({ id: lesson.key, order: index + 1, number: lesson.number, title: lesson.title, group: `Part ${lesson.part.number} · ${lesson.part.title}`, published: true })),
   two: rootTwoLessons,
   three: rootThreeRootsData.map((lesson, index) => ({ id: lesson.key, order: index + 1, number: lesson.number, title: lesson.title, group: lesson.theme, published: true })),
   four: rootFourRootsData.map((lesson, index) => ({ id: lesson.key, order: index + 1, number: lesson.number, title: lesson.shortTitle, group: lesson.season, published: true })),
