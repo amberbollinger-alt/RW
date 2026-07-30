@@ -68,7 +68,7 @@ function UserGrove({ profile }) {
       </section>
 
       <section className="grove-root-paths" aria-labelledby="root-paths-title">
-        <div className="grove-path-heading"><p>The Eleven Adult Roots</p><h2 id="root-paths-title">Financial decision capacity develops in sequence.</h2><span>Roots One through Six are published. Every future Root has a working overview and will gain real lesson links only when its curriculum is ready.</span></div>
+        <div className="grove-path-heading"><p>The Eleven Adult Roots</p><h2 id="root-paths-title">Financial decision capacity develops in sequence.</h2><span>Roots One through Seven are published. Every future Root has a working overview and will gain real lesson links only when its curriculum is ready.</span></div>
         <div className="grove-root-system">
           {ROOT_GROUPS.map((group) => {
             const groupEntries = entries.filter(({ root }) => root.id >= group.range[0] && root.id <= group.range[1]);
