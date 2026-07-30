@@ -56,16 +56,19 @@ export const rootSevenOpening = {
   "story": [
     "The ferry from the Harbor District reaches the opposite shore after dark. Ivy expects a quiet road. Instead, she and Eli step into Opportunity Junction—a crowded maze of platforms, workshops, office towers, market stalls, training rooms, loading docks, glowing job boards, and signs promising money in increasingly suspicious fonts.",
     "One board advertises overtime. Another lists promotions, credentials, contract projects, commission work, seasonal jobs, and paid apprenticeships. A neon arrow points toward a booth labeled PASSIVE INCOME WHILE YOU NAP. Smoke leaks from behind the curtain.",
-    "Eli stops walking. “Finally,” he says. “A financial strategy aligned with my natural gifts.”",
-    "Sage catches the back of his jacket before he reaches the booth. “Anything advertising itself with a hammock and a smoke machine deserves questions.”",
+    "Eli stops walking.",
+    "“Finally,” he says. “A financial strategy aligned with my natural gifts.”",
+    "Sage catches the back of his jacket before he reaches the booth.",
+    "“Anything advertising itself with a hammock and a smoke machine deserves questions.”",
     "Ivy studies the employment tower. “So the answer is overtime?”",
     "“The answer is not one route,” Sage says. “And it is not every route. Root Seven is about learning how income can expand, what each route actually requires, and whether the result adds choice—or merely gives exhaustion a second paycheck.”",
-    "The Junction attendant gives each of them a brass route token. They may test new earning paths, but every path must pass four gates: what value produces the income, how the money actually arrives, what remains after the full cost, and what new dependency or responsibility is created."
+    "The Junction attendant gives each of them a brass route token. They may test new earning paths, but every path must pass four gates:",
+    "1. What value produces the income?\n2. How does the money actually arrive?\n3. What remains after the full cost?\n4. What new dependency or responsibility is created?"
   ],
-  "promise": "Root Seven teaches the learner how to examine earning expansion across employment, skills, compensation, career movement, negotiation, contract work, platform work, paid services, and additional income routes. The learner will distinguish gross income from real gain, evaluate concentration risk, recognize hidden labor and expenses, verify worker status and tax responsibilities, test demand, compare stability and volatility, and build a personal income-diversity map. RootWise will not recommend a job, employer, gig platform, business opportunity, training program, credential, pricing decision, tax position, or universal number of income streams."
+  "promise": "Root Seven teaches the learner how to examine earning expansion across employment, skills, compensation, career movement, negotiation, contract work, platform work, paid services, and additional income routes. The learner will distinguish gross income from real gain, evaluate concentration risk, recognize hidden labor and expenses, verify worker status and tax responsibilities, test demand, compare stability and volatility, and build a personal income-diversity map.\n\nRootWise will not recommend a job, employer, gig platform, business opportunity, training program, credential, pricing decision, tax position, or universal number of income streams."
 };
 
-export const rootSevenSources = {
+const sources = {
   "blsCareer": {
     "label": "Occupational Outlook Handbook · U.S. Bureau of Labor Statistics",
     "url": "https://www.bls.gov/ooh/"
@@ -106,10 +109,7 @@ export const rootSevenSources = {
 
 const lessons = [
   {
-    "number": 1,
-    "displayNumber": "7.1",
-    "key": "more-income-is-not-the-same-as-more-choice",
-    "title": "More Income Is Not the Same as More Choice",
+    "title": "More Income Is Not The Same As More Choice",
     "story": [
       "At the center of Opportunity Junction, a giant board asks one question:",
       "HOW MUCH MORE DO YOU WANT TO EARN?",
@@ -123,7 +123,7 @@ const lessons = [
       "“One of you has built a prison with excellent formulas. The other has built a gift shop.”",
       "Earning expansion becomes a wider question. The goal is not merely a higher gross number. It is greater financial capacity after the full cost of earning is visible."
     ],
-    "sageOpen": "More income can widen choice. It can also consume the time, stability, and attention that choice requires.",
+    "sageOpen": "“More income can widen choice. It can also consume the time, stability, and attention that choice requires.”",
     "understand": [
       "Earning expansion means increasing the amount, quality, durability, or number of routes through which income can be earned.",
       "Expansion can occur through higher compensation, added hours, increased responsibility, skill development, career movement, contract work, commission, seasonal work, or another paid route.",
@@ -151,12 +151,7 @@ const lessons = [
     ],
     "mirror": "Where have you treated a larger income number as though it automatically created more freedom?",
     "workbook": "Expansion purpose statement",
-    "workbookPrompt": [
-      "Complete these sentences:",
-      "“I want additional income to make ______ possible.”",
-      "“The earning route cannot regularly remove ______.”",
-      "“I will know the expansion is helping when ______.”"
-    ],
+    "workbookPrompt": "Complete these sentences:\n\n“I want additional income to make ______ possible.”\n\n“The earning route cannot regularly remove ______.”\n\n“I will know the expansion is helping when ______.”",
     "check": {
       "prompt": "When does earning expansion most clearly widen choice?",
       "options": [
@@ -210,19 +205,13 @@ const lessons = [
         }
       ]
     },
-    "growth": "I separated earning more from automatically having more choice.",
-    "transition": [
-      "With the goal clarified, Ivy and Eli must identify how much of their current life depends on one income route."
-    ],
+    "growth": "“I separated earning more from automatically having more choice.”",
+    "transition": "With the goal clarified, Ivy and Eli must identify how much of their current life depends on one income route.",
     "sourceKeys": [
       "blsCareer"
-    ],
-    "jurisdictionNote": false
+    ]
   },
   {
-    "number": 2,
-    "displayNumber": "7.2",
-    "key": "the-one-paycheck-problem",
     "title": "The One-Paycheck Problem",
     "story": [
       "The Junction’s main rail line carries nearly everyone’s pay into the city. It is fast, familiar, and impressively efficient—until a signal failure stops the entire platform.",
@@ -234,7 +223,7 @@ const lessons = [
       "“Two payers can still be one dependency wearing different hats.”",
       "Income concentration is not automatically wrong. One strong employment route may provide reliable pay, insurance, paid leave, retirement benefits, legal protections, and advancement. But the learner must be able to see what happens when that route slows, changes, or stops."
     ],
-    "sageOpen": "Count income sources, but also trace what they share. Different names do not guarantee different risks.",
+    "sageOpen": "“Count income sources, but also trace what they share. Different names do not guarantee different risks.”",
     "understand": [
       "Income concentration occurs when a large share of income depends on one payer, employer, platform, customer, occupation, schedule, tool, location, or ability.",
       "Concentration can make income efficient and stable while the route is working.",
@@ -259,16 +248,7 @@ const lessons = [
     ],
     "mirror": "What person, organization, skill, tool, platform, schedule, or physical ability currently sits underneath most of your income?",
     "workbook": "Income dependency map",
-    "workbookPrompt": [
-      "List your current income routes using categories rather than account details. For each route, identify:",
-      "- payer or customer type",
-      "- work or value provided",
-      "- schedule",
-      "- tool or transportation required",
-      "- platform or employer dependency",
-      "- benefit dependency",
-      "- what else would stop if this route stopped"
-    ],
+    "workbookPrompt": "List your current income routes using categories rather than account details. For each route, identify:\n\n- payer or customer type\n- work or value provided\n- schedule\n- tool or transportation required\n- platform or employer dependency\n- benefit dependency\n- what else would stop if this route stopped",
     "check": {
       "prompt": "When are two income sources still highly concentrated?",
       "options": [
@@ -322,20 +302,14 @@ const lessons = [
         }
       ]
     },
-    "growth": "I traced the dependencies beneath my income.",
-    "transition": [
-      "Once dependence is visible, the Junction asks a less exciting but more useful question: how much money actually remains?"
-    ],
+    "growth": "“I traced the dependencies beneath my income.”",
+    "transition": "Once dependence is visible, the Junction asks a less exciting but more useful question: how much money actually remains?",
     "sourceKeys": [
       "blsCareer"
-    ],
-    "jurisdictionNote": false
+    ]
   },
   {
-    "number": 3,
-    "displayNumber": "7.3",
-    "key": "count-the-real-gain",
-    "title": "Count the Real Gain",
+    "title": "Count The Real Gain",
     "story": [
       "Eli returns from his first evening of delivery work holding a receipt and looking victorious.",
       "“I made one hundred and twelve dollars.”",
@@ -350,7 +324,7 @@ const lessons = [
       "She makes them stop using gross receipts as the answer.",
       "“The first number tells you money arrived. The second tells you what the work added.”"
     ],
-    "sageOpen": "Gross income is a headline. Net gain is the part that can actually support the rest of your life.",
+    "sageOpen": "“Gross income is a headline. Net gain is the part that can actually support the rest of your life.”",
     "understand": [
       "Gross income or gross receipts describe money earned or collected before relevant expenses and obligations are subtracted.",
       "Net income is generally the amount remaining after allowable and applicable expenses.",
@@ -376,20 +350,7 @@ const lessons = [
     ],
     "mirror": "Which earning cost are you most likely to dismiss because it does not leave your account as one obvious bill?",
     "workbook": "Real-gain worksheet",
-    "workbookPrompt": [
-      "Using fictional, approximate, or category-level figures, complete:",
-      "Gross income received",
-      "minus direct expenses",
-      "minus unpaid operating time",
-      "minus estimated tax set-aside where relevant",
-      "minus added household or transportation cost",
-      "equals estimated real gain",
-      "Also record:",
-      "- payment timing",
-      "- benefit changes",
-      "- recovery time",
-      "- major uncertainty"
-    ],
+    "workbookPrompt": "Using fictional, approximate, or category-level figures, complete:\n\nGross income received\nminus direct expenses\nminus unpaid operating time\nminus estimated tax set-aside where relevant\nminus added household or transportation cost\nequals estimated real gain\n\nAlso record:\n- payment timing\n- benefit changes\n- recovery time\n- major uncertainty",
     "check": {
       "prompt": "Why can gross side-income receipts overstate the value of the opportunity?",
       "options": [
@@ -443,21 +404,15 @@ const lessons = [
         }
       ]
     },
-    "growth": "I separated money received from value retained.",
-    "transition": [
-      "Ivy and Eli now understand why more routes can create more paperwork without creating meaningful diversity."
-    ],
+    "growth": "“I separated money received from value retained.”",
+    "transition": "Ivy and Eli now understand why more routes can create more paperwork without creating meaningful diversity.",
     "sourceKeys": [
       "irsGig",
       "irsSelf"
-    ],
-    "jurisdictionNote": false
+    ]
   },
   {
-    "number": 4,
-    "displayNumber": "7.4",
-    "key": "diversity-without-chaos",
-    "title": "Diversity without Chaos",
+    "title": "Diversity Without Chaos",
     "story": [
       "By the end of the week, Eli has created profiles on four platforms, registered three domain names, ordered business cards, and purchased a jacket embroidered with ELI UNLIMITED.",
       "He has earned fourteen dollars.",
@@ -469,7 +424,7 @@ const lessons = [
       "Income diversity should reduce harmful dependence or expand useful capacity. It should not create so many weak routes that the learner cannot perform, measure, improve, or exit any of them responsibly.",
       "The first part of the Junction ends with a difficult instruction: choose fewer routes and understand them better."
     ],
-    "sageOpen": "A pile of unfinished income ideas is not a portfolio. It is an administrative ambush.",
+    "sageOpen": "“A pile of unfinished income ideas is not a portfolio. It is an administrative ambush.”",
     "understand": [
       "Income diversity means having earning routes that serve different purposes or rely on meaningfully different sources of demand.",
       "Diversity can include a strong primary income route plus one carefully tested additional route.",
@@ -494,19 +449,7 @@ const lessons = [
     ],
     "mirror": "Where might variety be disguising a lack of direction?",
     "workbook": "Route-priority board",
-    "workbookPrompt": [
-      "List up to five possible earning routes.",
-      "Score each from low to high on:",
-      "- fit with existing skill",
-      "- realistic demand",
-      "- setup cost",
-      "- time requirement",
-      "- schedule fit",
-      "- independence from current income",
-      "- ability to test safely",
-      "- likely real gain",
-      "Choose only one route for deeper evaluation. Choosing is not committing."
-    ],
+    "workbookPrompt": "List up to five possible earning routes.\n\nScore each from low to high on:\n- fit with existing skill\n- realistic demand\n- setup cost\n- time requirement\n- schedule fit\n- independence from current income\n- ability to test safely\n- likely real gain\n\nChoose only one route for deeper evaluation. Choosing is not committing.",
     "check": {
       "prompt": "What distinguishes intentional income diversity from income clutter?",
       "options": [
@@ -560,19 +503,13 @@ const lessons = [
         }
       ]
     },
-    "growth": "I distinguished intentional diversity from scattered activity.",
-    "transition": [
-      "The Junction now directs Ivy and Eli back toward their strongest existing route: the skills and compensation already closest to them."
-    ],
+    "growth": "“I distinguished intentional diversity from scattered activity.”",
+    "transition": "The Junction now directs Ivy and Eli back toward their strongest existing route: the skills and compensation already closest to them.",
     "sourceKeys": [
       "sbaMarket"
-    ],
-    "jurisdictionNote": false
+    ]
   },
   {
-    "number": 5,
-    "displayNumber": "7.5",
-    "key": "skills-are-earning-infrastructure",
     "title": "Skills Are Earning Infrastructure",
     "story": [
       "The Skills Exchange looks less impressive than the neon income boards. There are no promises of instant money—only workbenches labeled communication, repair, analysis, caregiving, sales, organization, logistics, writing, technology, leadership, compliance, teaching, design, and problem solving.",
@@ -584,7 +521,7 @@ const lessons = [
       "The Exchange appraiser will not assign a universal dollar amount. A skill’s earning value depends on demand, evidence, level, context, reliability, access, and the problem it helps solve.",
       "But Ivy and Eli leave with something more useful than a motivational list. They can now name the infrastructure beneath their work."
     ],
-    "sageOpen": "You cannot intentionally expand a skill you have never learned to name.",
+    "sageOpen": "“You cannot intentionally expand a skill you have never learned to name.”",
     "understand": [
       "A skill is an ability used to perform work or create a result.",
       "Skills can be technical, operational, relational, physical, analytical, creative, managerial, or regulatory.",
@@ -611,17 +548,7 @@ const lessons = [
     ],
     "mirror": "What work do other people consistently trust you to handle, explain, repair, organize, or complete?",
     "workbook": "Skill-to-value inventory",
-    "workbookPrompt": [
-      "Choose three skills.",
-      "For each, record:",
-      "- what you can do",
-      "- who benefits",
-      "- what problem it addresses",
-      "- how you learned it",
-      "- what evidence exists",
-      "- where else the skill may apply",
-      "- what would deepen the skill"
-    ],
+    "workbookPrompt": "Choose three skills.\n\nFor each, record:\n- what you can do\n- who benefits\n- what problem it addresses\n- how you learned it\n- what evidence exists\n- where else the skill may apply\n- what would deepen the skill",
     "check": {
       "prompt": "What most directly turns a general strength into usable earning capacity?",
       "options": [
@@ -675,19 +602,13 @@ const lessons = [
         }
       ]
     },
-    "growth": "I named the abilities beneath the work I perform.",
-    "transition": [
-      "The next booth asks Ivy and Eli to prove that those abilities create results."
-    ],
+    "growth": "“I named the abilities beneath the work I perform.”",
+    "transition": "The next booth asks Ivy and Eli to prove that those abilities create results.",
     "sourceKeys": [
       "blsCareer"
-    ],
-    "jurisdictionNote": false
+    ]
   },
   {
-    "number": 6,
-    "displayNumber": "7.6",
-    "key": "turn-work-into-evidence",
     "title": "Turn Work Into Evidence",
     "story": [
       "At the Proof Counter, Ivy presents a long list of responsibilities.",
@@ -701,7 +622,7 @@ const lessons = [
       "Proof does not require exaggerated claims or confidential employer data. It can include outcomes, work samples, certifications, feedback, reliability, completed projects, reduced errors, increased capacity, or a clear explanation of the process used.",
       "The Junction does not guarantee higher pay because evidence exists. It teaches that invisible value is harder to evaluate, communicate, negotiate, or transfer."
     ],
-    "sageOpen": "Work becomes easier to price, compare, and communicate when the result is visible.",
+    "sageOpen": "“Work becomes easier to price, compare, and communicate when the result is visible.”",
     "understand": [
       "Evidence of value shows that a skill has been applied to produce a result.",
       "Evidence may be quantitative, qualitative, documented, demonstrated, credentialed, or verified by others.",
@@ -729,15 +650,7 @@ const lessons = [
     ],
     "mirror": "Which result have you produced that is currently living only in someone’s memory?",
     "workbook": "Evidence ledger",
-    "workbookPrompt": [
-      "Write three factual accomplishment statements using this structure:",
-      "Situation or need",
-      "Action performed",
-      "Result produced",
-      "Evidence available",
-      "Other people or conditions involved",
-      "Do not include confidential employer, customer, or personal information."
-    ],
+    "workbookPrompt": "Write three factual accomplishment statements using this structure:\n\nSituation or need\nAction performed\nResult produced\nEvidence available\nOther people or conditions involved\n\nDo not include confidential employer, customer, or personal information.",
     "check": {
       "prompt": "What is the difference between a responsibility and evidence of value?",
       "options": [
@@ -791,20 +704,14 @@ const lessons = [
         }
       ]
     },
-    "growth": "I turned performed work into credible evidence.",
-    "transition": [
-      "Evidence allows Ivy and Eli to compare compensation more completely than one hourly number."
-    ],
+    "growth": "“I turned performed work into credible evidence.”",
+    "transition": "Evidence allows Ivy and Eli to compare compensation more completely than one hourly number.",
     "sourceKeys": [
       "blsCareer"
-    ],
-    "jurisdictionNote": false
+    ]
   },
   {
-    "number": 7,
-    "displayNumber": "7.7",
-    "key": "compensation-is-bigger-than-the-rate",
-    "title": "Compensation Is Bigger Than the Rate",
+    "title": "Compensation Is Bigger Than The Rate",
     "story": [
       "Ivy receives an interview invitation for a role offering a higher salary. She circles the number and immediately imagines what it could change.",
       "At the Compensation House, the clerk adds the rest of the package: health coverage, retirement contributions, paid leave, bonus structure, schedule, overtime eligibility, commute, training, job stability, advancement, equipment, remote-work rules, and the date benefits begin.",
@@ -814,7 +721,7 @@ const lessons = [
       "“It is bigger in one category,” Sage replies. “The problem begins when one category impersonates the entire arrangement.”",
       "Compensation is the complete exchange surrounding work. Some elements can be estimated in money. Others affect access, predictability, time, health, and future opportunity."
     ],
-    "sageOpen": "Compare pay with pay, benefits with benefits, time with time, and responsibility with responsibility.",
+    "sageOpen": "“Compare pay with pay, benefits with benefits, time with time, and responsibility with responsibility.”",
     "understand": [
       "Compensation can include wages or salary, bonuses, commissions, paid leave, insurance, retirement contributions, training, allowances, and other benefits.",
       "Work arrangements also differ in schedule, stability, legal protections, tax withholding, expense responsibility, advancement, and payment risk.",
@@ -844,24 +751,7 @@ const lessons = [
     ],
     "mirror": "Which part of compensation do you tend to notice first, and what does that first number make easy to overlook?",
     "workbook": "Complete-compensation comparison",
-    "workbookPrompt": [
-      "Compare two fictional or redacted opportunities across:",
-      "- wages or salary",
-      "- expected hours",
-      "- overtime or bonus rules",
-      "- health benefits",
-      "- retirement benefits",
-      "- paid leave",
-      "- commute and transportation",
-      "- required expenses",
-      "- schedule control",
-      "- payment certainty",
-      "- training",
-      "- advancement",
-      "- legal or contractual status",
-      "- start dates and waiting periods",
-      "Do not choose a winner automatically. Record the differences."
-    ],
+    "workbookPrompt": "Compare two fictional or redacted opportunities across:\n\n- wages or salary\n- expected hours\n- overtime or bonus rules\n- health benefits\n- retirement benefits\n- paid leave\n- commute and transportation\n- required expenses\n- schedule control\n- payment certainty\n- training\n- advancement\n- legal or contractual status\n- start dates and waiting periods\n\nDo not choose a winner automatically. Record the differences.",
     "check": {
       "prompt": "Why can a higher hourly contract rate still be incomplete when compared with employee wages?",
       "options": [
@@ -915,21 +805,15 @@ const lessons = [
         }
       ]
     },
-    "growth": "I learned to compare the complete work exchange.",
-    "transition": [
-      "With evidence and complete compensation in view, Ivy prepares for a conversation she has avoided: the ask."
-    ],
+    "growth": "“I learned to compare the complete work exchange.”",
+    "transition": "With evidence and complete compensation in view, Ivy prepares for a conversation she has avoided: the ask.",
     "sourceKeys": [
       "blsComp",
       "eeocPay"
-    ],
-    "jurisdictionNote": false
+    ]
   },
   {
-    "number": 8,
-    "displayNumber": "7.8",
-    "key": "the-ask-negotiation-without-theater",
-    "title": "The Ask: Negotiation without Theater",
+    "title": "The Ask: Negotiation Without Theater",
     "story": [
       "The Negotiation Platform is filled with performers.",
       "One man shouts affirmations into a mirror. A woman practices saying “I know my worth” while ignoring the job description. Another booth sells a course titled DOMINATE THE SALARY CONVERSATION.",
@@ -940,7 +824,7 @@ const lessons = [
       "They build a real conversation: scope of work, evidence, market information, compensation structure, timing, constraints, questions, alternatives, and the ability to hear no without collapsing or threatening to leave in a dramatic cloud of printer paper.",
       "Negotiation cannot force agreement. Power, budgets, policy, discrimination, timing, and labor-market conditions matter. But asking informed questions gives the learner more information than silence."
     ],
-    "sageOpen": "Negotiation is not a magic phrase. It is a prepared conversation about value, terms, evidence, and constraints.",
+    "sageOpen": "“Negotiation is not a magic phrase. It is a prepared conversation about value, terms, evidence, and constraints.”",
     "understand": [
       "Negotiation is a process of discussing compensation, duties, schedule, benefits, resources, title, timing, or other work terms.",
       "Preparation may include evidence, market context, role scope, priorities, questions, alternatives, and likely constraints.",
@@ -971,17 +855,7 @@ const lessons = [
     ],
     "mirror": "What story do you tell yourself about people who ask for better compensation or terms?",
     "workbook": "The informed ask",
-    "workbookPrompt": [
-      "Prepare a fictional or real conversation without private employer information:",
-      "- What term needs discussion?",
-      "- What has changed?",
-      "- What evidence supports the discussion?",
-      "- What market or role information is relevant?",
-      "- What specific question will you ask?",
-      "- What alternatives might address the same need?",
-      "- What will you do if the answer is not immediate?",
-      "- What information would a no reveal?"
-    ],
+    "workbookPrompt": "Prepare a fictional or real conversation without private employer information:\n\n- What term needs discussion?\n- What has changed?\n- What evidence supports the discussion?\n- What market or role information is relevant?\n- What specific question will you ask?\n- What alternatives might address the same need?\n- What will you do if the answer is not immediate?\n- What information would a no reveal?",
     "check": {
       "prompt": "What makes a negotiation request stronger?",
       "options": [
@@ -1035,21 +909,15 @@ const lessons = [
         }
       ]
     },
-    "growth": "I separated informed negotiation from performance and intimidation.",
-    "transition": [
-      "The ask raises a larger question: should Ivy grow within her current route or move toward another one?"
-    ],
+    "growth": "“I separated informed negotiation from performance and intimidation.”",
+    "transition": "The ask raises a larger question: should Ivy grow within her current route or move toward another one?",
     "sourceKeys": [
       "blsCareer",
       "eeocPay"
-    ],
-    "jurisdictionNote": true
+    ]
   },
   {
-    "number": 9,
-    "displayNumber": "7.9",
-    "key": "move-stay-or-build-from-here",
-    "title": "Move, Stay, or Build from Here",
+    "title": "Move, Stay, Or Build From Here",
     "story": [
       "Opportunity Junction splits into three major lines.",
       "STAY & DEEPEN continues through Ivy’s current organization.",
@@ -1062,7 +930,7 @@ const lessons = [
       "They compare timing, skill fit, required credentials, compensation, work conditions, advancement, risk, access, family responsibilities, location, and what happens if the move does not work.",
       "A career decision is not proof of courage or loyalty. It is an exchange between present assets and future possibilities."
     ],
-    "sageOpen": "Career movement is not automatically progress, and staying is not automatically fear. Compare what each route develops, pays, requires, and closes.",
+    "sageOpen": "“Career movement is not automatically progress, and staying is not automatically fear. Compare what each route develops, pays, requires, and closes.”",
     "understand": [
       "Earning capacity can expand by deepening a current role, moving to another employer, transferring skills, entering a new occupation, or completing relevant training.",
       "Every movement has opportunity cost: the value of the time, income, stability, or alternative path not chosen.",
@@ -1092,26 +960,7 @@ const lessons = [
     ],
     "mirror": "Where are you currently deepening, waiting, transferring, or preparing to pivot?",
     "workbook": "Career-route comparison",
-    "workbookPrompt": [
-      "Compare three routes:",
-      "1. Stay and deepen",
-      "2. Move and transfer",
-      "3. Train and pivot",
-      "For each, record:",
-      "- skills used",
-      "- skills developed",
-      "- entry requirements",
-      "- time",
-      "- direct cost",
-      "- lost income",
-      "- compensation",
-      "- benefits",
-      "- work conditions",
-      "- demand evidence",
-      "- risk",
-      "- recovery path",
-      "- future options"
-    ],
+    "workbookPrompt": "Compare three routes:\n\n1. Stay and deepen\n2. Move and transfer\n3. Train and pivot\n\nFor each, record:\n- skills used\n- skills developed\n- entry requirements\n- time\n- direct cost\n- lost income\n- compensation\n- benefits\n- work conditions\n- demand evidence\n- risk\n- recovery path\n- future options",
     "check": {
       "prompt": "What is opportunity cost in a career decision?",
       "options": [
@@ -1165,21 +1014,15 @@ const lessons = [
         }
       ]
     },
-    "growth": "I compared career movement through present cost and future capacity.",
-    "transition": [
-      "Ivy has clarified the main employment line. Now she and Eli enter the section of the Junction where additional income routes are tested."
-    ],
+    "growth": "“I compared career movement through present cost and future capacity.”",
+    "transition": "Ivy has clarified the main employment line. Now she and Eli enter the section of the Junction where additional income routes are tested.",
     "sourceKeys": [
       "blsCareer",
       "sbaMarket"
-    ],
-    "jurisdictionNote": false
+    ]
   },
   {
-    "number": 10,
-    "displayNumber": "7.10",
-    "key": "choose-the-income-mechanism",
-    "title": "Choose the Income Mechanism",
+    "title": "Choose The Income Mechanism",
     "story": [
       "The Additional Routes Hall contains doors labeled wages, contract fee, commission, project payment, sale, royalty, rental, tip, bonus, and platform payout.",
       "Eli had been calling all of them “side hustles.”",
@@ -1190,7 +1033,7 @@ const lessons = [
       "Sage replies, “You are still required to understand the mechanism.”",
       "Choosing another earning route begins by separating the work performed from the structure through which money arrives."
     ],
-    "sageOpen": "Name the work. Then name the payment mechanism. They are related, but they are not the same thing.",
+    "sageOpen": "“Name the work. Then name the payment mechanism. They are related, but they are not the same thing.”",
     "understand": [
       "An income mechanism is the structure through which value is exchanged for payment.",
       "The same skill may produce wages, contract fees, commissions, project payments, sales revenue, or other forms of income.",
@@ -1222,26 +1065,7 @@ const lessons = [
     ],
     "mirror": "Which earning mechanism feels most attractive to you, and what assumptions are attached to that feeling?",
     "workbook": "Mechanism comparison",
-    "workbookPrompt": [
-      "Choose one skill and compare how it could be paid through:",
-      "- employment",
-      "- temporary or project employment",
-      "- independent contract",
-      "- commission",
-      "- sale or another relevant route",
-      "For each, identify:",
-      "- payer",
-      "- control",
-      "- pricing or pay method",
-      "- expenses",
-      "- tools",
-      "- schedule",
-      "- payment timing",
-      "- legal or tax status",
-      "- protections",
-      "- customer responsibility",
-      "- risk of nonpayment"
-    ],
+    "workbookPrompt": "Choose one skill and compare how it could be paid through:\n\n- employment\n- temporary or project employment\n- independent contract\n- commission\n- sale or another relevant route\n\nFor each, identify:\n- payer\n- control\n- pricing or pay method\n- expenses\n- tools\n- schedule\n- payment timing\n- legal or tax status\n- protections\n- customer responsibility\n- risk of nonpayment",
     "check": {
       "prompt": "Why should the learner separate the skill from the income mechanism?",
       "options": [
@@ -1295,20 +1119,14 @@ const lessons = [
         }
       ]
     },
-    "growth": "I separated value created from the mechanism that pays for it.",
-    "transition": [
-      "Before building a route around a mechanism, Ivy and Eli must find out whether anyone actually wants the result."
-    ],
+    "growth": "“I separated value created from the mechanism that pays for it.”",
+    "transition": "Before building a route around a mechanism, Ivy and Eli must find out whether anyone actually wants the result.",
     "sourceKeys": [
-      "irsGig",
-      "dolClassification"
-    ],
-    "jurisdictionNote": false
+      "dolClassification",
+      "irsGig"
+    ]
   },
   {
-    "number": 11,
-    "displayNumber": "7.11",
-    "key": "demand-before-decoration",
     "title": "Demand Before Decoration",
     "story": [
       "Eli arrives at the Night Market with a banner, branded invoices, matching shirts, and a QR code leading to a website that says COMING SOON.",
@@ -1320,7 +1138,7 @@ const lessons = [
       "Demand testing does not guarantee success. It reduces the amount of money, identity, and inventory attached to an assumption.",
       "The Night Market lesson is painful but cheap: find evidence of a problem before investing heavily in a solution."
     ],
-    "sageOpen": "A logo can identify an offer. It cannot create the need for one.",
+    "sageOpen": "“A logo can identify an offer. It cannot create the need for one.”",
     "understand": [
       "Demand is evidence that people want or need a result and may be willing and able to exchange money for it.",
       "Market research examines customers, problems, existing alternatives, competition, access, and price expectations.",
@@ -1350,19 +1168,7 @@ const lessons = [
     ],
     "mirror": "Where have you invested in the appearance of readiness before testing whether the result was needed?",
     "workbook": "Smallest credible test",
-    "workbookPrompt": [
-      "Define one possible paid result.",
-      "Then record:",
-      "- who may need it",
-      "- what problem they have",
-      "- what they use now",
-      "- how you could ask without leading them",
-      "- the smallest safe test",
-      "- what counts as interest",
-      "- what counts as payment evidence",
-      "- what evidence would weaken the idea",
-      "- the maximum time and money allowed for the test"
-    ],
+    "workbookPrompt": "Define one possible paid result.\n\nThen record:\n- who may need it\n- what problem they have\n- what they use now\n- how you could ask without leading them\n- the smallest safe test\n- what counts as interest\n- what counts as payment evidence\n- what evidence would weaken the idea\n- the maximum time and money allowed for the test",
     "check": {
       "prompt": "What is the main purpose of a small demand test?",
       "options": [
@@ -1416,20 +1222,14 @@ const lessons = [
         }
       ]
     },
-    "growth": "I learned to test the problem before decorating the solution.",
-    "transition": [
-      "The first customer asks the question Eli has postponed: “How much?”"
-    ],
+    "growth": "“I learned to test the problem before decorating the solution.”",
+    "transition": "The first customer asks the question Eli has postponed: “How much?”",
     "sourceKeys": [
       "sbaMarket"
-    ],
-    "jurisdictionNote": false
+    ]
   },
   {
-    "number": 12,
-    "displayNumber": "7.12",
-    "key": "price-cost-and-the-money-that-remains",
-    "title": "Price, Cost & the Money That Remains",
+    "title": "Price, Cost & The Money That Remains",
     "story": [
       "A market customer asks Eli for a repair estimate.",
       "He names a price based on what feels reasonable. Ivy asks how he calculated it.",
@@ -1441,7 +1241,7 @@ const lessons = [
       "Eli removes the phrase “basically anything.”",
       "Progress has occurred."
     ],
-    "sageOpen": "A price is not revenue, revenue is not profit, and none of them explain the scope by themselves.",
+    "sageOpen": "“A price is not revenue, revenue is not profit, and none of them explain the scope by themselves.”",
     "understand": [
       "Price is the amount charged or paid for a defined product, service, unit, hour, project, or result.",
       "Revenue is money generated before applicable expenses are subtracted.",
@@ -1474,24 +1274,7 @@ const lessons = [
     ],
     "mirror": "When money must be attached to your work, do you become more likely to overexplain, undercharge, overpromise, or avoid the conversation?",
     "workbook": "Scope and real-return builder",
-    "workbookPrompt": [
-      "Using a fictional service, define:",
-      "- promised result",
-      "- work included",
-      "- work excluded",
-      "- estimated direct labor",
-      "- unpaid administration",
-      "- materials",
-      "- travel",
-      "- tools",
-      "- payment fees",
-      "- expected corrections or revisions",
-      "- tax set-aside category",
-      "- payment timing",
-      "- possible nonpayment",
-      "- estimated net return",
-      "Do not use this exercise as legal, tax, or pricing advice."
-    ],
+    "workbookPrompt": "Using a fictional service, define:\n\n- promised result\n- work included\n- work excluded\n- estimated direct labor\n- unpaid administration\n- materials\n- travel\n- tools\n- payment fees\n- expected corrections or revisions\n- tax set-aside category\n- payment timing\n- possible nonpayment\n- estimated net return\n\nDo not use this exercise as legal, tax, or pricing advice.",
     "check": {
       "prompt": "Why can a profitable-looking price still produce a poor result?",
       "options": [
@@ -1545,21 +1328,15 @@ const lessons = [
         }
       ]
     },
-    "growth": "I connected price to scope, cost, and real return.",
-    "transition": [
-      "The person paying Eli calls him a contractor. The Junction now asks whether the label matches the actual relationship."
-    ],
+    "growth": "“I connected price to scope, cost, and real return.”",
+    "transition": "The person paying Eli calls him a contractor. The Junction now asks whether the label matches the actual relationship.",
     "sourceKeys": [
-      "sbaMarket",
-      "irsSelf"
-    ],
-    "jurisdictionNote": false
+      "irsSelf",
+      "sbaMarket"
+    ]
   },
   {
-    "number": 13,
-    "displayNumber": "7.13",
-    "key": "employee-contractor-or-platform-worker",
-    "title": "Employee, Contractor, or Platform Worker?",
+    "title": "Employee, Contractor, Or Platform Worker?",
     "story": [
       "A Junction company offers Eli regular work. The company sets the schedule, controls the process, assigns each task, requires its uniform, and restricts outside work.",
       "The agreement calls him an independent contractor.",
@@ -1570,7 +1347,7 @@ const lessons = [
       "Different classifications can change wage protections, overtime, withholding, unemployment coverage, workers’ compensation, benefits, expense responsibility, tax treatment, and remedies.",
       "The lesson is not “avoid contract work.” It is “do not accept a label as a complete explanation of the relationship.”"
     ],
-    "sageOpen": "Read the title. Then investigate who actually controls the work, carries the risk, and depends on whom.",
+    "sageOpen": "“Read the title. Then investigate who actually controls the work, carries the risk, and depends on whom.”",
     "understand": [
       "Employees and independent contractors can have different rights, responsibilities, protections, and tax treatment.",
       "Worker status is generally determined by applicable law and the facts of the relationship, not only by the label used in an agreement.",
@@ -1601,21 +1378,7 @@ const lessons = [
     ],
     "mirror": "Which work label—employee, contractor, owner, freelancer, partner, consultant—carries the strongest emotional meaning for you?",
     "workbook": "Relationship-facts checklist",
-    "workbookPrompt": [
-      "Using a fictional arrangement, record:",
-      "- who sets the schedule",
-      "- who controls how work is performed",
-      "- who provides tools",
-      "- who carries expenses",
-      "- who finds customers",
-      "- whether work can be refused",
-      "- whether other work is allowed",
-      "- whether the relationship is ongoing",
-      "- how payment is determined",
-      "- what protections or benefits apply",
-      "- which official source or professional could verify the status",
-      "Do not use the workbook to make a final legal classification."
-    ],
+    "workbookPrompt": "Using a fictional arrangement, record:\n\n- who sets the schedule\n- who controls how work is performed\n- who provides tools\n- who carries expenses\n- who finds customers\n- whether work can be refused\n- whether other work is allowed\n- whether the relationship is ongoing\n- how payment is determined\n- what protections or benefits apply\n- which official source or professional could verify the status\n\nDo not use the workbook to make a final legal classification.",
     "check": {
       "prompt": "Why may a contract label be insufficient to establish worker status?",
       "options": [
@@ -1669,20 +1432,14 @@ const lessons = [
         }
       ]
     },
-    "growth": "I learned to investigate the relationship beneath the work label.",
-    "transition": [
-      "Whatever the classification, the money creates records and responsibilities that cannot be managed from memory alone."
-    ],
+    "growth": "“I learned to investigate the relationship beneath the work label.”",
+    "transition": "Whatever the classification, the money creates records and responsibilities that cannot be managed from memory alone.",
     "sourceKeys": [
       "dolClassification",
       "irsGig"
-    ],
-    "jurisdictionNote": true
+    ]
   },
   {
-    "number": 14,
-    "displayNumber": "7.14",
-    "key": "records-taxes-and-cash-separation",
     "title": "Records, Taxes & Cash Separation",
     "story": [
       "Eli receives payments through cash, an app, a bank transfer, and one envelope labeled “for helping with the thing.”",
@@ -1695,7 +1452,7 @@ const lessons = [
       "Gig and self-employment income may be taxable even when no information form arrives. Depending on the situation, estimated payments, additional withholding, business records, licenses, insurance, or other obligations may apply.",
       "RootWise does not calculate a personal tax position. It teaches that income arriving without withholding is not automatically fully available to spend."
     ],
-    "sageOpen": "An income route is not complete until the learner can document what arrived, what it cost, what remains unpaid, and what obligation follows.",
+    "sageOpen": "“An income route is not complete until the learner can document what arrived, what it cost, what remains unpaid, and what obligation follows.”",
     "understand": [
       "Additional income may create federal, state, local, licensing, reporting, insurance, or recordkeeping responsibilities.",
       "Income can be taxable even when it is part-time, temporary, paid in cash, or not reported to the learner on an information form.",
@@ -1729,22 +1486,7 @@ const lessons = [
     ],
     "mirror": "Which kind of earning record are you most likely to postpone until the information is difficult to reconstruct?",
     "workbook": "Income-route record system",
-    "workbookPrompt": [
-      "Create a private category system without entering account numbers, tax identifiers, or customer information.",
-      "Include:",
-      "- date",
-      "- income category",
-      "- amount received",
-      "- amount still owed",
-      "- direct expense",
-      "- receipt location",
-      "- payment fee",
-      "- tax set-aside category",
-      "- mileage or travel category where relevant",
-      "- contract or invoice location",
-      "- required follow-up",
-      "- official verification source"
-    ],
+    "workbookPrompt": "Create a private category system without entering account numbers, tax identifiers, or customer information.\n\nInclude:\n- date\n- income category\n- amount received\n- amount still owed\n- direct expense\n- receipt location\n- payment fee\n- tax set-aside category\n- mileage or travel category where relevant\n- contract or invoice location\n- required follow-up\n- official verification source",
     "check": {
       "prompt": "Which statement about gig or side income is accurate?",
       "options": [
@@ -1798,20 +1540,14 @@ const lessons = [
         }
       ]
     },
-    "growth": "I connected additional income to records and follow-through.",
-    "transition": [
-      "Ivy and Eli now have a legitimate route. Their next mistake is attempting to fit it into time that does not exist."
-    ],
+    "growth": "“I connected additional income to records and follow-through.”",
+    "transition": "Ivy and Eli now have a legitimate route. Their next mistake is attempting to fit it into time that does not exist.",
     "sourceKeys": [
       "irsGig",
       "irsSelf"
-    ],
-    "jurisdictionNote": true
+    ]
   },
   {
-    "number": 15,
-    "displayNumber": "7.15",
-    "key": "the-thirty-one-hour-tuesday",
     "title": "The Thirty-One-Hour Tuesday",
     "story": [
       "Ivy unveils her new schedule.",
@@ -1825,7 +1561,7 @@ const lessons = [
       "Additional income frequently enters the hours left after primary work and existing responsibility. Those hours may already be carrying rest, relationships, caregiving, health, or the unpaid labor that keeps the household functioning.",
       "Time is not automatically more important than money. But time must be counted as an input rather than treated as empty space."
     ],
-    "sageOpen": "A calendar cannot create capacity by refusing to acknowledge transition, maintenance, and recovery.",
+    "sageOpen": "“A calendar cannot create capacity by refusing to acknowledge transition, maintenance, and recovery.”",
     "understand": [
       "Earning routes consume direct work time and surrounding operating time.",
       "Surrounding time can include travel, setup, communication, learning, scheduling, correction, bookkeeping, and recovery.",
@@ -1856,24 +1592,7 @@ const lessons = [
     ],
     "mirror": "Which part of your current schedule is treated as empty even though it is already supporting your life?",
     "workbook": "True-time map",
-    "workbookPrompt": [
-      "Choose one possible earning route and estimate:",
-      "- direct work time",
-      "- preparation",
-      "- travel",
-      "- communication",
-      "- administration",
-      "- learning",
-      "- corrections",
-      "- recovery",
-      "- household redistribution",
-      "- schedule variability",
-      "- total weekly capacity required",
-      "Then identify:",
-      "- what will receive less time",
-      "- who else is affected",
-      "- what happens during a difficult week"
-    ],
+    "workbookPrompt": "Choose one possible earning route and estimate:\n\n- direct work time\n- preparation\n- travel\n- communication\n- administration\n- learning\n- corrections\n- recovery\n- household redistribution\n- schedule variability\n- total weekly capacity required\n\nThen identify:\n- what will receive less time\n- who else is affected\n- what happens during a difficult week",
     "check": {
       "prompt": "Why can a two-hour paid task require more than two hours of capacity?",
       "options": [
@@ -1927,20 +1646,14 @@ const lessons = [
         }
       ]
     },
-    "growth": "I counted the full time required by an earning route.",
-    "transition": [
-      "The Capacity Clock leads to the Recovery Platform, where Ivy and Eli discover that hours are not the only limited input."
-    ],
+    "growth": "“I counted the full time required by an earning route.”",
+    "transition": "The Capacity Clock leads to the Recovery Platform, where Ivy and Eli discover that hours are not the only limited input.",
     "sourceKeys": [
       "blsCareer"
-    ],
-    "jurisdictionNote": false
+    ]
   },
   {
-    "number": 16,
-    "displayNumber": "7.16",
-    "key": "energy-is-part-of-capacity",
-    "title": "Energy Is Part of Capacity",
+    "title": "Energy Is Part Of Capacity",
     "story": [
       "For three weeks, Ivy follows the schedule as closely as possible.",
       "The numbers improve. Her patience disappears.",
@@ -1953,7 +1666,7 @@ const lessons = [
       "“Motivation is not a substitute for capacity. Neither is caffeine wearing a leadership title.”",
       "Earning expansion that repeatedly damages the ability to maintain the primary route, health, judgment, or relationships may be consuming the system that produces it."
     ],
-    "sageOpen": "Your earning capacity includes the ability to recover well enough to perform again.",
+    "sageOpen": "“Your earning capacity includes the ability to recover well enough to perform again.”",
     "understand": [
       "Capacity includes time, energy, attention, health, emotional regulation, physical ability, and recovery.",
       "Different work places different demands on the same person.",
@@ -1983,22 +1696,7 @@ const lessons = [
     ],
     "mirror": "What signal does your body, attention, or behavior send before you consciously admit that capacity has been exceeded?",
     "workbook": "Energy-cost map",
-    "workbookPrompt": [
-      "For each current or possible route, estimate the demand on:",
-      "- physical energy",
-      "- emotional energy",
-      "- social energy",
-      "- analytical attention",
-      "- creative attention",
-      "- decision-making",
-      "- recovery",
-      "- schedule flexibility",
-      "Identify:",
-      "- early overload signals",
-      "- recovery requirements",
-      "- minimum boundaries",
-      "- what should pause first when capacity falls"
-    ],
+    "workbookPrompt": "For each current or possible route, estimate the demand on:\n\n- physical energy\n- emotional energy\n- social energy\n- analytical attention\n- creative attention\n- decision-making\n- recovery\n- schedule flexibility\n\nIdentify:\n- early overload signals\n- recovery requirements\n- minimum boundaries\n- what should pause first when capacity falls",
     "check": {
       "prompt": "Why does energy belong in an earning-expansion decision?",
       "options": [
@@ -2052,19 +1750,13 @@ const lessons = [
         }
       ]
     },
-    "growth": "I included recovery and performance in my earning capacity.",
-    "transition": [
-      "As Ivy and Eli adjust their schedules, they discover that some earning routes cannot be evaluated without other people, contracts, and rules."
-    ],
+    "growth": "“I included recovery and performance in my earning capacity.”",
+    "transition": "As Ivy and Eli adjust their schedules, they discover that some earning routes cannot be evaluated without other people, contracts, and rules.",
     "sourceKeys": [
       "blsCareer"
-    ],
-    "jurisdictionNote": false
+    ]
   },
   {
-    "number": 17,
-    "displayNumber": "7.17",
-    "key": "boundaries-permission-and-conflicts",
     "title": "Boundaries, Permission & Conflicts",
     "story": [
       "Ivy plans to offer paid help using knowledge similar to what she performs at work. She has not copied employer files or contacted employer customers, but she has not checked the organization’s outside-work policy either.",
@@ -2076,7 +1768,7 @@ const lessons = [
       "RootWise will not interpret Ivy’s agreement. It teaches her which questions require verification before the route begins.",
       "The household boundary is equally real. Additional work that quietly assigns caregiving, errands, or cleanup to someone else is not independent simply because the payment has one name on it."
     ],
-    "sageOpen": "An income route does not exist outside the agreements, property, people, and responsibilities it touches.",
+    "sageOpen": "“An income route does not exist outside the agreements, property, people, and responsibilities it touches.”",
     "understand": [
       "Outside work may interact with employment policies, confidentiality, intellectual property, customer relationships, licensing, insurance, safety rules, contracts, and local law.",
       "The learner must distinguish personal skill from protected information, employer property, or restricted activity.",
@@ -2108,23 +1800,7 @@ const lessons = [
     ],
     "mirror": "Whose property, time, permission, relationship, or responsibility would your additional income route touch?",
     "workbook": "Boundary verification list",
-    "workbookPrompt": [
-      "For a fictional route, identify whether you need to verify:",
-      "- employer policy",
-      "- confidentiality",
-      "- intellectual property",
-      "- customer restrictions",
-      "- equipment ownership",
-      "- insurance",
-      "- licensing",
-      "- local registration",
-      "- lease or property rules",
-      "- household agreement",
-      "- caregiving impact",
-      "- professional ethics",
-      "- safety requirements",
-      "Record only the source or person who can answer. Do not enter confidential agreement language."
-    ],
+    "workbookPrompt": "For a fictional route, identify whether you need to verify:\n\n- employer policy\n- confidentiality\n- intellectual property\n- customer restrictions\n- equipment ownership\n- insurance\n- licensing\n- local registration\n- lease or property rules\n- household agreement\n- caregiving impact\n- professional ethics\n- safety requirements\n\nRecord only the source or person who can answer. Do not enter confidential agreement language.",
     "check": {
       "prompt": "Why should a learner verify outside-work boundaries before starting?",
       "options": [
@@ -2178,20 +1854,14 @@ const lessons = [
         }
       ]
     },
-    "growth": "I identified the boundaries surrounding additional work.",
-    "transition": [
-      "The final booth in this section promises enormous income, minimal effort, and absolutely no uncomfortable details."
-    ],
+    "growth": "“I identified the boundaries surrounding additional work.”",
+    "transition": "The final booth in this section promises enormous income, minimal effort, and absolutely no uncomfortable details.",
     "sourceKeys": [
       "dolClassification"
-    ],
-    "jurisdictionNote": true
+    ]
   },
   {
-    "number": 18,
-    "displayNumber": "7.18",
-    "key": "the-passive-income-hammock-is-on-fire",
-    "title": "The Passive-Income Hammock Is on Fire",
+    "title": "The Passive-Income Hammock Is On Fire",
     "story": [
       "The smoke behind the PASSIVE INCOME WHILE YOU NAP booth has become visible from three platforms away.",
       "Inside, a salesman promises Eli thousands of dollars for completing online “optimization tasks.” Eli must first deposit his own money to unlock the next level.",
@@ -2202,7 +1872,7 @@ const lessons = [
       "Legitimate income can become less connected to each additional hour, but systems still require value, setup, ownership, maintenance, demand, administration, or financial risk.",
       "No honest opportunity needs the learner to ignore how it works."
     ],
-    "sageOpen": "If the income explanation disappears when you ask who pays and why, the opportunity has not passed the first gate.",
+    "sageOpen": "“If the income explanation disappears when you ask who pays and why, the opportunity has not passed the first gate.”",
     "understand": [
       "Job and money-making scams often use promises of high income, little effort, urgency, secrecy, fake checks, unexpected messages, or required upfront payment.",
       "Task scams may display fake earnings before demanding the learner deposit personal money.",
@@ -2234,21 +1904,7 @@ const lessons = [
     ],
     "mirror": "Which promise would be most likely to make you suspend your usual skepticism?",
     "workbook": "Opportunity verification gate",
-    "workbookPrompt": [
-      "Before considering an unfamiliar earning offer, answer:",
-      "- Who is paying?",
-      "- What value is being created?",
-      "- What exact work is required?",
-      "- Why is the payer willing to pay?",
-      "- Is money required upfront?",
-      "- Is personal information requested too early?",
-      "- Can the organization be verified independently?",
-      "- Are duties and terms written clearly?",
-      "- Are earnings guaranteed?",
-      "- Is pressure being used?",
-      "- What do current or former workers report?",
-      "- Which official scam source can be checked?"
-    ],
+    "workbookPrompt": "Before considering an unfamiliar earning offer, answer:\n\n- Who is paying?\n- What value is being created?\n- What exact work is required?\n- Why is the payer willing to pay?\n- Is money required upfront?\n- Is personal information requested too early?\n- Can the organization be verified independently?\n- Are duties and terms written clearly?\n- Are earnings guaranteed?\n- Is pressure being used?\n- What do current or former workers report?\n- Which official scam source can be checked?",
     "check": {
       "prompt": "Which signal most strongly indicates a likely job or task scam?",
       "options": [
@@ -2302,21 +1958,15 @@ const lessons = [
         }
       ]
     },
-    "growth": "I learned to verify the income mechanism before trusting the promise.",
-    "transition": [
-      "After leaving the smoking hammock booth, Ivy and Eli begin building an income mix based on independence rather than excitement."
-    ],
+    "growth": "“I learned to verify the income mechanism before trusting the promise.”",
+    "transition": "After leaving the smoking hammock booth, Ivy and Eli begin building an income mix based on independence rather than excitement.",
     "sourceKeys": [
+      "irsGig",
       "ftcHustle",
-      "ftcJobs",
-      "irsGig"
-    ],
-    "jurisdictionNote": true
+      "ftcJobs"
+    ]
   },
   {
-    "number": 19,
-    "displayNumber": "7.19",
-    "key": "different-payers-are-not-always-different-risks",
     "title": "Different Payers Are Not Always Different Risks",
     "story": [
       "Ivy and Eli pin their earning routes to the Junction map.",
@@ -2329,7 +1979,7 @@ const lessons = [
       "Sage introduces correlation: the degree to which routes may rise, slow, or fail together because they share an industry, customer group, season, platform, location, resource, or economic driver.",
       "Perfect independence is not required. It may not be possible. The point is to see whether diversity adds another path—or simply another invoice connected to the same weak point."
     ],
-    "sageOpen": "Diversification is strongest when the routes do not all wait for the same gate to open.",
+    "sageOpen": "“Diversification is strongest when the routes do not all wait for the same gate to open.”",
     "understand": [
       "Correlated income routes respond similarly to the same event or condition.",
       "Routes can share demand, industry, season, location, platform, customer type, tool, schedule, or physical ability.",
@@ -2357,23 +2007,7 @@ const lessons = [
     ],
     "mirror": "Which of your current or imagined income routes would likely weaken at the same time?",
     "workbook": "Income correlation map",
-    "workbookPrompt": [
-      "Place each route in a row and compare shared exposure to:",
-      "- employer",
-      "- industry",
-      "- customer group",
-      "- geography",
-      "- season",
-      "- platform",
-      "- schedule",
-      "- vehicle",
-      "- equipment",
-      "- credential",
-      "- physical ability",
-      "- economic cycle",
-      "- household event",
-      "Mark clusters. Do not assume every cluster must be eliminated."
-    ],
+    "workbookPrompt": "Place each route in a row and compare shared exposure to:\n\n- employer\n- industry\n- customer group\n- geography\n- season\n- platform\n- schedule\n- vehicle\n- equipment\n- credential\n- physical ability\n- economic cycle\n- household event\n\nMark clusters. Do not assume every cluster must be eliminated.",
     "check": {
       "prompt": "What makes two income routes correlated?",
       "options": [
@@ -2427,19 +2061,13 @@ const lessons = [
         }
       ]
     },
-    "growth": "I measured diversity by shared risk, not payment count.",
-    "transition": [
-      "Correlation explains what may fail together. The next platform examines when money actually arrives."
-    ],
+    "growth": "“I measured diversity by shared risk, not payment count.”",
+    "transition": "Correlation explains what may fail together. The next platform examines when money actually arrives.",
     "sourceKeys": [
       "blsCareer"
-    ],
-    "jurisdictionNote": false
+    ]
   },
   {
-    "number": 20,
-    "displayNumber": "7.20",
-    "key": "stability-volatility-and-timing",
     "title": "Stability, Volatility & Timing",
     "story": [
       "Ivy’s paycheck arrives on a predictable schedule. Eli’s project income arrives when customers approve work, invoices are processed, platforms release funds, and occasionally when Mercury appears to be in the correct administrative position.",
@@ -2449,7 +2077,7 @@ const lessons = [
       "Income diversity can improve annual earnings while making monthly cash flow harder to manage.",
       "Root Three taught them how money moves. Root Four taught them to carry resources forward. Root Seven now applies those capacities to uncertain earning patterns."
     ],
-    "sageOpen": "An annual total cannot pay a Tuesday bill unless enough of it arrived before Tuesday.",
+    "sageOpen": "“An annual total cannot pay a Tuesday bill unless enough of it arrived before Tuesday.”",
     "understand": [
       "Income stability describes the consistency and predictability of earnings.",
       "Volatility describes how much income changes across periods.",
@@ -2483,20 +2111,7 @@ const lessons = [
     ],
     "mirror": "Do you make decisions using your ordinary income month, your strongest month, or the month you hope will become normal?",
     "workbook": "Income-pattern calendar",
-    "workbookPrompt": [
-      "Using approximate or fictional values, map twelve months.",
-      "For each route, identify:",
-      "- expected range",
-      "- payment dates",
-      "- seasonal high",
-      "- seasonal low",
-      "- delayed-payment risk",
-      "- cancellation risk",
-      "- minimum reliable amount",
-      "- amount not yet received",
-      "- expenses that occur before payment",
-      "- reserve or cash-flow connection"
-    ],
+    "workbookPrompt": "Using approximate or fictional values, map twelve months.\n\nFor each route, identify:\n- expected range\n- payment dates\n- seasonal high\n- seasonal low\n- delayed-payment risk\n- cancellation risk\n- minimum reliable amount\n- amount not yet received\n- expenses that occur before payment\n- reserve or cash-flow connection",
     "check": {
       "prompt": "Why can average monthly income be misleading?",
       "options": [
@@ -2550,19 +2165,13 @@ const lessons = [
         }
       ]
     },
-    "growth": "I connected income amount to timing and volatility.",
-    "transition": [
-      "A route that survives timing and demand must still be performed repeatedly. Ivy and Eli now examine what makes work repeatable."
-    ],
+    "growth": "“I connected income amount to timing and volatility.”",
+    "transition": "A route that survives timing and demand must still be performed repeatedly. Ivy and Eli now examine what makes work repeatable.",
     "sourceKeys": [
       "irsSelf"
-    ],
-    "jurisdictionNote": false
+    ]
   },
   {
-    "number": 21,
-    "displayNumber": "7.21",
-    "key": "repeatability-before-scale",
     "title": "Repeatability Before Scale",
     "story": [
       "Eli has completed five repair projects. Every one required a different process, a different list, a last-minute materials run, and at least one message asking Ivy where he put something.",
@@ -2574,7 +2183,7 @@ const lessons = [
       "Repeatability can reduce mistakes and operating time. It also exposes whether the income route works only because the learner supplies constant emergency effort.",
       "Scale means increasing output, reach, or income without every cost rising in the same proportion. Not every route should scale. Some work is valuable precisely because it remains personal, specialized, or limited."
     ],
-    "sageOpen": "Do not multiply a process you have not yet learned to perform reliably.",
+    "sageOpen": "“Do not multiply a process you have not yet learned to perform reliably.”",
     "understand": [
       "Repeatability means the important steps of an earning route can be performed consistently.",
       "Systems organize recurring work, information, tools, decisions, communication, and quality.",
@@ -2609,29 +2218,7 @@ const lessons = [
     ],
     "mirror": "Which recurring task still depends on you remembering everything at exactly the right moment?",
     "workbook": "Repeatable route map",
-    "workbookPrompt": [
-      "Map one route from beginning to end:",
-      "- inquiry",
-      "- qualification",
-      "- scope",
-      "- estimate or pay terms",
-      "- scheduling",
-      "- preparation",
-      "- delivery",
-      "- quality check",
-      "- payment",
-      "- records",
-      "- follow-up",
-      "- correction",
-      "- exit",
-      "Mark:",
-      "- steps requiring judgment",
-      "- steps that repeat",
-      "- common failure points",
-      "- possible checklist or template",
-      "- work that should not be automated",
-      "- capacity limit"
-    ],
+    "workbookPrompt": "Map one route from beginning to end:\n\n- inquiry\n- qualification\n- scope\n- estimate or pay terms\n- scheduling\n- preparation\n- delivery\n- quality check\n- payment\n- records\n- follow-up\n- correction\n- exit\n\nMark:\n- steps requiring judgment\n- steps that repeat\n- common failure points\n- possible checklist or template\n- work that should not be automated\n- capacity limit",
     "check": {
       "prompt": "What should generally come before attempting to scale an earning route?",
       "options": [
@@ -2685,20 +2272,14 @@ const lessons = [
         }
       ]
     },
-    "growth": "I learned to stabilize the work before multiplying it.",
-    "transition": [
-      "Once a route produces a surplus, another decision appears: keep it, improve it, or use it to expand."
-    ],
+    "growth": "“I learned to stabilize the work before multiplying it.”",
+    "transition": "Once a route produces a surplus, another decision appears: keep it, improve it, or use it to expand.",
     "sourceKeys": [
       "sbaMarket"
-    ],
-    "jurisdictionNote": false
+    ]
   },
   {
-    "number": 22,
-    "displayNumber": "7.22",
-    "key": "reinvest-improve-or-keep-the-cash",
-    "title": "Reinvest, Improve, or Keep the Cash?",
+    "title": "Reinvest, Improve, Or Keep The Cash?",
     "story": [
       "Eli’s route finally produces a positive surplus.",
       "Within eleven minutes, he has selected a premium tool kit, upgraded software, a second phone, and a sign large enough to be seen from the Harbor District.",
@@ -2711,7 +2292,7 @@ const lessons = [
       "They compare each use against the actual bottleneck.",
       "The sign does not survive the comparison."
     ],
-    "sageOpen": "Do not feed every dollar back into the route simply because the route produced it.",
+    "sageOpen": "“Do not feed every dollar back into the route simply because the route produced it.”",
     "understand": [
       "Reinvestment uses part of an income route’s return to maintain, improve, or expand that route.",
       "Useful reinvestment should connect to an identified constraint, demand signal, risk, efficiency, quality issue, or capacity need.",
@@ -2745,23 +2326,7 @@ const lessons = [
     ],
     "mirror": "When additional money arrives, are you more likely to spend it on the route, protect it, or assign it to another goal before measuring what the route needs?",
     "workbook": "Surplus decision gate",
-    "workbookPrompt": [
-      "For a fictional surplus, compare:",
-      "Option A — Keep",
-      "What purpose would the cash serve?",
-      "Option B — Improve",
-      "What verified weakness would change?",
-      "Option C — Expand",
-      "What demand evidence and capacity support growth?",
-      "For every option, record:",
-      "- expected benefit",
-      "- direct cost",
-      "- risk",
-      "- time",
-      "- reversibility",
-      "- evidence",
-      "- what remains unavailable after the choice"
-    ],
+    "workbookPrompt": "For a fictional surplus, compare:\n\nOption A — Keep\nWhat purpose would the cash serve?\n\nOption B — Improve\nWhat verified weakness would change?\n\nOption C — Expand\nWhat demand evidence and capacity support growth?\n\nFor every option, record:\n- expected benefit\n- direct cost\n- risk\n- time\n- reversibility\n- evidence\n- what remains unavailable after the choice",
     "check": {
       "prompt": "What makes a work-related purchase a stronger reinvestment decision?",
       "options": [
@@ -2815,21 +2380,15 @@ const lessons = [
         }
       ]
     },
-    "growth": "I learned to assign surplus according to evidence and purpose.",
-    "transition": [
-      "Not every route deserves additional investment. Some need to pause, shrink, or end."
-    ],
+    "growth": "“I learned to assign surplus according to evidence and purpose.”",
+    "transition": "Not every route deserves additional investment. Some need to pause, shrink, or end.",
     "sourceKeys": [
-      "sbaMarket",
-      "irsSelf"
-    ],
-    "jurisdictionNote": false
+      "irsSelf",
+      "sbaMarket"
+    ]
   },
   {
-    "number": 23,
-    "displayNumber": "7.23",
-    "key": "prune-the-income-garden",
-    "title": "Prune the Income Garden",
+    "title": "Prune The Income Garden",
     "story": [
       "Months into the Junction experiment, Ivy and Eli review every route.",
       "One of Eli’s platforms produces low net income, unpredictable demand, heavy vehicle use, and constant messages. He has kept it because stopping would make the setup feel wasted.",
@@ -2843,7 +2402,7 @@ const lessons = [
       "Stopping is not automatically failure. Continuing is not automatically persistence.",
       "A diversified system also needs rules for what does not remain."
     ],
-    "sageOpen": "Choice includes the ability to stop feeding a route that no longer earns its place.",
+    "sageOpen": "“Choice includes the ability to stop feeding a route that no longer earns its place.”",
     "understand": [
       "Pruning means reducing, pausing, redesigning, or ending an earning route.",
       "Sunk costs are past costs that cannot be recovered and should not by themselves determine the next choice.",
@@ -2876,25 +2435,7 @@ const lessons = [
     ],
     "mirror": "Which commitment is hardest for you to reevaluate once you have publicly called it a plan?",
     "workbook": "Continue, redesign, pause, or exit",
-    "workbookPrompt": [
-      "Evaluate one fictional or real route:",
-      "- original purpose",
-      "- current demand",
-      "- gross income",
-      "- real return",
-      "- time",
-      "- energy",
-      "- concentration",
-      "- reliability",
-      "- improvement options",
-      "- responsibilities to others",
-      "- unrecovered sunk cost",
-      "- future cost",
-      "- continue criteria",
-      "- pause criteria",
-      "- exit criteria",
-      "- proper closure steps"
-    ],
+    "workbookPrompt": "Evaluate one fictional or real route:\n\n- original purpose\n- current demand\n- gross income\n- real return\n- time\n- energy\n- concentration\n- reliability\n- improvement options\n- responsibilities to others\n- unrecovered sunk cost\n- future cost\n- continue criteria\n- pause criteria\n- exit criteria\n- proper closure steps",
     "check": {
       "prompt": "Why should a sunk cost not control the next decision by itself?",
       "options": [
@@ -2948,19 +2489,13 @@ const lessons = [
         }
       ]
     },
-    "growth": "I learned to remove an earning route without turning the decision into a judgment of myself.",
-    "transition": [
-      "The Junction lights dim. Ivy and Eli must now build one complete opportunity map from everything they have learned."
-    ],
+    "growth": "“I learned to remove an earning route without turning the decision into a judgment of myself.”",
+    "transition": "The Junction lights dim. Ivy and Eli must now build one complete opportunity map from everything they have learned.",
     "sourceKeys": [
       "sbaMarket"
-    ],
-    "jurisdictionNote": false
+    ]
   },
   {
-    "number": 24,
-    "displayNumber": "7.24",
-    "key": "the-opportunity-junction-map",
     "title": "The Opportunity Junction Map",
     "story": [
       "At dawn, Ivy and Eli return to the central board where Root Seven began.",
@@ -2975,7 +2510,7 @@ const lessons = [
       "Before they leave, Sage turns the original question around one final time.",
       "“Do not ask only how many ways money can reach you. Ask how many of those ways create options after you have carried the full responsibility.”"
     ],
-    "sageOpen": "The goal is not to collect income streams. It is to design an earning system you can understand, maintain, question, and change.",
+    "sageOpen": "“The goal is not to collect income streams. It is to design an earning system you can understand, maintain, question, and change.”",
     "understand": [
       "An earning system connects skills, value, payers, mechanisms, costs, records, timing, capacity, dependence, and purpose.",
       "Income diversity is useful when the routes meaningfully widen choice or reduce harmful concentration.",
@@ -3006,47 +2541,7 @@ const lessons = [
     ],
     "mirror": "What does an intentional earning system look like for the life you are actually responsible for—not the life being advertised to you?",
     "workbook": "Personal Opportunity Junction Map",
-    "workbookPrompt": [
-      "Build one final map using approximate values or categories.",
-      "Section One — Current Routes",
-      "- value created",
-      "- payer",
-      "- mechanism",
-      "- gross income pattern",
-      "- real return",
-      "- benefits",
-      "- schedule",
-      "- dependence",
-      "- volatility",
-      "- records",
-      "- boundaries",
-      "Section Two — Expansion Purpose",
-      "- what additional income should make possible",
-      "- what must remain protected",
-      "- time limit",
-      "- financial limit",
-      "- capacity limit",
-      "Section Three — One Route to Evaluate",
-      "- skill",
-      "- customer or employer need",
-      "- demand evidence",
-      "- smallest safe test",
-      "- complete cost",
-      "- tax and record questions",
-      "- legal or policy questions",
-      "- expected timing",
-      "- correlation with current income",
-      "Section Four — Decision Rules",
-      "- evidence required to continue",
-      "- evidence required to improve",
-      "- conditions requiring a pause",
-      "- conditions requiring exit",
-      "- review date",
-      "Section Five — Choice Gained",
-      "Complete:",
-      "“This earning system widens my choices when ______.”",
-      "“It begins removing choice when ______.”"
-    ],
+    "workbookPrompt": "Build one final map using approximate values or categories.\n\nSection One — Current Routes\n- value created\n- payer\n- mechanism\n- gross income pattern\n- real return\n- benefits\n- schedule\n- dependence\n- volatility\n- records\n- boundaries\n\nSection Two — Expansion Purpose\n- what additional income should make possible\n- what must remain protected\n- time limit\n- financial limit\n- capacity limit\n\nSection Three — One Route to Evaluate\n- skill\n- customer or employer need\n- demand evidence\n- smallest safe test\n- complete cost\n- tax and record questions\n- legal or policy questions\n- expected timing\n- correlation with current income\n\nSection Four — Decision Rules\n- evidence required to continue\n- evidence required to improve\n- conditions requiring a pause\n- conditions requiring exit\n- review date\n\nSection Five — Choice Gained\nComplete:\n\n“This earning system widens my choices when ______.”\n\n“It begins removing choice when ______.”",
     "check": {
       "prompt": "What is the strongest definition of an intentional income-diversity system?",
       "options": [
@@ -3100,40 +2595,43 @@ const lessons = [
         }
       ]
     },
-    "growth": "I can evaluate how earning expansion changes my income, capacity, dependence, and choices.",
-    "transition": [
-      "Ivy and Eli leave Opportunity Junction with more than income ideas. They know how to investigate an earning route before letting it reorganize their lives.",
-      "Ahead, Root Eight’s Merchant Arcade is already calling to them:",
-      "LIMITED TIME.",
-      "BEST VALUE.",
-      "ACT NOW.",
-      "Eli looks at Sage.",
-      "“This seems trustworthy.”",
-      "“It is going to be a long day,” Sage says."
-    ],
+    "growth": "“I can evaluate how earning expansion changes my income, capacity, dependence, and choices.”",
+    "transition": "Ivy and Eli leave Opportunity Junction with more than income ideas. They know how to investigate an earning route before letting it reorganize their lives.\n\nAhead, Root Eight’s Merchant Arcade is already calling to them:\n\nLIMITED TIME.\nBEST VALUE.\nACT NOW.\n\nEli looks at Sage.\n\n“This seems trustworthy.”\n\n“It is going to be a long day,” Sage says.",
     "sourceKeys": [
       "blsCareer",
       "blsComp",
+      "eeocPay",
       "dolClassification",
       "irsGig",
       "irsSelf",
       "sbaMarket",
-      "ftcJobs",
       "ftcHustle",
-      "eeocPay"
-    ],
-    "jurisdictionNote": false
+      "ftcJobs"
+    ]
   }
 ];
 
-export const rootSevenLessons = Object.freeze(lessons.map((lesson) => Object.freeze({
-  ...lesson,
-  part: rootSevenParts.find((part) => lesson.number >= part.range[0] && lesson.number <= part.range[1]),
-  sources: lesson.sourceKeys.map((key) => rootSevenSources[key]),
-})));
+function slugify(value) {
+  return value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
 
-export const rootSevenQuickPrompts = ['Help me find the hidden cost', 'Separate the skill from the payment route', 'Compare stability and flexibility', 'Show me the shared dependency', 'Help me prepare better questions'];
+export const rootSevenLessons = lessons.map((lesson, index) => ({
+  ...lesson,
+  number: index + 1,
+  displayNumber: `7.${index + 1}`,
+  key: `junction-${String(index + 1).padStart(2, '0')}-${slugify(lesson.title)}`,
+  part: rootSevenParts.find((part) => index + 1 >= part.range[0] && index + 1 <= part.range[1]),
+  sources: lesson.sourceKeys.map((key) => sources[key]),
+}));
+
+export const rootSevenQuickPrompts = [
+  'Help me find the hidden cost',
+  'Separate the skill from the payment route',
+  'Compare stability and flexibility',
+  'Show me the shared dependency',
+  'Help me prepare better questions',
+];
 
 export function rootSevenNarration(lesson) {
-  return [lesson.sageOpen, ...lesson.story, 'Understand. What is it?', ...lesson.understand, 'Recognize. Where does it appear?', ...lesson.recognize, 'Examine. What is driving the choice?', ...lesson.examine].join('\n\n');
+  return [lesson.sageOpen, ...lesson.story, ...lesson.understand, lesson.growth].join('\n\n');
 }
