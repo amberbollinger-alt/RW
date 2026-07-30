@@ -65,6 +65,9 @@ function Opening() {
   const [answer, setAnswer] = useState('');
   const choices = ['Work more hours', 'Earn more for the work I already do', 'Add another source', 'Learn a skill that creates new options', 'I am not sure yet'];
   return <section className="r7-opening">
+    <figure className="r7-junction-scene">
+      <img src="/root-seven-opportunity-junction.png" alt="Ivy and Eli at Opportunity Junction beneath the city lights" />
+    </figure>
     <div className="r7-opening-copy"><p className="r7-eyebrow"><MapPinned /> Root Seven · The Opportunity Junction</p><h1>Earning Expansion &amp; Income Diversity</h1><blockquote>{rootSevenOpening.coreQuestion}</blockquote></div>
     <div className="r7-opening-story"><div><p className="r7-eyebrow"><Sparkles /> Ivy, Eli &amp; Sage arrive</p><h2>Every earning route is advertising at once. The useful route survives all four gates.</h2><Paragraphs items={rootSevenOpening.story} /></div><img src="/rootwise-sage-cutout.png" alt="Sage, the RootWise guide" /></div>
     <fieldset className="r7-opening-choice"><legend>When you imagine earning more, which answer appears first?</legend><p>No answer is graded. Root Seven will test what your first answer solves, costs, and leaves untouched.</p><div>{choices.map((choice) => <button type="button" className={answer === choice ? 'is-selected' : ''} onClick={() => setAnswer(choice)} key={choice}>{answer === choice ? <Check /> : <ArrowRight />}{choice}</button>)}</div>{answer && <p className="r7-opening-response">“Keep that answer. Root Seven will help you see what it solves, what it costs, and what it leaves untouched.”</p>}</fieldset>
