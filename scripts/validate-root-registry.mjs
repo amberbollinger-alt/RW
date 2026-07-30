@@ -8,6 +8,7 @@ import { rootOneRootsData } from '../src/root-one-roots-data.js';
 import { rootTwoDistricts } from '../src/root-two-data.js';
 import { rootThreeRootsData } from '../src/root-three-roots-data.js';
 import { rootFourRootsData } from '../src/root-four-roots-data.js';
+import { rootSixLessons } from '../src/root-six-data.js';
 
 const rootFiveCanon = await readFile(new URL('../src/root-five-canon.md', import.meta.url), 'utf8');
 const rootTwoLessons = rootTwoDistricts.flatMap((district) => district.lessons).map((lesson, index) => ({
@@ -19,6 +20,7 @@ const registry = createRootRegistry(ROOT_CATALOG, {
   three: rootThreeRootsData.map((lesson, index) => ({ id: lesson.key, order: index + 1, title: lesson.title, published: true })),
   four: rootFourRootsData.map((lesson, index) => ({ id: lesson.key, order: index + 1, title: lesson.shortTitle, published: true })),
   five: extractRootFiveLessonIndex(rootFiveCanon),
+  six: rootSixLessons.map((lesson) => ({ id: lesson.key, order: lesson.number, number: lesson.displayNumber, title: lesson.title, published: true })),
 });
 
 const errors = validateRootRegistry(registry);
