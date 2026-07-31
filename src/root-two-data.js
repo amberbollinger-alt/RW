@@ -3938,6 +3938,86 @@ const districtPlan = [
   { chapter: 7, start: 0, end: 7, key: 'exchange-square', title: 'Exchange Square', theme: 'Information, negotiation & choice' },
 ];
 
+export const ROOT_TWO_PROGRESS_KEY = 'rootwise_root_two_exchange_progress_v1';
+export const ROOT_TWO_LEGACY_PROGRESS_KEYS = ['rootwise_root_two_journey_v4', 'rootwise_root_two_journey_v3'];
+
+export const rootTwoOpening = {
+  eyebrow: 'Root Two · The Exchange District',
+  title: 'Value & Earning',
+  coreQuestion: 'Why does work earn what it earns, and what conditions shape the exchange between value, labor, opportunity, and money?',
+  story: [
+    { type: 'narration', text: 'Ivy and Eli leave Root One carrying a new awareness of the scripts beneath their decisions. They expect the next district to begin with money. It does not.' },
+    { type: 'narration', text: 'The Exchange District wakes around them in layers. Metal shutters rise over repair shops. Bakers move trays toward cooling racks. Delivery carts rattle over stone. A nurse crosses between buildings while a crane operator checks a load above the eastern road. Restaurant workers prepare tables no customer has used yet. Apprentices carry tools behind people whose hands already know where every worn handle belongs.' },
+    { type: 'narration', text: 'Everywhere they look, someone is doing something another person needs.' },
+    { type: 'dialogue', speaker: 'Eli', text: 'So where is the money?' },
+    { type: 'dialogue', speaker: 'Sage', text: 'Usually, on the other side of a problem.' },
+    { type: 'narration', text: 'Sage points toward a laundress standing beside a broken press and a line of unfinished orders. A repair technician named Nicole arrives, listens to the machine, removes one panel, resets a safety catch, and restores the press in eleven minutes. She writes seventy-five dollars on the invoice.' },
+    { type: 'dialogue', speaker: 'Eli', text: 'Seventy-five dollars for eleven minutes?' },
+    { type: 'dialogue', speaker: 'Nicole', text: 'No. Seventy-five dollars because the machine works before the pickup cart arrives.' },
+    { type: 'dialogue', speaker: 'Sage', text: 'Root Two begins here. Not with what a person wants to earn. With what is being exchanged—and everything the price fails to explain by itself.' },
+  ],
+  promise: 'Root Two teaches how value, labor, time, expertise, results, demand, scarcity, access, responsibility, risk, systems, bargaining power, and working conditions affect earning and exchange. You will separate time from result, effort from outcome, skill from title, price from worth, demand from importance, compensation from human dignity, individual performance from surrounding systems, and opportunity from equal access.',
+  question: 'When you see someone paid more for completing work quickly, which explanation appears first?',
+  options: ['They charged too much', 'Their experience made the work faster', 'The result mattered more than the time', 'Demand or scarcity affected the exchange', 'I need more information'],
+  response: 'Keep that answer. Root Two will show you what it notices—and what it may be leaving out.',
+};
+
+export const rootTwoScanLenses = [
+  { id: 'work', title: 'Work', prompt: 'What labor, skill, judgment, preparation, access, care, or responsibility is being provided?' },
+  { id: 'result', title: 'Result', prompt: 'What changes, becomes possible, gets prevented, improves, moves, heals, works, arrives, or becomes usable?' },
+  { id: 'conditions', title: 'Conditions', prompt: 'What demand, scarcity, timing, tools, systems, risk, access, authority, location, bias, or constraint shapes the exchange?' },
+  { id: 'complete-exchange', title: 'Complete Exchange', prompt: 'Who provides what, who benefits, who carries the cost or responsibility, how does payment occur, and what remains invisible?' },
+];
+
+export const rootTwoSourceCatalog = {
+  blsCareer: { id: 'bls-career', label: 'Occupational Outlook Handbook · U.S. Bureau of Labor Statistics', url: 'https://www.bls.gov/ooh/' },
+  blsWages: { id: 'bls-wages', label: 'Occupational Employment and Wage Statistics · U.S. Bureau of Labor Statistics', url: 'https://www.bls.gov/oes/' },
+  blsProductivity: { id: 'bls-productivity', label: 'Labor Productivity and Costs · U.S. Bureau of Labor Statistics', url: 'https://www.bls.gov/lpc/' },
+  dolWages: { id: 'dol-wages', label: 'Wages and the Fair Labor Standards Act · U.S. Department of Labor', url: 'https://www.dol.gov/agencies/whd/flsa' },
+  eeocPay: { id: 'eeoc-pay', label: 'Equal pay and compensation discrimination · U.S. Equal Employment Opportunity Commission', url: 'https://www.eeoc.gov/fact-sheet/facts-about-equal-pay-and-compensation-discrimination' },
+  onet: { id: 'onet', label: 'O*NET OnLine · U.S. Department of Labor', url: 'https://www.onetonline.org/' },
+};
+
+function lessonSlug(value) {
+  return String(value || '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+    .replace(/&/g, ' and ').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+
+function lessonSources(lesson) {
+  const text = `${lesson.title} ${lesson.focus} ${lesson.concept.title} ${lesson.concept.explanation} ${lesson.tradeoff}`.toLowerCase();
+  const sources = [rootTwoSourceCatalog.blsCareer, rootTwoSourceCatalog.onet];
+  if (/wage|salary|pay|compensation|hourly|overtime|employee/.test(text)) sources.push(rootTwoSourceCatalog.blsWages, rootTwoSourceCatalog.dolWages);
+  if (/productiv|result|output|efficien|system|tool/.test(text)) sources.push(rootTwoSourceCatalog.blsProductivity);
+  if (/bias|discrimin|equal pay|barrier|access/.test(text)) sources.push(rootTwoSourceCatalog.eeocPay);
+  return [...new Map(sources.map((source) => [source.id, source])).values()];
+}
+
+function exchangeDecisionDrill(lesson) {
+  return {
+    prompt: `In ${lesson.title}, which response keeps the complete exchange visible?`,
+    options: [
+      {
+        id: 'complete-exchange',
+        strength: 'strong',
+        label: 'Keep the work, result, conditions, and complete exchange visible',
+        feedback: `This keeps ${lesson.concept.title.toLowerCase()} connected to the people, preparation, consequences, responsibility, and conditions in the story.`,
+      },
+      {
+        id: 'visible-number',
+        strength: 'developing',
+        label: 'Treat the most visible number as the complete answer and decide from it alone',
+        feedback: `The visible number matters, but it cannot carry the full lesson about ${lesson.focus.toLowerCase()}. Work, result, and conditions are still missing.`,
+      },
+      {
+        id: 'universal-rule',
+        strength: 'developing',
+        label: 'Apply one universal rule to every worker, buyer, and set of conditions',
+        feedback: 'A general rule can feel efficient while hiding access, timing, alternatives, power, risk, and responsibility. Return to the specific exchange.',
+      },
+    ],
+  };
+}
+
 export const rootTwoDistricts = districtPlan.map((plan, districtIndex) => {
   const chapter = rootTwoChapters[plan.chapter];
   return {
@@ -3945,17 +4025,63 @@ export const rootTwoDistricts = districtPlan.map((plan, districtIndex) => {
     number: String(districtIndex + 1).padStart(2, '0'),
     arc: chapter.arc,
     capability: chapter.closingCapability,
-    lessons: chapter.lessons.slice(plan.start, plan.end).map((lesson, offset) => ({
-      ...lesson,
-      sourceChapterIndex: plan.chapter,
-      sourceLessonIndex: plan.start + offset,
-      progressKey: `${plan.chapter}-${plan.start + offset}`,
-    })),
+    lessons: chapter.lessons.slice(plan.start, plan.end).map((lesson, offset) => {
+      const slug = lessonSlug(lesson.title);
+      const legalBoundary = /wage|salary|pay|compensation|discrimin|bias|credential|license|classification|right|contract/.test(`${lesson.title} ${lesson.focus} ${lesson.tradeoff}`.toLowerCase());
+      const sageBeat = lesson.story.find((beat) => beat.type === 'sage') || lesson.story.find((beat) => beat.speaker === 'Sage');
+      return {
+        ...lesson,
+        slug,
+        key: slug,
+        sourceChapterIndex: plan.chapter,
+        sourceLessonIndex: plan.start + offset,
+        legacyProgressKey: `${plan.chapter}-${plan.start + offset}`,
+        progressKey: slug,
+        sageOpening: sageBeat?.text || `Keep ${lesson.focus.toLowerCase()} connected to the complete exchange before deciding what the price means.`,
+        understand: { title: lesson.concept.title, body: lesson.concept.explanation },
+        recognize: { title: 'Where the exchange appears', body: lesson.connection },
+        examine: { title: 'What may be driving the choice', body: lesson.tradeoff },
+        financialParallel: `${lesson.concept.explanation} ${lesson.tradeoff}`,
+        mirrorPrompt: lesson.connection,
+        workbook: { prompt: lesson.application.prompt, placeholder: lesson.application.placeholder },
+        check: {
+          ...lesson.check,
+          options: lesson.check.options.map((option, optionIndex) => ({
+            ...option,
+            id: `choice-${optionIndex + 1}`,
+            isCorrect: Boolean(option.correct),
+          })),
+        },
+        decisionDrill: exchangeDecisionDrill(lesson),
+        growthStatement: lesson.takeaway.startsWith('I can ')
+          ? lesson.takeaway
+          : `I can examine ${lesson.focus.toLowerCase()} without confusing compensation with human worth.`,
+        sources: lessonSources(lesson),
+        sourceBoundary: legalBoundary,
+        scanPrompts: rootTwoScanLenses.map((lens) => ({ ...lens })),
+        transition: '',
+      };
+    }),
   };
 });
 
+export const rootTwoLessons = rootTwoDistricts.flatMap((district) => district.lessons);
+
+rootTwoLessons.forEach((lesson, index) => {
+  const next = rootTwoLessons[index + 1];
+  lesson.transition = next
+    ? `Ivy, Eli, and Sage continue through the Exchange District toward ${next.title.toLowerCase()}: ${next.opening}`
+    : 'As the evening market closes, money moves from work into rent, food, transportation, debt, savings, and every choice waiting beyond the district. Ivy and Eli follow Sage toward Root Three: Choice, Cash Flow & Spending.';
+});
+
+export function rootTwoNarration(lesson) {
+  return `${lesson.sageOpening}\n\n${lesson.opening}\n\nListen for the work, result, conditions, and complete exchange as Ivy and Eli move through the scene.`;
+}
+
 export const rootTwoQuickPrompts = [
-  { key: 'explain', label: 'Explain this simply' },
-  { key: 'example', label: 'Give me another example' },
-  { key: 'apply', label: 'Help me apply this' },
+  { key: 'exchange', label: 'Show me the complete exchange' },
+  { key: 'time', label: 'Separate time from value' },
+  { key: 'invisible', label: 'Help me identify invisible work' },
+  { key: 'result', label: 'Explain what changed the result' },
+  { key: 'power', label: 'Help me examine the power in this exchange' },
 ];

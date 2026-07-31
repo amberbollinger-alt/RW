@@ -1,7 +1,7 @@
 import { ROOT_CATALOG, ROOT_GROUPS } from './root-catalog';
 import { createRootRegistry, rootActionForProgress, validateRootRegistry } from './root-registry-core';
 import { rootOneIntroduction, rootOneRootsData } from './root-one-roots-data';
-import { rootTwoDistricts } from './root-two-data';
+import { ROOT_TWO_LEGACY_PROGRESS_KEYS, ROOT_TWO_PROGRESS_KEY, rootTwoDistricts } from './root-two-data';
 import { rootThreeRootsData } from './root-three-roots-data';
 import { rootFourRootsData } from './root-four-roots-data';
 import { rootFiveLessons, rootFiveOpening } from './root-five-data';
@@ -9,7 +9,9 @@ import { rootSixLessons, rootSixOpening } from './root-six-data';
 import { rootSevenLessons, rootSevenOpening } from './root-seven-data';
 
 const rootTwoLessons = rootTwoDistricts.flatMap((district) => district.lessons.map((lesson) => ({
-  id: lesson.progressKey,
+  id: lesson.slug,
+  slug: lesson.slug,
+  legacyId: lesson.legacyProgressKey,
   order: 0,
   number: lesson.number,
   title: lesson.title,
@@ -32,7 +34,7 @@ const lessonSources = {
 
 const progressKeys = {
   one: ['rootwise_root_one_city_progress'],
-  two: ['rootwise_root_two_journey_v4', 'rootwise_root_two_journey_v3'],
+  two: [ROOT_TWO_PROGRESS_KEY, ...ROOT_TWO_LEGACY_PROGRESS_KEYS],
   three: ['rootwise_root_three_city_progress_v2'],
   four: ['rootwise_root_four_reservoir_progress_v2'],
   five: ['rootwise_root_five_bridge_progress_v1'],
@@ -102,13 +104,18 @@ export function readRootProgress(root, storage = globalThis.localStorage) {
 
   const records = root.progressKeys.map((key) => safeRecord(storage.getItem(key)));
   const validIds = new Set(root.lessons.map((lesson) => lesson.id));
+  const legacyRootTwoIds = root.slug === 'two'
+    ? new Map(root.lessons.map((lesson) => [lesson.legacyId, lesson.id]))
+    : new Map();
   const completedIds = [...new Set(records.flatMap((record) => Array.isArray(record.completed) ? record.completed : []))]
+    .map((id) => validIds.has(id) ? id : legacyRootTwoIds.get(id))
     .filter((id) => validIds.has(id));
   const primary = records.find(hasProgress) || records[0] || {};
   let activeOrder = Number.isInteger(primary.activeIndex) ? primary.activeIndex + 1 : 1;
 
   if (root.slug === 'two') {
-    const activeLesson = root.lessons.find((lesson) => lesson.sourceChapterIndex === primary.chapter && lesson.sourceLessonIndex === primary.lesson);
+    const activeLesson = root.lessons.find((lesson) => lesson.id === primary.lastVisitedSlug || lesson.id === primary.activeSlug)
+      || root.lessons.find((lesson) => lesson.sourceChapterIndex === primary.chapter && lesson.sourceLessonIndex === primary.lesson);
     activeOrder = activeLesson?.order || 1;
   }
 

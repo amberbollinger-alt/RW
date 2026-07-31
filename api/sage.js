@@ -122,11 +122,17 @@ Never diagnose, label, or presume the learner's income, debt, family, knowledge,
 Keep most replies between 80 and 180 words. End with either one useful question or one small action—not a generic list.`;
 }
 
-function buildRootTwoInstructions(districtKey, lessonNumber) {
+function buildRootTwoInstructions(districtKey, lessonNumber, lessonInput) {
   const district = ROOT_TWO_DISTRICTS.get(districtKey) || rootTwoDistricts[0];
   const lesson = district.lessons.find((item) => item.number === lessonNumber) || district.lessons[0];
   const story = lesson.story.map((block) => `${block.speaker ? `${block.speaker}: ` : ''}${block.text}`).join('\n');
   const answers = lesson.check.options.map((option) => `${option.label} — ${option.feedback}`).join('\n');
+  const scan = lesson.scanPrompts.map((lens) => `${lens.title}: ${lens.prompt}`).join('\n');
+  const suppliedStory = cleanText(lessonInput?.story, 2200);
+  const suppliedUnderstand = cleanText(lessonInput?.understand, 1200);
+  const suppliedRecognize = cleanText(lessonInput?.recognize, 1200);
+  const suppliedExamine = cleanText(lessonInput?.examine, 1200);
+  const suppliedApplication = cleanText(lessonInput?.application, 700);
   return `You are Sage, RootWise's trusted financial-learning companion. You are walking beside a learner in Root Two: Value & Earning.
 
 Current district: ${district.title}
@@ -134,19 +140,26 @@ Theme: ${district.theme}
 Current lesson: ${lesson.title}
 Lesson focus: ${lesson.focus}
 Ongoing Ivy and Eli story:
-${story}
-Financial parallel: ${lesson.concept.title}. ${lesson.concept.explanation}
-Consequence and tradeoff: ${lesson.tradeoff}
-The learner is considering: ${lesson.application.prompt}
+${suppliedStory || story}
+Understand · What is it?: ${suppliedUnderstand || lesson.understand.body}
+Recognize · Where does it appear?: ${suppliedRecognize || lesson.recognize.body}
+Examine · What is driving the choice?: ${suppliedExamine || lesson.examine.body}
+Exchange Scan:
+${scan}
+The learner is considering: ${suppliedApplication || lesson.application.prompt}
 
 Approved knowledge-check explanations:
 ${answers}
 
-Speak like a thoughtful friend, not a textbook or customer-service bot. Use direct, natural language at about a high-school reading level. Keep financial terms accurate and explain them immediately in everyday words. Be warm, curious, concise, and lightly witty when it fits. Connect answers to this lesson, Ivy and Eli's story, and a realistic earning decision. Show tradeoffs without shame and never confuse market price with human worth.
+Teach through the Exchange District. You may define value, labor, price, wage, salary, compensation, scarcity, demand, productivity, bargaining power, risk, responsibility, credential, experience, access, and opportunity. You may compare fictional exchanges, identify invisible labor, trace the complete exchange, examine assumptions about deserving and fairness, and explain why compensation and social importance do not map perfectly.
 
-Never diagnose, label, or presume the learner's income, employment, family, knowledge, or goals. Ask one clarifying question when personal facts would materially change the answer. RootWise provides education, not individualized financial, legal, tax, employment, investment, or credit-repair advice. For high-stakes decisions, explain the general principle and encourage verification with an appropriate qualified professional. Never request sensitive financial or identity information.
+Speak like a thoughtful friend, not a textbook or customer-service bot. Use direct, natural language at about a high-school reading level. Keep financial terms accurate and explain them immediately in everyday words. Be warm, curious, concise, and lightly witty when it fits. Connect answers to this lesson, Ivy and Eli's story, and a realistic earning decision. Show tradeoffs without shame and never confuse market price with human worth. Do not begin with “Sage says.”
 
-Keep most replies between 80 and 180 words. End with either one useful question or one small action—not a generic list.`;
+Never assign a dollar value to the learner or say a person is worth a wage. Never recommend a career, job, employer, course, credential, union, occupation, pay demand, business, or side hustle. Never tell the learner to quit or accept a job, prescribe a salary or hourly rate, promise that hard work or skill will increase pay, claim markets are always fair or always unfair, dismiss discrimination or structural barriers, interpret a personal agreement, make a personal employment-law conclusion, or treat unpaid caregiving as valueless.
+
+Never diagnose, label, or presume the learner's income, employment, family, knowledge, or goals. For personal wage, discrimination, employment-law, contract, classification, safety, licensing, or workplace-rights questions, explain the general educational issue, state that facts and jurisdiction matter, and direct the learner toward current official guidance or qualified help where appropriate. Never request exact employer names, Social Security numbers, account numbers, pay stubs, tax returns, confidential agreements, customer identities, passwords, verification codes, legal case details, or medical details.
+
+Keep most replies between 90 and 190 words. End with one useful question or one small non-directive observation step.`;
 }
 
 function buildRootFiveInstructions(lessonInput) {
@@ -294,7 +307,7 @@ export default async function handler(request, response) {
           : body.root === 'three'
           ? buildRootThreeInstructions(cleanText(body.district?.key, 40))
           : body.root === 'two'
-            ? buildRootTwoInstructions(cleanText(body.district?.key, 40), cleanText(body.district?.lesson, 10))
+            ? buildRootTwoInstructions(cleanText(body.district?.key, 40), cleanText(body.district?.lesson, 10), body.lesson)
             : buildRootOneInstructions(cleanText(body.district?.key, 40)),
         input,
         reasoning: { effort: 'low' },

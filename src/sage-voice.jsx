@@ -88,6 +88,12 @@ export default function SageVoice({ pageText = '' }) {
   useEffect(() => {
     const onVoice = (event) => {
       releaseAudio();
+      if (event.detail?.cancel) {
+        setOpen(false);
+        setQueuedText('');
+        setMessage('Sage can read the current lesson aloud.');
+        return;
+      }
       setQueuedText(String(event.detail?.text || '').slice(0, 3000));
       setMessage(event.detail?.label || 'Sage is ready to speak.');
       setOpen(true);
