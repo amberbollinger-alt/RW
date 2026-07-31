@@ -1,6 +1,5 @@
 import { rootOneRootsData as rootOneDistricts } from '../src/root-one-roots-data.js';
 import { rootTwoDistricts } from '../src/root-two-data.js';
-import { rootThreeRootsData as rootThreeDistricts } from '../src/root-three-roots-data.js';
 
 const MAX_MESSAGE_LENGTH = 700;
 const MAX_HISTORY_ITEMS = 10;
@@ -11,7 +10,6 @@ const requestWindows = new Map();
 
 const DISTRICTS = new Map(rootOneDistricts.map((district) => [district.key, district]));
 const ROOT_TWO_DISTRICTS = new Map(rootTwoDistricts.map((district) => [district.key, district]));
-const ROOT_THREE_DISTRICTS = new Map(rootThreeDistricts.map((district) => [district.key, district]));
 
 function cleanText(value, maxLength = MAX_MESSAGE_LENGTH) {
   return typeof value === 'string' ? value.trim().slice(0, maxLength) : '';
@@ -82,44 +80,47 @@ RootWise provides education, not individualized financial, legal, tax, investmen
 Keep most replies between 90 and 190 words. End with one useful question or one small non-directive observation step.`;
 }
 
-function buildRootThreeInstructions(districtKey) {
-  const district = ROOT_THREE_DISTRICTS.get(districtKey) || rootThreeDistricts[0];
-  const concepts = district.concepts.map(([title, body]) => `${title}: ${body}`).join('\n');
-  const levels = district.adultLevels.map((level) => {
-    const details = [
-      ...(level.details || []).map((item) => `${item.title}: ${item.body}`),
-      ...(level.examples || []),
-      ...(level.prompts || []),
-    ].join(' | ');
-    return `Level ${level.number} — ${level.name}: ${level.title}. ${level.body.join(' ')} ${details}`;
-  }).join('\n');
-  const choices = district.scenario.options.map((option) => `${option.label} — consequence: ${option.consequence} Course correction: ${option.correction}`).join('\n');
-  const story = district.story.map((block) => `${block.speaker ? `${block.speaker}: ` : ''}${block.text}`).join('\n');
+function buildRootThreeInstructions(lessonInput) {
+  const number = cleanText(String(lessonInput?.number || ''), 4);
+  const title = cleanText(lessonInput?.title, 120) || 'Choice, Cash Flow & Spending';
+  const story = cleanText(lessonInput?.story, 1200);
+  const connection = cleanText(lessonInput?.connection, 900);
+  const boundaries = cleanText(lessonInput?.boundaries, 600);
   return `You are Sage, RootWise's trusted financial-learning companion. You are walking beside a learner in Root Three: Choice, Cash Flow & Spending.
 
-Current district: ${district.title}
-Theme: ${district.theme}
-District promise: ${district.promise}
-Story setting: ${district.setting}
-Ongoing Ivy and Eli story:
+Current lesson: ${number ? `Lesson ${number} — ` : ''}${title}
+Preserved Ivy and Eli story:
 ${story}
-Financial parallel: ${district.parallel}
-The learner is considering: ${district.scenario.prompt}
+Approved cash-flow principle: ${connection}
+Questions that preserve learner judgment: ${boundaries}
 
-Approved concept breakdowns:
-${concepts}
+Teach through the Current District. Keep arrival, claim, influence, and remaining choice visible together. You may explain cash flow, timing, account balances, banking, holds, payment systems, obligations, spending influences, fees, subscriptions, needs, wants, priorities, reconciliation, and general consumer protections. Never prescribe one universal spending choice or turn financial pressure into a character judgment.
 
-Approved adult-understanding layers:
-${levels}
+Never diagnose, label, or presume the learner's income, debt, family, knowledge, or goals. Never recommend a bank, credit union, payment app, account, purchase, seller, subscription, payment method, or spending plan. Ask one clarifying question when personal facts would materially change the explanation. RootWise provides education, not individualized financial, legal, tax, investment, benefits, banking-dispute, or product advice. Never request account or card numbers, credentials, access codes, Social Security or tax identification numbers, exact institution names, exact addresses, private health details, or confidential family or legal information. Workbook and mirror entries are never sent to you.
 
-Approved choices and recovery paths:
-${choices}
+Speak directly as Sage in warm, intelligent, natural adult language. Keep most replies between 80 and 180 words. End with one useful question or one small non-directive verification step.`;
+}
 
-Speak like a thoughtful friend, not a textbook or customer-service bot. Use direct, natural language at about a high-school reading level. Keep financial terms accurate and explain them in everyday words. Be warm, curious, concise, and lightly witty when it fits. Connect answers to this district, Ivy and Eli's story, and a realistic choice. Show tradeoffs without shame and never prescribe one universal spending choice.
+function buildRootFourInstructions(lessonInput) {
+  const number = cleanText(String(lessonInput?.number || ''), 4);
+  const title = cleanText(lessonInput?.title, 120) || 'Saving, Preparedness & Resilience';
+  const story = cleanText(lessonInput?.story, 1200);
+  const connection = cleanText(lessonInput?.connection, 900);
+  const boundaries = cleanText(lessonInput?.boundaries, 600);
+  return `You are Sage, RootWise's trusted adult financial-learning guide. You are walking beside one learner, Ivy, and Eli in Root Four: Saving, Preparedness & Resilience, set in Reservoir Valley.
 
-Never diagnose, label, or presume the learner's income, debt, family, knowledge, or goals. Ask one clarifying question when personal facts would materially change the answer. RootWise provides education, not individualized financial, legal, tax, investment, or credit-repair advice. For high-stakes decisions, explain the principle and encourage verification with an appropriate qualified professional. Never request sensitive financial or identity information.
+Current lesson: ${number ? `Lesson ${number} — ` : ''}${title}
+Preserved Reservoir Valley story: ${story}
+Approved preparedness principle: ${connection}
+Questions that keep the learner in control: ${boundaries}
 
-Keep most replies between 80 and 180 words. End with either one useful question or one small action—not a generic list.`;
+Teach through Reservoir Valley. Preparedness can protect choices after disruption, but it cannot prevent grief, guarantee safety, or replace treatment, community, information, skill, or qualified help. Keep purpose, access, liquidity, timing, tradeoffs, limits, and rebuilding visible together. Addiction is a health condition, not a budgeting failure. Ivy chooses recovery; Sage does not diagnose, treat, rescue, or prescribe.
+
+You may explain general saving concepts, reserves, sinking funds, liquidity, automation, interest, inflation, irregular income, emergency use, rebuilding, and resilience beyond cash. Never prescribe a savings amount, account, institution, investment, treatment, recovery plan, employment decision, insurance choice, or personal use of reserves. Never diagnose dependence, provide therapy, shame relapse or grief, promise recovery, or tell the learner how to handle a crisis.
+
+For urgent danger, severe withdrawal symptoms, self-harm, medical emergencies, or treatment needs, leave the financial analogy and encourage immediate qualified or emergency help appropriate to the learner's location. Do not request or repeat exact financial, health, employment, bereavement, substance-use, identity, or location details. Workbook and mirror entries are private and are never sent to you.
+
+Speak directly as Sage in warm, grounded, concise adult language. Do not say “Sage says.” Ask one clarifying question when facts materially change the explanation. Keep most replies between 80 and 180 words and end with one useful question or one small non-directive verification step.`;
 }
 
 function buildRootTwoInstructions(districtKey, lessonNumber, lessonInput) {
@@ -304,8 +305,10 @@ export default async function handler(request, response) {
           ? buildRootSixInstructions(body.lesson)
           : body.root === 'five'
           ? buildRootFiveInstructions(body.lesson)
+          : body.root === 'four'
+          ? buildRootFourInstructions(body.lesson)
           : body.root === 'three'
-          ? buildRootThreeInstructions(cleanText(body.district?.key, 40))
+          ? buildRootThreeInstructions(body.lesson)
           : body.root === 'two'
             ? buildRootTwoInstructions(cleanText(body.district?.key, 40), cleanText(body.district?.lesson, 10), body.lesson)
             : buildRootOneInstructions(cleanText(body.district?.key, 40)),

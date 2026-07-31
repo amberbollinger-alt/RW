@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import {
   ArrowLeft, ArrowRight, BookOpen, Check, CheckCircle2, ChevronRight,
-  ExternalLink, Eye, EyeOff, Menu, MessageCircle, Play, Sparkles, Waves, X,
+  ExternalLink, Eye, EyeOff, LoaderCircle, Menu, MessageCircle, Play, Send,
+  Sparkles, Waves, X,
 } from 'lucide-react';
 import { ApprovedArtwork } from './approved-artwork';
 import lessons from './root-four-master-data.json';
@@ -42,6 +43,77 @@ function Levels({ lesson }) {
 
 function PrivatePanel({ kind, title, prompt, value, status, onValue, onStatus, children }) {
   return <section className="r4-card r4-reflection"><div><p className="r4-eyebrow"><MessageCircle /> {kind} · Private on this device</p><h2>{title}</h2><p>{prompt}</p>{children}<label>Your private entry<textarea value={value || ''} rows={6} onChange={(event) => { onValue(event.target.value); onStatus(''); }} placeholder="Use ranges, categories, a fictional example, or leave this blank." /></label><div className="r4-application-actions"><button type="button" disabled={!String(value || '').trim()} onClick={() => onStatus('saved')}><Check /> Save privately</button><button type="button" onClick={() => onStatus('skipped')}>Continue without writing</button>{value && <button type="button" onClick={() => { onValue(''); onStatus(''); }}>Clear entry</button>}</div>{status && <p className="r4-application-status" aria-live="polite"><CheckCircle2 /> {status === 'saved' ? 'Saved only on this device.' : 'Intentional skip saved. You may return later.'}</p>}</div><aside><strong>Privacy note</strong><p>Exact financial, health, employment, bereavement, or substance-use information is never required and is not sent to Ask Sage.</p></aside></section>;
+}
+
+function AskSage({ lesson }) {
+  const welcome = `We’re at ${lesson.title}. Ask me to separate the reservoir’s purpose, access, tradeoff, limit, or rebuilding path.`;
+  const [open, setOpen] = useState(false);
+  const [draft, setDraft] = useState('');
+  const [sending, setSending] = useState(false);
+  const [messages, setMessages] = useState([{ role: 'assistant', content: welcome }]);
+  const toggleRef = useRef(null);
+  const closeRef = useRef(null);
+  useEffect(() => {
+    if (!open) return undefined;
+    closeRef.current?.focus();
+    const onKey = (event) => {
+      if (event.key === 'Escape') {
+        setOpen(false);
+        toggleRef.current?.focus();
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [open]);
+  const send = async (message) => {
+    const clean = message.trim();
+    if (!clean || sending) return;
+    const next = [...messages, { role: 'user', content: clean }];
+    setMessages(next);
+    setDraft('');
+    setSending(true);
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 22000);
+    try {
+      const response = await fetch('/api/sage', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          root: 'four',
+          message: clean,
+          lesson: {
+            number: lesson.number,
+            title: lesson.title,
+            story: lesson.story.map((line) => `${line.speaker ? `${line.speaker}: ` : ''}${line.text}`).join(' ').slice(0, 1200),
+            connection: lesson.levels.flatMap((level) => level.paragraphs).join(' ').slice(0, 900),
+            boundaries: lesson.lenses.map((lens) => `${lens.title}: ${lens.body}`).join(' ').slice(0, 600),
+          },
+          history: messages.slice(-9),
+        }),
+        signal: controller.signal,
+      });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok || !payload.reply) throw new Error('unavailable');
+      setMessages([...next, { role: 'assistant', content: payload.reply }]);
+      queueSageVoice(payload.reply, 'Sage answered your Root Four question.');
+    } catch {
+      setMessages([...next, { role: 'assistant', unavailable: true, content: 'The conversation service is not reachable right now. The lesson, sources, private work, and narration remain available.' }]);
+    } finally {
+      window.clearTimeout(timeout);
+      setSending(false);
+    }
+  };
+  return <>
+    <button ref={toggleRef} type="button" className="r4-sage-toggle" onClick={() => setOpen(true)} aria-expanded={open} aria-controls="r4-sage-panel"><MessageCircle /> Ask Sage</button>
+    {open && <button type="button" className="r4-sage-scrim" onClick={() => { setOpen(false); toggleRef.current?.focus(); }} aria-label="Close Ask Sage" />}
+    <aside id="r4-sage-panel" className={open ? 'r4-sage is-open' : 'r4-sage'} role="dialog" aria-modal="true" aria-hidden={!open} aria-label="Ask Sage support">
+      <header><div><Sparkles /><span><strong>Ask Sage</strong><small>{lesson.title}</small></span></div><button ref={closeRef} type="button" onClick={() => { setOpen(false); toggleRef.current?.focus(); }} aria-label="Close Ask Sage"><X /></button></header>
+      <div className="r4-sage-messages" aria-live="polite">{messages.map((message, index) => <div className={`${message.role} ${message.unavailable ? 'is-unavailable' : ''}`} key={`${lesson.key}-${index}`}><strong>{message.role === 'assistant' ? 'Sage' : 'You'}</strong><p>{message.content}</p></div>)}{sending && <div className="assistant"><LoaderCircle className="r4-spin" /><p>Sage is thinking…</p></div>}</div>
+      <div className="r4-quick">{['Name the purpose', 'Show the access tradeoff', 'Separate grief from the math', 'Map the rebuilding path'].map((prompt) => <button type="button" disabled={sending} onClick={() => send(`${prompt} in ${lesson.title}. Keep the Reservoir Valley story and RootWise boundaries in view.`)} key={prompt}>{prompt}</button>)}</div>
+      <form onSubmit={(event) => { event.preventDefault(); send(draft); }}><label htmlFor={`r4-sage-${lesson.key}`}>Ask about this lesson</label><div><textarea id={`r4-sage-${lesson.key}`} rows={3} maxLength={700} value={draft} onChange={(event) => setDraft(event.target.value)} placeholder="What are you trying to understand?" /><button type="submit" disabled={!draft.trim() || sending} aria-label="Send question"><Send /></button></div></form>
+      <footer>Do not share exact financial, health, employment, bereavement, substance-use, identity, or location details. Sage provides education and reflection support—not diagnosis, treatment, crisis care, or individualized financial direction.</footer>
+    </aside>
+  </>;
 }
 
 function Lesson({ lesson, state, setField }) {
@@ -97,5 +169,6 @@ export default function RootFourValley({ go, initialLessonKey, onLessonChange })
     <div className="r4-shell">{navOpen && <button type="button" className="r4-nav-scrim" onClick={() => setNavOpen(false)} aria-label="Close lesson menu" />}<aside className={navOpen ? 'r4-nav-wrap is-open' : 'r4-nav-wrap'}><div className="r4-chapter-nav"><header><div><p>Root Four</p><h2>Reservoir Valley</h2></div><button type="button" onClick={() => setNavOpen(false)} aria-label="Close lesson menu"><X /></button></header><nav aria-label="Root Four lessons">{lessons.map((item, index) => <button type="button" className={index === activeIndex ? 'is-active' : ''} onClick={() => select(index)} key={item.key}><span>{state.completed.includes(item.key) ? <Check /> : item.number}</span><span><small>Part {item.part} · {item.season}</small><strong>{item.title}</strong></span><ChevronRight /></button>)}</nav><footer>{state.completed.length} of 22 lessons complete</footer></div></aside>
       <article className="r4-lesson"><Lesson lesson={lesson} state={state} setField={keyed} /><footer className="r4-footer"><button type="button" disabled={activeIndex === 0} onClick={() => select(activeIndex - 1)}><ArrowLeft /> Previous</button><button type="button" disabled={!ready} className={state.completed.includes(lesson.key) ? 'is-complete' : ''} onClick={complete}><CheckCircle2 />{state.completed.includes(lesson.key) ? 'Lesson complete' : ready ? 'Complete lesson' : 'Finish all lesson steps'}</button><button type="button" onClick={() => activeIndex === 21 ? go('/roots/five') : select(activeIndex + 1)}>{activeIndex === 21 ? 'Enter Root Five' : 'Next lesson'} <ArrowRight /></button></footer></article>
     </div>
+    <AskSage key={lesson.key} lesson={lesson} />
   </main>;
 }
