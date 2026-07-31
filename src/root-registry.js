@@ -2,8 +2,8 @@ import { ROOT_CATALOG, ROOT_GROUPS } from './root-catalog';
 import { createRootRegistry, rootActionForProgress, validateRootRegistry } from './root-registry-core';
 import { rootOneIntroduction, rootOneRootsData } from './root-one-roots-data';
 import { ROOT_TWO_LEGACY_PROGRESS_KEYS, ROOT_TWO_PROGRESS_KEY, rootTwoDistricts } from './root-two-data';
-import { rootThreeRootsData } from './root-three-roots-data';
-import { rootFourRootsData } from './root-four-roots-data';
+import { ROOT_THREE_PROGRESS_KEY, rootThreeLessons, rootThreeOpening } from './root-three-data';
+import rootFourMasterLessons from './root-four-master-data.json';
 import { rootFiveLessons, rootFiveOpening } from './root-five-data';
 import { rootSixLessons, rootSixOpening } from './root-six-data';
 import { rootSevenLessons, rootSevenOpening } from './root-seven-data';
@@ -25,8 +25,8 @@ rootTwoLessons.forEach((lesson, index) => { lesson.order = index + 1; });
 const lessonSources = {
   one: rootOneRootsData.map((lesson, index) => ({ id: lesson.key, order: index + 1, number: lesson.number, title: lesson.title, group: `Part ${lesson.part.number} · ${lesson.part.title}`, published: true })),
   two: rootTwoLessons,
-  three: rootThreeRootsData.map((lesson, index) => ({ id: lesson.key, order: index + 1, number: lesson.number, title: lesson.title, group: lesson.theme, published: true })),
-  four: rootFourRootsData.map((lesson, index) => ({ id: lesson.key, order: index + 1, number: lesson.number, title: lesson.shortTitle, group: lesson.season, published: true })),
+  three: rootThreeLessons.map((lesson) => ({ id: lesson.key, order: lesson.number, number: lesson.displayNumber, title: lesson.title, group: `Part ${lesson.part.number} · ${lesson.part.title}`, published: true })),
+  four: rootFourMasterLessons.map((lesson, index) => ({ id: lesson.key, order: index + 1, number: lesson.number, title: lesson.title, group: `Part ${lesson.part} · ${lesson.partTitle}`, published: true })),
   five: rootFiveLessons.map((lesson) => ({ id: lesson.key, order: lesson.number, number: lesson.displayNumber, title: lesson.title, group: `Part ${lesson.part.number} · ${lesson.part.title}`, published: true })),
   six: rootSixLessons.map((lesson) => ({ id: lesson.key, order: lesson.number, number: lesson.displayNumber, title: lesson.title, group: `Part ${lesson.part.number} · ${lesson.part.title}`, published: true })),
   seven: rootSevenLessons.map((lesson) => ({ id: lesson.key, order: lesson.number, number: lesson.displayNumber, title: lesson.title, group: `Part ${lesson.part.number} · ${lesson.part.title}`, published: true })),
@@ -35,8 +35,8 @@ const lessonSources = {
 const progressKeys = {
   one: ['rootwise_root_one_city_progress'],
   two: [ROOT_TWO_PROGRESS_KEY, ...ROOT_TWO_LEGACY_PROGRESS_KEYS],
-  three: ['rootwise_root_three_city_progress_v2'],
-  four: ['rootwise_root_four_reservoir_progress_v2'],
+  three: [ROOT_THREE_PROGRESS_KEY, 'rootwise_root_three_city_progress_v2'],
+  four: ['rootwise_root_four_reservoir_progress_v3', 'rootwise_root_four_reservoir_progress_v2'],
   five: ['rootwise_root_five_bridge_progress_v1'],
   six: ['rootwise_root_six_harbor_progress_v1'],
   seven: ['rootwise_root_seven_opportunity_progress_v1'],
@@ -44,6 +44,7 @@ const progressKeys = {
 
 const registry = createRootRegistry(ROOT_CATALOG, lessonSources, {
   one: rootOneIntroduction.question,
+  three: rootThreeOpening.coreQuestion,
   five: rootFiveOpening.coreQuestion,
   six: rootSixOpening.coreQuestion,
   seven: rootSevenOpening.coreQuestion,

@@ -167,8 +167,29 @@ function App() {
   const [routeKind, rootSlug, lessonSlug] = route.split(':');
   const currentRoot = routeKind === 'root-overview' || routeKind === 'root-lesson' ? getRootBySlug(rootSlug) : null;
   const currentLesson = routeKind === 'root-lesson' && currentRoot ? getLessonBySlug(currentRoot, lessonSlug) : null;
-  const knownRoutes = ['home', 'journey', 'signup', 'assessment', 'heart', 'dashboard', 'learn', 'tools', 'tool-dictionary', 'schools', 'legacy-my-journey', 'legacy-tools'];
+  const knownRoutes = ['home', 'journey', 'profile', 'assessment', 'heart', 'dashboard', 'learn', 'tools', 'tool-dictionary', 'schools', 'privacy', 'terms', 'accessibility', 'faq', 'contact', 'legacy-my-journey', 'legacy-tools'];
   const routeMissing = !knownRoutes.includes(route) && !currentRoot && routeKind !== 'tool';
+  React.useEffect(() => {
+    const titles = {
+      home: 'Root$Wise',
+      heart: 'Before We Enter the City · Root$Wise',
+      dashboard: 'Your Grove · Root$Wise',
+      learn: 'The Eleven Roots · Root$Wise',
+      assessment: 'Financial Roots Assessment · Root$Wise',
+      tools: 'Tools · Root$Wise',
+      'tool-dictionary': 'Money Dictionary · Root$Wise',
+      schools: 'Schools · Root$Wise',
+      profile: 'Your Grove Profile · Root$Wise',
+      privacy: 'Privacy · Root$Wise',
+      terms: 'Terms of Use · Root$Wise',
+      accessibility: 'Accessibility · Root$Wise',
+      faq: 'Frequently Asked Questions · Root$Wise',
+      contact: 'Contact · Root$Wise',
+    };
+    document.title = currentRoot
+      ? `${currentLesson?.title || currentRoot.displayTitle} · Root$Wise`
+      : titles[route] || 'Root$Wise';
+  }, [route, currentRoot, currentLesson]);
   const updateProfile = (next) => { const merged = { ...(profile || {}), ...next }; setProfile(merged); saveProfile(merged); };
   const groveNarration = route === 'heart'
     ? 'Before we enter the city, I want to ask you a question. When did money become real to you? Not when you learned what a dollar was. When did money begin to mean something? Most financial decisions look as though they begin with numbers. They rarely do. Before we examine where money goes, we have to understand who is making the decision. That is where Root One begins.'
@@ -179,7 +200,7 @@ function App() {
     <>
       {route === 'home' && <Home />}
       {route === 'journey' && <Journey updateProfile={updateProfile} />}
-      {route === 'signup' && <Signup profile={profile} updateProfile={updateProfile} />}
+      {route === 'profile' && <LocalProfile profile={profile} updateProfile={updateProfile} />}
       {route === 'assessment' && <AssessmentFlow profile={profile} updateProfile={updateProfile} />}
       {route === 'heart' && <Grove profile={null} view="welcome" />}
       {route === 'dashboard' && <Dashboard profile={profile} />}
@@ -188,6 +209,11 @@ function App() {
       {route === 'tool-dictionary' && <MoneyDictionary />}
       {routeKind === 'tool' && <ToolDetail slug={rootSlug} />}
       {route === 'schools' && <Schools />}
+      {route === 'privacy' && <Privacy />}
+      {route === 'terms' && <Terms />}
+      {route === 'accessibility' && <Accessibility />}
+      {route === 'faq' && <Faq />}
+      {route === 'contact' && <Contact />}
       {routeKind === 'root-overview' && currentRoot && <RootOverview root={currentRoot} />}
       {routeKind === 'root-lesson' && currentRoot && currentLesson && <RootLessonExperience root={currentRoot} lesson={currentLesson} />}
       {routeKind === 'root-lesson' && currentRoot?.id === 5 && currentLesson && <ContextualDefinition lesson={currentLesson} />}
@@ -226,11 +252,11 @@ function Home() {
       <footer className="landing-legal-footer">
         <div className="landing-legal-brand"><ApprovedArtwork variant="tree" /><span><strong>Root$Wise</strong><small>Grow financial wisdom at the root.</small></span></div>
         <div className="landing-legal-links" aria-label="Legal information">
-          <span>Privacy Policy</span>
-          <span>Terms of Use</span>
-          <span>Accessibility</span>
-          <span>FAQ</span>
-          <span>Contact Us</span>
+          <a href="/#/privacy">Privacy Policy</a>
+          <a href="/#/terms">Terms of Use</a>
+          <a href="/#/accessibility">Accessibility</a>
+          <a href="/#/faq">FAQ</a>
+          <a href="/#/contact">Contact Us</a>
         </div>
         <small>© 2026 Root$Wise. All rights reserved.</small>
       </footer>
@@ -256,26 +282,54 @@ function PageShell({ kicker, title, lead, children, back = true }) {
 }
 
 function TopBar() {
-  return <header className="topbar"><button className="wordmark" onClick={() => go('home')}><ApprovedArtwork variant="tree" className="topbar-approved-tree"/><span>Root$Wise</span></button><nav>{navItems.map(([label, page]) => <button key={page} onClick={() => go(page)}>{label}</button>)}</nav><button className="signin" onClick={() => go('signup')}>Sign In</button></header>;
+  return <header className="topbar"><button className="wordmark" onClick={() => go('home')}><ApprovedArtwork variant="tree" className="topbar-approved-tree"/><span>Root$Wise</span></button><nav>{navItems.map(([label, page]) => <button key={page} onClick={() => go(page)}>{label}</button>)}</nav><button className="signin" onClick={() => go('profile')}>My Grove</button></header>;
 }
 
 function Journey({ updateProfile }) {
   return <PageShell kicker="Meet Sage" title="Choose the root you most want to strengthen first." lead="This is not a box. It is a starting point. The assessment will still listen across every area.">
     <div className="principle-box"><strong>Root$Wise principle:</strong> We discover the user's starting point. We do not assume one.</div>
-    <div className="path-choice-grid eleven">{paths.map(({ key, title, text }) => <button className="choice-card" key={key} onClick={() => { updateProfile({ path: key, pathTitle: title }); go('signup'); }}><Sprout size={28}/><h3>{title}</h3><p>{text}</p></button>)}</div>
+    <div className="path-choice-grid eleven">{paths.map(({ key, title, text }) => <button className="choice-card" key={key} onClick={() => { updateProfile({ path: key, pathTitle: title }); go('assessment'); }}><Sprout size={28}/><h3>{title}</h3><p>{text}</p></button>)}</div>
   </PageShell>;
 }
 
-function Signup({ profile, updateProfile }) {
-  const [form, setForm] = useState({ firstName: profile?.firstName || '', email: profile?.email || '', password: '' });
-  return <PageShell kicker="Create My Root System" title="Tell me a little about yourself." lead="Just enough to personalize the experience. Sage does not need your whole financial life on day one.">
-    <form className="signup-card" onSubmit={(e) => { e.preventDefault(); updateProfile({ firstName: form.firstName, email: form.email }); go('assessment'); }}>
-      <label>First Name<input required value={form.firstName} onChange={e => setForm({ ...form, firstName: e.target.value })}/></label>
-      <label>Email Address<input type="email" required value={form.email} onChange={e => setForm({ ...form, email: e.target.value })}/></label>
-      <label>Password<input type="password" required value={form.password} onChange={e => setForm({ ...form, password: e.target.value })}/></label>
-      <label className="check-row"><input type="checkbox"/> Keep me signed in</label>
-      <button>Create My Root System <ArrowRight size={17}/></button>
+function LocalProfile({ profile, updateProfile }) {
+  const [firstName, setFirstName] = useState(profile?.firstName || '');
+  return <PageShell kicker="Your Grove" title="Personalize this device." lead="RootWise does not create an online account here. Your name and learning progress stay in this browser unless a feature clearly tells you otherwise.">
+    <form className="signup-card" onSubmit={(event) => { event.preventDefault(); updateProfile({ firstName: firstName.trim() }); go('dashboard'); }}>
+      <label>First name or nickname<input value={firstName} maxLength={60} onChange={(event) => setFirstName(event.target.value)} /></label>
+      <p className="principle-box"><strong>Private by default:</strong> You may leave this blank. Never enter account numbers, passwords, Social Security numbers, or other sensitive information.</p>
+      <button>Save on this device <ArrowRight size={17}/></button>
     </form>
+  </PageShell>;
+}
+
+function Privacy() {
+  return <PageShell kicker="Privacy" title="Your learning should not require your financial identity." lead="RootWise is designed to teach with category-level, approximate, fictional, or redacted examples.">
+    <div className="legal-copy"><h2>Information stored on this device</h2><p>Your optional Grove name, assessment answers, lesson progress, workbook entries, and reflections are stored in this browser’s local storage. Clearing browser data may remove them.</p><h2>Ask Sage and narration</h2><p>Text you intentionally submit to Ask Sage and lesson text requested for connected narration are sent to RootWise server functions to produce a response. Private workbook and reflection entries are not automatically sent to Sage.</p><h2>Keep sensitive information out</h2><p>Do not enter account numbers, Social Security numbers, passwords, verification codes, exact financial records, medical details, legal case details, or confidential employer or customer information.</p><h2>Payments and accounts</h2><p>This version does not create an online user account or collect payment information. Any future account or payment feature must identify its own data practices before collecting information.</p></div>
+  </PageShell>;
+}
+
+function Terms() {
+  return <PageShell kicker="Terms of Use" title="RootWise is financial education—not a command." lead="Use RootWise to understand choices, questions, systems, and consequences.">
+    <div className="legal-copy"><h2>Educational purpose</h2><p>RootWise provides general financial education. It does not provide individualized financial, investment, tax, legal, insurance, employment, medical, or substance-use advice.</p><h2>Your decisions remain yours</h2><p>Examples, tools, and calculations simplify real situations. Verify current facts, agreements, laws, eligibility rules, fees, rates, and professional qualifications before acting.</p><h2>Responsible use</h2><p>Do not use RootWise to submit unlawful, harmful, deceptive, confidential, or sensitive identifying information. Do not rely on Ask Sage for emergencies or professional diagnosis or treatment.</p><h2>Availability</h2><p>Curriculum, tools, and connected services may change as RootWise improves. Locally stored progress can be lost if browser storage is cleared or unavailable.</p></div>
+  </PageShell>;
+}
+
+function Accessibility() {
+  return <PageShell kicker="Accessibility" title="Financial understanding should be reachable." lead="RootWise is being built for keyboard, screen-reader, mobile, reduced-motion, and readable-text access.">
+    <div className="legal-copy"><h2>Current support</h2><p>Core pages use semantic headings, labeled controls, keyboard-operable actions, visible focus treatment, responsive layouts, text alternatives for meaningful images, and reduced-motion preferences where animation appears.</p><h2>Need another format?</h2><p>If a lesson, tool, narration control, contrast choice, or interaction creates a barrier, use the Contact page to describe the page and what you were trying to do. Do not include private financial or medical details.</p></div>
+  </PageShell>;
+}
+
+function Faq() {
+  return <PageShell kicker="FAQ" title="Questions about how RootWise works." lead="The short version: learn the system, see yourself in the story, and practice without surrendering your judgment.">
+    <div className="legal-copy"><h2>Does RootWise tell me what financial decision to make?</h2><p>No. It teaches concepts, makes tradeoffs visible, and asks questions that help you evaluate your own decision.</p><h2>Are workbook entries private?</h2><p>They are stored on this device and are not automatically sent to Ask Sage. Each Root also provides specific privacy boundaries.</p><h2>Do I have to complete Roots in order?</h2><p>The curriculum builds in sequence, but the Grove lets you inspect any published Root. Progress is not a grade or judgment.</p><h2>Why are some Roots marked in development?</h2><p>RootWise publishes complete learning experiences—not placeholder lessons. Their overviews preserve the full eleven-Root map until the curriculum is ready.</p><h2>Is Ask Sage professional advice?</h2><p>No. Sage provides general education and reflection support within RootWise boundaries.</p></div>
+  </PageShell>;
+}
+
+function Contact() {
+  return <PageShell kicker="Contact" title="Tell us where the experience needs attention." lead="RootWise does not currently collect contact messages inside the app.">
+    <div className="legal-copy"><h2>Protect your privacy</h2><p>When reporting a problem, note the page or Root, the device or browser, and what happened. Do not include account numbers, Social Security numbers, passwords, verification codes, exact financial records, legal case details, or medical information.</p><h2>Current status</h2><p>A public support address or contact form will appear here only after it is connected, tested, and ready to receive messages securely.</p></div>
   </PageShell>;
 }
 

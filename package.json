@@ -10,8 +10,10 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit -p jsconfig.json",
     "validate:roots": "node scripts/validate-root-registry.mjs",
+    "validate:root-four": "node scripts/validate-root-four-master.mjs",
     "validate:root-one": "node scripts/validate-root-one-progress.mjs",
     "validate:root-two": "node scripts/validate-root-two-revamp.mjs",
+    "validate:root-three": "node scripts/validate-root-three-remaster.mjs",
     "validate:tools": "node scripts/validate-tools.mjs"
   },
   "dependencies": {

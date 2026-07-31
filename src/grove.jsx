@@ -85,6 +85,8 @@ function UserGrove({ profile }) {
 }
 
 function WelcomeGrove() {
+  const openingStory = rootOneIntroduction.story || [];
+  const storyPreview = openingStory.slice(0, 13);
   return (
     <main className="grove-page">
       <GroveHeader label="The Grove" action={{ label: 'Tools', href: '/tools', icon: <Calculator /> }} />
@@ -98,12 +100,24 @@ function WelcomeGrove() {
         <div className="grove-root-one-copy">
           <p className="grove-intro-label">Sage</p>
           <h2 id="grove-root-one-title">{rootOneIntroduction.title}</h2>
-          {rootOneIntroduction.sage.map((paragraph, index) => <p className={paragraph === rootOneIntroduction.question ? 'grove-intro-question' : ''} key={`${paragraph}-${index}`}>{paragraph}</p>)}
+          {storyPreview.map((beat, index) => (
+            <p
+              className={beat.text === rootOneIntroduction.question ? 'grove-intro-question' : ''}
+              key={`${beat.type}-${beat.speaker || 'narrator'}-${index}`}
+            >
+              {beat.speaker && <strong>{beat.speaker}: </strong>}
+              {beat.text}
+            </p>
+          ))}
         </div>
         <div className="grove-method-grid" aria-label="The RootWise learning method">
-          {rootOneIntroduction.method.map((level, index) => <article key={level.title}><span>0{index + 1}</span><small>{level.question}</small><h3>{level.title}</h3><p>{level.body}</p></article>)}
+          {[
+            { title: 'Understand', question: 'What is it?', body: rootOneIntroduction.purpose },
+            { title: 'Recognize', question: 'Where does it appear?', body: rootOneIntroduction.promise },
+            { title: 'Examine', question: 'What is driving the decision?', body: rootOneIntroduction.capacity },
+          ].map((level, index) => <article key={level.title}><span>0{index + 1}</span><small>{level.question}</small><h3>{level.title}</h3><p>{level.body}</p></article>)}
         </div>
-        <blockquote>{rootOneIntroduction.principle}</blockquote>
+        <blockquote>{rootOneIntroduction.outcome}</blockquote>
       </section>
       <section className="grove-enter" aria-labelledby="enter-grove-title"><p>Your tree begins today.</p><h2 id="enter-grove-title">Whenever you’re ready, enter your Grove.</h2><span>Your saved progress and the complete eleven-Root map are waiting.</span><a href="/grove">Enter your Grove <ArrowRight /></a></section>
       <footer className="grove-footer"><p><strong>Your roots are planted in ideas.</strong><span>Our purpose is understanding. Our goal is choice.</span></p></footer>
