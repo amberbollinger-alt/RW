@@ -85,7 +85,7 @@ function readProgress() {
 function CurrentBackdrop() {
   return (
     <div className="r3-backdrop" aria-hidden="true">
-      <img src="/root-three-current-district.png" alt="" />
+      <img src="/root-three-current-district-v2.jpg" alt="" />
       <div />
     </div>
   );
@@ -166,7 +166,7 @@ function Opening() {
   return (
     <section className="r3-opening">
       <figure className="r3-current-scene">
-        <img src="/root-three-current-district.png" alt="The rain-lit Current District with amber routes moving through the city" />
+        <img src="/root-three-current-district-v2.jpg" alt="The rain-lit Current District with amber routes moving through the city" />
       </figure>
       <div className="r3-opening-copy">
         <p className="r3-eyebrow"><Waves /> Root Three · {rootThreeOpening.setting}</p>
