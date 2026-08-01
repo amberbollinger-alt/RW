@@ -1488,3 +1488,9 @@
     transition: none !important;
   }
 }
+
+/* Sidebar readability polish: one step larger, same layout. */
+.r3-nav nav h3{font-size:13px}
+.r3-nav nav h3 span{font-size:10px}
+.r3-nav nav button strong{font-size:13px}
+.r3-nav>footer{font-size:12px}
