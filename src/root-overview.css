@@ -63,3 +63,62 @@
 @media(max-width:780px){.root-overview-header{grid-template-columns:1fr auto}.root-overview-brand{display:none}.root-overview-hero{grid-template-columns:1fr;padding-top:96px}.root-overview-progress{max-width:420px}.root-lesson-group ol{grid-template-columns:1fr}.root-lesson-group a{grid-template-columns:38px minmax(0,1fr) 18px}.root-lesson-group a>small{display:none}}
 @media(max-width:520px){.root-overview-header{padding:8px 13px}.root-overview-header>span{font-size:.65rem}.root-overview-hero{padding-right:18px;padding-left:18px}.root-overview-copy h1{font-size:clamp(2.8rem,14vw,4.2rem)}.root-overview-actions{display:grid}.root-overview-actions a{justify-content:center}.root-overview-capacity{padding-right:18px;padding-left:18px}.root-lesson-index{padding-right:12px;padding-left:12px}.root-lesson-index>header svg{display:none}}
 @media(prefers-reduced-motion:reduce){.root-overview *{scroll-behavior:auto!important;transition-duration:.001ms!important}}
+
+
+/* Root Two overview scene: use its district artwork instead of the generic green field. */
+.root-overview-two {
+  position: relative;
+  isolation: isolate;
+  background: #061713;
+}
+.root-overview-two-backdrop {
+  position: absolute;
+  z-index: 0;
+  top: 72px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.root-overview-two-backdrop img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  filter: saturate(.9) contrast(1.06) brightness(.62);
+}
+.root-overview-two-backdrop > div {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(3,14,18,.78), rgba(3,14,18,.28) 48%, rgba(3,14,18,.58)),
+    linear-gradient(180deg, rgba(3,14,18,.2), rgba(3,14,18,.72) 72%, #061713 100%);
+}
+.root-overview-two > .root-overview-hero,
+.root-overview-two > .root-overview-capacity,
+.root-overview-two > .root-lesson-index {
+  position: relative;
+  z-index: 1;
+}
+.root-overview-two .root-overview-hero {
+  min-height: 650px;
+}
+.root-overview-two .root-overview-capacity {
+  background: rgba(4,19,19,.72);
+  backdrop-filter: blur(9px);
+}
+.root-overview-two .root-lesson-index {
+  max-width: 1260px;
+}
+.root-overview-two .root-lesson-group a,
+.root-overview-two .root-development-note {
+  background: rgba(4,19,19,.72);
+  backdrop-filter: blur(10px);
+}
+@media(max-width:780px) {
+  .root-overview-two-backdrop { top: 64px; }
+  .root-overview-two .root-overview-hero { min-height: 0; }
+}
