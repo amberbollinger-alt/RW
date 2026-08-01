@@ -1497,3 +1497,51 @@
 
 /* Keep the lesson navigation present while the reader moves through the full lesson. */
 .r3-nav-wrap{align-self:stretch}
+
+
+/* Root Three visual revision: daylight Current District with genuinely translucent lesson surfaces. */
+.root-three-city .r3-backdrop img {
+  filter: saturate(.92) contrast(1.04) brightness(.96);
+  object-position: center center;
+}
+.root-three-city .r3-backdrop > div {
+  background:
+    linear-gradient(90deg, rgba(3,13,24,.24), rgba(6,20,32,.08) 46%, rgba(3,13,24,.22)),
+    linear-gradient(180deg, rgba(4,14,24,.04), rgba(4,14,24,.38));
+}
+.root-three-city .r3-nav,
+.root-three-city .r3-opening,
+.root-three-city .r3-lesson-title,
+.root-three-city .r3-card,
+.root-three-city .r3-next,
+.root-three-city .r3-support > section {
+  background: rgba(7,25,35,.48);
+  backdrop-filter: blur(10px) saturate(1.08);
+}
+.root-three-city .r3-opening-story {
+  background: rgba(9,28,42,.42);
+}
+.root-three-city .r3-opening-choice,
+.root-three-city .r3-promise {
+  background: rgba(4,15,26,.3);
+}
+.root-three-city .r3-sage-open {
+  background: rgba(8,28,41,.42);
+}
+.root-three-city .r3-dialogue {
+  background: rgba(16,38,52,.42);
+}
+.root-three-city .r3-dialogue.is-sage {
+  background: rgba(13,43,51,.42);
+}
+.root-three-city .r3-scan button,
+.root-three-city .r3-options button,
+.root-three-city .r3-private textarea {
+  background: rgba(9,30,41,.5);
+  backdrop-filter: blur(8px);
+}
+@media(max-width:680px) {
+  .root-three-city .r3-backdrop > div {
+    background: linear-gradient(180deg, rgba(3,13,24,.08), rgba(3,13,24,.46));
+  }
+}
