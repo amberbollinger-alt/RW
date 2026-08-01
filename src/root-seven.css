@@ -47,3 +47,9 @@
 .r7-footer button{border-color:rgba(167,214,37,.35);background:rgba(5,23,34,.94);color:#e6f5ed}.r7-footer button:nth-child(2){background:#a7d625;color:#07100c}.r7-footer button.is-complete{background:#547813;color:#fff}.r7-sage-toggle{border-color:#cfff49;background:#a7d625;color:#07100c}
 .r7-sage{border-left-color:rgba(167,214,37,.38);background:rgba(3,15,24,.99);color:#eef5f1}.r7-sage>header{background:linear-gradient(100deg,#0d2b39,#3b1135)}.r7-sage>header small{color:#d8e7e1}.r7-sage-messages>div{background:#102c39}.r7-sage-messages>div.user{background:#3a2437}.r7-sage-messages>div.is-unavailable{border-color:#f7a64a;background:#3c2519}.r7-quick button{border-color:rgba(167,214,37,.35);background:#0a2431;color:#d8ff69}.r7-sage form,.r7-sage>footer{border-color:var(--r7-line);background:#061923;color:#b9c9c5}
 .r7-tree-reward{background:conic-gradient(#a7d625 var(--growth),#17303c 0)}.r7-tree-reward::before{background:#071923}.r7-tree-reward>svg{color:#cfff49}.r7-tree-reward>span{background:var(--r7-rust)}
+
+/* Sidebar readability polish: one step larger, same layout. */
+.r7-nav nav h3{font-size:13px}
+.r7-nav nav h3 span{font-size:10px}
+.r7-nav nav button strong{font-size:13px}
+.r7-nav>footer{font-size:12px}
