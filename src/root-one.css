@@ -1752,3 +1752,9 @@ body.r1-sage-open .sage-voice-dock {
     animation: none;
   }
 }
+
+/* Sidebar readability polish: one step larger, same layout. */
+.r1-nav nav h3{font-size:13px}
+.r1-nav nav h3 span{font-size:10px}
+.r1-nav nav button strong{font-size:13px}
+.r1-nav>footer{font-size:12px}

@@ -15,3 +15,9 @@
 .r5-sage-toggle{bottom:94px}
 @media(max-width:680px){.r5-sage-toggle{bottom:82px}}
 @media(prefers-reduced-motion:reduce){.root-five-bridge *{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+
+/* Sidebar readability polish: one step larger, same layout. */
+.r5-nav nav h3{font-size:13px}
+.r5-nav nav h3 span{font-size:10px}
+.r5-nav nav button strong{font-size:13px}
+.r5-nav>footer{font-size:12px}
