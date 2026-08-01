@@ -4018,6 +4018,293 @@ function exchangeDecisionDrill(lesson) {
   };
 }
 
+const rootTwoCopyRepairs = {
+  "Effort and Results": {
+    "storyTail": [
+      {
+        "type": "narration",
+        "text": "The first crew sits on flour sacks, too tired to argue. Their bodies paid for work the system could not convert into a usable result. Ivy notices the part no efficiency slogan can erase: effort can be enormous, honest, and physically costly while the person doing it has almost no authority over what it produces."
+      },
+      {
+        "type": "sage",
+        "speaker": "Sage",
+        "text": "A person can be completely spent and still be unable to control what their effort becomes. Respect the exertion. Then examine the tools, authority, sequence, information, and demand surrounding it."
+      }
+    ],
+    "tradeoff": "Focusing only on results can hide poor systems, unequal resources, unpaid labor, and circumstances outside the worker’s control. Focusing only on effort can hide whether the needed problem was solved. Keep exertion, conditions, outcome, and who carried the cost visible together.",
+    "connection": "Recall a time when you worked until you were depleted and the result still fell short. What did the conditions make difficult, and who had the authority to change them?",
+    "takeaway": "I can respect hard work without pretending effort alone controls the result."
+  },
+  "Price Is Not Human Worth": {
+    "storyTail": [
+      {
+        "type": "narration",
+        "text": "Mara checks her phone. Her daughter’s school has called twice. She cannot leave until the replacement arrives, and the replacement is late. No line on the pay record shows the fear of losing hours, the emotional control required to keep helping, or the care that continues after the clock."
+      },
+      {
+        "type": "dialogue",
+        "speaker": "Ivy",
+        "text": "A low number can fail to measure a person and still make that person’s life harder. Those are two separate truths, and both have consequences."
+      },
+      {
+        "type": "sage",
+        "speaker": "Sage",
+        "text": "A market number can describe a condition of payment. It cannot measure a human being. If you confuse those two, every low number becomes a verdict and every high number becomes a certificate of worth."
+      }
+    ],
+    "tradeoff": "Rejecting the idea that price equals worth protects dignity, but it does not make an inadequate or unequal exchange harmless. A person is more than a price, and the price can still restrict housing, rest, safety, care, and choice.",
+    "connection": "When a number felt like a judgment about you, what did it actually tell you about the exchange—and what did it never have the power to measure?",
+    "takeaway": "I can question what a price takes for granted without turning it into a verdict about a person."
+  },
+  "The Same Earnings, Different Exchange": {
+    "storyTail": [
+      {
+        "type": "narration",
+        "text": "They add the hours no one recorded, the nights spent waiting for a commission to clear, the months when the bonus was only a possibility, the tools Jun replaced himself, and the family members who absorbed schedule changes. The same annual earnings were built from different amounts of time, control, risk, and unpaid support."
+      },
+      {
+        "type": "dialogue",
+        "speaker": "Eli",
+        "text": "So the equal number can hide an unequal life."
+      },
+      {
+        "type": "sage",
+        "speaker": "Sage",
+        "text": "An equal destination does not prove an equal route. If one person arrives after selling predictability, health, evenings, or control, those are part of the price paid to reach the number."
+      }
+    ],
+    "tradeoff": "Reducing every arrangement to one annual number makes comparison fast but can hide exhaustion, unpaid labor, volatility, and dependence on other people’s choices. Two people can earn the same amount while one has far less time, stability, control, or usable income.",
+    "connection": "Think of two people who report the same income. What could be unequal underneath it: hours, risk, costs, predictability, care, authority, or the ability to recover?",
+    "takeaway": "I can compare equal earnings without pretending the exchanges that produced them were equal."
+  },
+  "Childcare and Dependent Care": {
+    "storyTail": [
+      {
+        "type": "narration",
+        "text": "The next week, paid late-notice care costs more. The week after that, a missed shift costs Ivy income. Her sister asks how long she is expected to keep absorbing the change. Ivy realizes that calling support ‘free’ has only moved the bill into another person’s fatigue, missed work, and growing resentment."
+      },
+      {
+        "type": "sage",
+        "speaker": "Sage",
+        "text": "If the work changes what must happen for someone to accept it, the consequence belongs in the exchange. Love can make support possible. It does not make support limitless."
+      }
+    ],
+    "tradeoff": "An opportunity may raise gross pay while shifting unpaid burden to family, partners, friends, or children. Care can preserve work access and family stability, but treating it as unlimited can exhaust the people carrying the exchange.",
+    "connection": "Whose time, money, sleep, or reliability makes your work schedule possible? What happens to that support if the schedule changes?",
+    "takeaway": "I can count the care that makes earning possible without pretending family support has no limit."
+  },
+  "Unpaid Preparation": {
+    "storyTail": [
+      {
+        "type": "narration",
+        "text": "The dispatcher has a mortgage, a child who needs a ride, and a fear he never says aloud: if he asks whether the time counts, he may be labeled difficult before the next schedule is posted. The missing time is not only unpaid; it is protected by the worker’s dependence on the income."
+      },
+      {
+        "type": "dialogue",
+        "speaker": "Ivy",
+        "text": "That is not just a time question. It is a power question. Who can afford to refuse the extra work, and who has to swallow it to stay employable?"
+      },
+      {
+        "type": "sage",
+        "speaker": "Sage",
+        "text": "A practice can be common and still be costly. Repetition can make invisible work look voluntary, especially when the worker carries the risk of objecting."
+      }
+    ],
+    "tradeoff": "When substantial required activity remains unrecorded, the worker’s effective time exchange may be larger than the posted schedule suggests—and the worker may absorb the cost because the power to question the practice is unequal.",
+    "connection": "What happens before you can begin paid work and after the official work appears finished? What would it cost you to stop doing it?",
+    "takeaway": "I can examine the invisible edges of a job without confusing common practice with a harmless cost."
+  },
+  "Travel and Commuting Time": {
+    "storyTail": [
+      {
+        "type": "narration",
+        "text": "On the first Harbor week, Ivy leaves before the house wakes and returns after the kitchen is cleaned. She eats standing up because the next morning is already approaching. The paycheck does not show the lost sleep, missed conversation, or hours no longer available for care, study, recovery, or another exchange."
+      },
+      {
+        "type": "dialogue",
+        "speaker": "Ivy",
+        "text": "The route is not just distance. It is what the route takes from the rest of the day, and whether I still have enough person left when I get home."
+      },
+      {
+        "type": "sage",
+        "speaker": "Sage",
+        "text": "Legal pay treatment and life impact are different lenses. Do not make unpaid time disappear because it is not a wage claim."
+      }
+    ],
+    "tradeoff": "A longer route may reach higher wages while consuming time, energy, and reliability. Closer work may return time without offering the same compensation or advancement. The tradeoff is the portion of life that becomes unavailable or harder to recover.",
+    "connection": "If your commute were added to your scheduled hours, how large would the real weekly commitment become—and what would those hours displace?",
+    "takeaway": "I can distinguish what travel is legally paid from what travel still costs my life."
+  },
+  "Physical and Schedule Demands": {
+    "storyTail": [
+      {
+        "type": "narration",
+        "text": "After four shifts, Ivy comes home with her shoulders tight and her attention used up. She eats whatever requires the least effort, postpones a repair she needed to make, and realizes she has no energy left for the training path she hoped the higher pay would fund."
+      },
+      {
+        "type": "dialogue",
+        "speaker": "Eli",
+        "text": "How do we put a price on being this tired without making up a number?"
+      },
+      {
+        "type": "sage",
+        "speaker": "Sage",
+        "text": "A consequence does not become unreal because it resists a price tag. And a demanding job does not become noble merely because someone survives it."
+      }
+    ],
+    "tradeoff": "Demanding work may provide meaning, skill, identity, or higher compensation. It may also reduce capacity for recovery and other responsibilities. A worker can value a job and still be unable to sustain what it asks. Difference is not proof that the demand is harmless.",
+    "connection": "Which part of your work follows you home after the timecard stops? What does it leave you unable to do, or able to do only by borrowing energy from tomorrow?",
+    "takeaway": "I can include physical and emotional depletion in an earning exchange without romanticizing exhaustion."
+  },
+  "Usable Income After Work Costs": {
+    "storyTail": [
+      {
+        "type": "narration",
+        "text": "In the difficult month, the additional money is mostly consumed by the conditions that made the additional income possible. Ivy also writes down what the calculation cannot settle: how much sleep she can keep losing, how much family support can bend, and whether the work will leave enough attention for training."
+      },
+      {
+        "type": "dialogue",
+        "speaker": "Ivy",
+        "text": "The raise is real. So is the fact that I have to spend part of it buying the ability to survive the schedule."
+      },
+      {
+        "type": "sage",
+        "speaker": "Sage",
+        "text": "A usable-income estimate is not a command and not a prophecy. Make the assumptions visible, then let reality revise them."
+      }
+    ],
+    "tradeoff": "A higher-paying role may create more usable cash, but by less than the wage difference suggests. It may also consume recovery, care capacity, or future earning capacity. The calculation informs the tradeoff without making the cost disappear.",
+    "connection": "How much of a pay increase remains after the new costs—and how much of your time, energy, and support system must be spent to obtain it?",
+    "takeaway": "I can ask what income remains after the job is funded—and what capacity the job consumes."
+  },
+  "The Cost of Training": {
+    "storyTail": [
+      {
+        "type": "narration",
+        "text": "The path demands sleep, weekends, borrowed tools, reduced current income, and the willingness to be a beginner while carrying adult obligations. Ivy is not casually investing in herself. She is buying uncertainty with the life she has now."
+      },
+      {
+        "type": "dialogue",
+        "speaker": "Ivy",
+        "text": "Calling these choices does not make the time, money, or risk imaginary."
+      },
+      {
+        "type": "sage",
+        "speaker": "Sage",
+        "text": "The price purchases entry to the program. The complete cost describes what completing the path requires—and what happens if the expected return arrives late or not at all."
+      }
+    ],
+    "tradeoff": "Training can expand future options while reducing present cash, rest, care capacity, and earning capacity. Support may create service, grade, completion, or repayment conditions. The possible future benefit does not refund what the learner had to give up to reach it.",
+    "connection": "What did a learning investment cost in sleep, current income, care, transportation, confidence, or alternatives—not only in registration money?",
+    "takeaway": "I can examine a learning investment without hiding the present life it asks me to spend."
+  },
+  "Access and Structural Barriers": {
+    "storyTail": [
+      {
+        "type": "narration",
+        "text": "The second learner applies anyway. One employer requires a car. Another requires six weeks of unpaid placement. A third never responds. Each rejection arrives looking individual. Together they form a gate system that turns equal effort into unequal access and return."
+      },
+      {
+        "type": "dialogue",
+        "speaker": "Ivy",
+        "text": "Not every closed door is a mindset problem. Some doors are placed where only certain people can reach them."
+      },
+      {
+        "type": "sage",
+        "speaker": "Sage",
+        "text": "Naming a barrier does not erase agency. It stops the learner from spending all remaining energy trying to prove that a locked gate is a personal failure."
+      }
+    ],
+    "tradeoff": "Naming barriers prevents self-blame, but it does not make a barrier disappear. Some can be reduced, some require collective or policy change, and some must be carried as uncertainty or cost in the exchange.",
+    "connection": "Which gate between capability and opportunity has mattered most in your work history? What did that gate cost beyond the missed opportunity itself?",
+    "takeaway": "I can examine the barrier between ability and opportunity without turning unequal access into a personal defect."
+  },
+  "Comparing Two Offers": {
+    "storyTail": [
+      {
+        "type": "narration",
+        "text": "Ivy adds Harbor’s higher health premium, longer commute, rotating shifts, dependent-care gaps, late preparation, physical demand, and the possibility that she will be too depleted to continue training. The extra money is real. So is the life it purchases from her."
+      },
+      {
+        "type": "dialogue",
+        "speaker": "Ivy",
+        "text": "City wins the hours I need to remain a person outside the job. Harbor wins the income row. Neither fact cancels the other."
+      },
+      {
+        "type": "sage",
+        "speaker": "Sage",
+        "text": "A comparison does not choose for you. It prevents one attractive number from choosing before you have seen what it requires."
+      }
+    ],
+    "tradeoff": "The higher-paying offer can be financially useful and still be too expensive in time, health, care, or future capacity for a particular life. Keeping categories separate may leave an uncomfortable answer instead of manufacturing a winner.",
+    "connection": "When two opportunities are close, which differences would change what each one provides—and what would each one take from your actual life?",
+    "takeaway": "I can see an offer’s benefits without hiding the life and capacity it consumes."
+  },
+  "When the Exchange No Longer Works": {
+    "storyTail": [
+      {
+        "type": "narration",
+        "text": "Eli accepts two emergency requests without changing the terms. He sleeps badly, misses another customer’s repair, and spends the next morning trying to work while his hands are still shaking from the night before."
+      },
+      {
+        "type": "dialogue",
+        "speaker": "Eli",
+        "text": "I knew it was more. I just did not know how quickly more would become the whole arrangement."
+      },
+      {
+        "type": "sage",
+        "speaker": "Sage",
+        "text": "An exchange can stop working because the work changed, the cost changed, your capacity changed, or the terms were never shared clearly enough. Naming that is accurate accounting."
+      }
+    ],
+    "tradeoff": "Renegotiating, reducing, or leaving work can protect time, health, reliability, or other income while reducing immediate earnings or introducing uncertainty. Continuing may preserve income today while spending the capacity required to earn tomorrow.",
+    "connection": "What evidence would show that an exchange has changed—not merely become inconvenient? What cost are you already paying to keep calling it the old arrangement?",
+    "takeaway": "I can recognize when endurance is disguising a changed and unsustainable exchange."
+  },
+  "Income Changes and Recovery": {
+    "storyTail": [
+      {
+        "type": "narration",
+        "text": "Ivy feels the delay before she can explain it. She had arranged the commute, counted the first paycheck, and told her sister when the schedule would change. Now the date moves. The bills do not move with it."
+      },
+      {
+        "type": "dialogue",
+        "speaker": "Ivy",
+        "text": "I know the start date changed. I also know that knowing does not pay what is due before it starts."
+      },
+      {
+        "type": "sage",
+        "speaker": "Sage",
+        "text": "No map fixes the gap. It keeps fear from pretending to be a fact, and keeps facts from being softened into hope. Both are necessary when the margin is thin."
+      }
+    ],
+    "tradeoff": "A fast replacement may restore income sooner while carrying weaker terms, new costs, or damage to future capacity. Waiting for a stronger exchange may preserve standards while extending the gap. Clarity does not remove the hardship of limited margin.",
+    "connection": "If expected income changed, which fact would you need first—and what consequence is already happening while you wait for the rest?",
+    "takeaway": "I can face an income interruption without turning it into a character verdict or pretending a map makes it painless."
+  },
+  "The Root Two Choice": {
+    "storyTail": [
+      {
+        "type": "narration",
+        "text": "Ivy knows what City gives up: faster debt reduction, more cash in ordinary months, and the comfort of the larger number. She also knows what Harbor might take: sleep, care stability, physical capacity, and the future time required to change her options."
+      },
+      {
+        "type": "dialogue",
+        "speaker": "Eli",
+        "text": "A price still tells me something. It just never tells me everything—and it definitely does not tell me what a person is worth."
+      },
+      {
+        "type": "sage",
+        "speaker": "Sage",
+        "text": "The root is not the choice Ivy made. It is the ability to see what the exchange provides, what it consumes, who carries the cost, and what remains possible after the choice."
+      }
+    ],
+    "tradeoff": "Choosing one exchange closes or delays others. A rooted choice does not eliminate the cost or prove the choice universally right. It makes the reason for accepting the tradeoff visible, names who carries it, and leaves room to revise when facts or capacity change.",
+    "connection": "What do you want an income exchange to make possible—not only on payday, but in the life around it? What are you unwilling to keep paying with?",
+    "takeaway": "I can choose with the whole exchange visible, including the costs I cannot make disappear."
+  }
+};
+
 export const rootTwoDistricts = districtPlan.map((plan, districtIndex) => {
   const chapter = rootTwoChapters[plan.chapter];
   return {
@@ -4026,37 +4313,39 @@ export const rootTwoDistricts = districtPlan.map((plan, districtIndex) => {
     arc: chapter.arc,
     capability: chapter.closingCapability,
     lessons: chapter.lessons.slice(plan.start, plan.end).map((lesson, offset) => {
-      const slug = lessonSlug(lesson.title);
-      const legalBoundary = /wage|salary|pay|compensation|discrimin|bias|credential|license|classification|right|contract/.test(`${lesson.title} ${lesson.focus} ${lesson.tradeoff}`.toLowerCase());
-      const sageBeat = lesson.story.find((beat) => beat.type === 'sage') || lesson.story.find((beat) => beat.speaker === 'Sage');
+      const { storyTail = [], ...copyRepair } = rootTwoCopyRepairs[lesson.title] || {};
+      const repairedLesson = { ...lesson, ...copyRepair, story: [...lesson.story, ...storyTail] };
+      const slug = lessonSlug(repairedLesson.title);
+      const legalBoundary = /wage|salary|pay|compensation|discrimin|bias|credential|license|classification|right|contract/.test(`${repairedLesson.title} ${repairedLesson.focus} ${repairedLesson.tradeoff}`.toLowerCase());
+      const sageBeat = repairedLesson.story.find((beat) => beat.type === 'sage') || repairedLesson.story.find((beat) => beat.speaker === 'Sage');
       return {
-        ...lesson,
+        ...repairedLesson,
         slug,
         key: slug,
         sourceChapterIndex: plan.chapter,
         sourceLessonIndex: plan.start + offset,
         legacyProgressKey: `${plan.chapter}-${plan.start + offset}`,
         progressKey: slug,
-        sageOpening: sageBeat?.text || `Keep ${lesson.focus.toLowerCase()} connected to the complete exchange before deciding what the price means.`,
-        understand: { title: lesson.concept.title, body: lesson.concept.explanation },
-        recognize: { title: 'Where the exchange appears', body: lesson.connection },
-        examine: { title: 'What may be driving the choice', body: lesson.tradeoff },
-        financialParallel: `${lesson.concept.explanation} ${lesson.tradeoff}`,
-        mirrorPrompt: lesson.connection,
-        workbook: { prompt: lesson.application.prompt, placeholder: lesson.application.placeholder },
+        sageOpening: sageBeat?.text || `Keep ${repairedLesson.focus.toLowerCase()} connected to the complete exchange before deciding what the price means.`,
+        understand: { title: repairedLesson.concept.title, body: repairedLesson.concept.explanation },
+        recognize: { title: 'Where the exchange appears', body: repairedLesson.connection },
+        examine: { title: 'What may be driving the choice', body: repairedLesson.tradeoff },
+        financialParallel: `${repairedLesson.concept.explanation} ${repairedLesson.tradeoff}`,
+        mirrorPrompt: repairedLesson.connection,
+        workbook: { prompt: repairedLesson.application.prompt, placeholder: repairedLesson.application.placeholder },
         check: {
-          ...lesson.check,
-          options: lesson.check.options.map((option, optionIndex) => ({
+          ...repairedLesson.check,
+          options: repairedLesson.check.options.map((option, optionIndex) => ({
             ...option,
             id: `choice-${optionIndex + 1}`,
             isCorrect: Boolean(option.correct),
           })),
         },
-        decisionDrill: exchangeDecisionDrill(lesson),
-        growthStatement: lesson.takeaway.startsWith('I can ')
-          ? lesson.takeaway
-          : `I can examine ${lesson.focus.toLowerCase()} without confusing compensation with human worth.`,
-        sources: lessonSources(lesson),
+        decisionDrill: exchangeDecisionDrill(repairedLesson),
+        growthStatement: repairedLesson.takeaway.startsWith('I can ')
+          ? repairedLesson.takeaway
+          : `I can examine ${repairedLesson.focus.toLowerCase()} without confusing compensation with human worth.`,
+        sources: lessonSources(repairedLesson),
         sourceBoundary: legalBoundary,
         scanPrompts: rootTwoScanLenses.map((lens) => ({ ...lens })),
         transition: '',
