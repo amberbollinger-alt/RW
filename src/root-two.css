@@ -74,3 +74,9 @@
   .root-two-exchange .r2-backdrop>div{background:linear-gradient(180deg,rgba(3,12,20,.08),rgba(3,12,20,.48))}
   .root-two-exchange .r2-opening-hero{background-position:center 30%}
 }
+
+/* Sidebar readability polish: one step larger, same layout. */
+.r2-nav nav h3{font-size:13px}
+.r2-nav nav h3 span{font-size:10px}
+.r2-nav nav button strong{font-size:13px}
+.r2-nav>footer{font-size:12px}
