@@ -18,9 +18,11 @@ export default function RootOverview({ root }) {
   const action = rootActionForProgress(root, progress);
   const groups = groupLessons(root.lessons.filter((lesson) => lesson.published));
   const accentStyle = /** @type {import('react').CSSProperties & Record<'--root-accent', string>} */ ({ '--root-accent': root.accent });
+  const isRootTwo = root.slug === 'two';
 
   return (
-    <main className="root-overview" style={accentStyle}>
+    <main className={`root-overview ${isRootTwo ? 'root-overview-two' : ''}`} style={accentStyle}>
+      {isRootTwo && <div className="root-overview-two-backdrop" aria-hidden="true"><img src="/root-two-exchange-district.png" alt="" /><div /></div>}
       <header className="root-overview-header">
         <a href="/grove"><ArrowLeft /> The Grove</a>
         <a href="/" className="root-overview-brand" aria-label="RootWise home"><Sprout /><span><strong>Root$Wise</strong><small>The eleven-Root journey</small></span></a>
