@@ -4314,7 +4314,7 @@ export const rootTwoDistricts = districtPlan.map((plan, districtIndex) => {
     capability: chapter.closingCapability,
     lessons: chapter.lessons.slice(plan.start, plan.end).map((lesson, offset) => {
       const { storyTail = [], ...copyRepair } = rootTwoCopyRepairs[lesson.title] || {};
-      const repairedLesson = { ...lesson, ...copyRepair, story: [...lesson.story, ...storyTail] };
+      const repairedLesson = { ...lesson, ...copyRepair, story: [...lesson.story, ...storyTail.filter((tailBeat) => !lesson.story.some((beat) => beat.speaker === tailBeat.speaker && beat.text === tailBeat.text))] };
       const slug = lessonSlug(repairedLesson.title);
       const legalBoundary = /wage|salary|pay|compensation|discrimin|bias|credential|license|classification|right|contract/.test(`${repairedLesson.title} ${repairedLesson.focus} ${repairedLesson.tradeoff}`.toLowerCase());
       const sageBeat = repairedLesson.story.find((beat) => beat.type === 'sage') || repairedLesson.story.find((beat) => beat.speaker === 'Sage');
