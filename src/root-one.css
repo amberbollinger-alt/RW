@@ -1758,3 +1758,6 @@ body.r1-sage-open .sage-voice-dock {
 .r1-nav nav h3 span{font-size:10px}
 .r1-nav nav button strong{font-size:13px}
 .r1-nav>footer{font-size:12px}
+
+/* Keep the lesson navigation present while the reader moves through the full lesson. */
+.r1-nav-wrap{align-self:stretch}
