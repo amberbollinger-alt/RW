@@ -1494,3 +1494,6 @@
 .r3-nav nav h3 span{font-size:10px}
 .r3-nav nav button strong{font-size:13px}
 .r3-nav>footer{font-size:12px}
+
+/* Keep the lesson navigation present while the reader moves through the full lesson. */
+.r3-nav-wrap{align-self:stretch}
