@@ -161,7 +161,7 @@ export default function RootFourValley({ go, initialLessonKey, onLessonChange })
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
   const complete = () => setState((current) => ({ ...current, completed: [...new Set([...current.completed, lesson.key])] }));
-  return <main className="root-four-valley"><div className={`r4-landscape r4-stage-${Math.floor(activeIndex / 5)}`} aria-hidden="true"><img src="/root-four-weathered-reservoir.jpg" alt="" /><div className="r4-landscape-shade" /></div>
+  return <main className="root-four-valley"><div className={`r4-landscape r4-stage-${Math.floor(activeIndex / 5)}`} aria-hidden="true"><img src="/root-four-weathered-reservoir-v2.jpg" alt="" /><div className="r4-landscape-shade" /></div>
     <header className="r4-topbar"><button type="button" onClick={() => go('dashboard')}><ArrowLeft /> The Grove</button><button type="button" className="r4-brand" onClick={() => go('home')}><ApprovedArtwork variant="tree" /><span><strong>Root$Wise</strong><small>Root Four · Saving, Preparedness &amp; Resilience</small></span></button><button ref={menuRef} type="button" onClick={() => setNavOpen(true)}><Menu /> Lessons</button></header>
     <div className="r4-progress" role="progressbar" aria-label="Root Four progress" aria-valuemin={0} aria-valuemax={22} aria-valuenow={state.completed.length}><i style={{ width: `${state.completed.length / 22 * 100}%` }} /></div>
     <div className="r4-content-note"><strong>Content note</strong><p>{CONTENT_NOTE}</p><button type="button" onClick={() => setState((current) => ({ ...current, conceptFirst: !current.conceptFirst }))}>{state.conceptFirst ? <Eye /> : <EyeOff />}{state.conceptFirst ? 'Show complete story' : 'Use concept-first view'}</button></div>
