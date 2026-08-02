@@ -130,3 +130,37 @@
 .r4-sage-toggle{background:rgba(10,31,36,.9);border-color:rgba(220,218,198,.35);}.r4-sage{background:#172c31;color:#e5e7dc;border-color:rgba(220,218,198,.28);}.r4-sage-messages>div{background:rgba(76,117,123,.45);}.r4-sage-messages>div.user{background:rgba(137,103,71,.55);}.r4-quick button{background:rgba(218,214,193,.1);border-color:rgba(220,218,198,.24);color:#eadfca;}.r4-sage form{border-color:var(--r4-line);}.r4-sage textarea{background:rgba(8,23,27,.65);color:#eef0e5;border-color:rgba(220,218,198,.3);}.r4-sage>footer{background:rgba(8,22,26,.7);color:#b7c2b8;}
 @media(max-width:900px){.r4-landscape{opacity:.86;}.r4-nav-scrim{background:rgba(3,14,17,.68);}}
 @media(max-width:650px){.r4-landscape>img{object-position:58% 68%;}.r4-content-note{background:rgba(10,28,32,.82);}}
+
+/* Final Root Four exposure correction: make the weathered Reservoir Valley visibly carry the story. */
+.root-four-valley .r4-landscape,
+.root-four-valley .r4-stage-0,
+.root-four-valley .r4-stage-1,
+.root-four-valley .r4-stage-2,
+.root-four-valley .r4-stage-3,
+.root-four-valley .r4-stage-4,
+.root-four-valley .r4-stage-5,
+.root-four-valley .r4-stage-6,
+.root-four-valley .r4-stage-7,
+.root-four-valley .r4-stage-8,
+.root-four-valley .r4-stage-9{
+  filter:none!important;
+  background:linear-gradient(180deg,#819198 0%,#718184 43%,#514d43 100%);
+}
+.root-four-valley .r4-landscape>img{
+  object-position:center 68%;
+  opacity:.96;
+  filter:saturate(.42) contrast(1.14) brightness(1.06) sepia(.08)!important;
+}
+.root-four-valley .r4-landscape-shade{
+  background:
+    linear-gradient(90deg,rgba(18,29,35,.22),rgba(22,30,32,.02) 45%,rgba(31,31,28,.22)),
+    linear-gradient(180deg,rgba(61,76,82,.10),transparent 28%,rgba(20,24,23,.24) 100%)!important;
+}
+.root-four-valley .r4-landscape-shade::after{
+  background:linear-gradient(105deg,rgba(61,87,97,.18),transparent 40%,rgba(164,108,75,.13) 72%,transparent)!important;
+  mix-blend-mode:color!important;
+  opacity:.9;
+}
+@media(max-width:900px){
+  .root-four-valley .r4-landscape{opacity:.94;}
+}
