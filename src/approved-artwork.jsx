@@ -134,6 +134,11 @@ function GroveIntroduction() {
             <p>Not simply to teach you about money.</p>
             <p>But to help you build a life where your choices become larger than your circumstances.</p>
             <strong>Welcome to The Grove.<br />Let&apos;s begin.</strong>
+            <p className="grove-cta-thought">Your journey doesn&apos;t start with money.<br />It starts with understanding.</p>
+            <a className="grove-primary-cta" href="/#/heart">
+              <span>Begin Your Journey</span>
+              <span aria-hidden="true">→</span>
+            </a>
           </article>
         </div>
       </div>
@@ -142,7 +147,6 @@ function GroveIntroduction() {
 }
 
 export function ApprovedLandingArtwork({ className = '' }) {
-  // End the approved artwork at the bottom edge of its ornate certificate frame.
   const visibleHeight = 748;
 
   return (
