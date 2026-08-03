@@ -64,6 +64,9 @@ function Opening() {
   const [answer, setAnswer] = useState('');
   const choices = ['What might happen', 'What I could lose access to', 'Who else would be affected', 'How recovery would work'];
   return <section className="r6-opening">
+    <figure className="r6-harbor-scene">
+      <img src="/root-six-harbor-district.png" alt="The Harbor District lit against a storm-dark sea" />
+    </figure>
     <div className="r6-opening-copy"><p className="r6-eyebrow"><Anchor /> Root Six · The Harbor District</p><h1>Financial Protection &amp; Risk</h1><blockquote>{rootSixOpening.coreQuestion}</blockquote></div>
     <div className="r6-opening-story"><div><p className="r6-eyebrow"><Sparkles /> Ivy, Eli &amp; Sage arrive</p><h2>The harbor is protected because every layer has a different job.</h2><Paragraphs items={rootSixOpening.story} /></div><img src="/rootwise-sage-cutout.png" alt="Sage, the RootWise guide" /></div>
     <fieldset className="r6-opening-choice"><legend>When you hear “financial risk,” what do you notice first?</legend><p>No answer is graded. Root Six will widen the frame around your first instinct.</p><div>{choices.map((choice) => <button type="button" className={answer === choice ? 'is-selected' : ''} onClick={() => setAnswer(choice)} key={choice}>{answer === choice ? <Check /> : <ArrowRight />}{choice}</button>)}</div>{answer && <p className="r6-opening-response">“Keep that in view. Then ask what your first instinct leaves outside the harbor wall.”</p>}</fieldset>
