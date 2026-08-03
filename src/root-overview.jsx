@@ -14,6 +14,15 @@ function groupLessons(lessons) {
   }, []);
 }
 
+const ROOT_OVERVIEW_ART = {
+  one: '/root-one-city-beneath-the-decision.png',
+  two: '/root-two-exchange-district.png',
+  three: '/root-three-current-district-v2.jpg',
+  five: '/root-five-bridge-hero-v2.jpg',
+  six: '/root-six-harbor-district.png',
+  seven: '/root-seven-opportunity-junction.png',
+};
+
 function RootFourOverview({ root, progress, action, groups }) {
   return (
     <main className="root-four-overview">
@@ -161,13 +170,17 @@ export default function RootOverview({ root }) {
   const groups = groupLessons(root.lessons.filter((lesson) => lesson.published));
   const accentStyle = /** @type {import('react').CSSProperties & Record<'--root-accent', string>} */ ({ '--root-accent': root.accent });
   const isRootTwo = root.slug === 'two';
+  const art = ROOT_OVERVIEW_ART[root.slug] || ROOT_OVERVIEW_ART.seven;
 
   if (root.slug === 'four') return <RootFourOverview root={root} progress={progress} action={action} groups={groups} />;
   if (root.slug === 'five') return <RootFiveOverview root={root} progress={progress} action={action} groups={groups} />;
 
   return (
-    <main className={`root-overview ${isRootTwo ? 'root-overview-two' : ''}`} style={accentStyle}>
-      {isRootTwo && <div className="root-overview-two-backdrop" aria-hidden="true"><img src="/root-two-exchange-district.png" alt="" /><div /></div>}
+    <main className={`root-overview root-overview-${root.slug} ${isRootTwo ? 'root-overview-two' : ''}`} style={accentStyle}>
+      <div className="root-overview-backdrop" aria-hidden="true">
+        <img src={art} alt="" />
+        <div />
+      </div>
       <header className="root-overview-header">
         <a href="/grove"><ArrowLeft /> The Grove</a>
         <a href="/" className="root-overview-brand" aria-label="RootWise home"><Sprout /><span><strong>Root$Wise</strong><small>The eleven-Root journey</small></span></a>
