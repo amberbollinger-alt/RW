@@ -60,7 +60,7 @@ function MarkdownContent({ text, className = '' }) {
 }
 
 function BridgeBackdrop() {
-  return <div className="r5-backdrop" aria-hidden="true"><img src="/root-five-bridge-district.png" alt="" /><div /></div>;
+  return <div className="r5-backdrop" aria-hidden="true"><img src="/root-five-bridge-hero-v2.jpg" alt="" /><div /></div>;
 }
 
 function LessonNav({ activeIndex, visited, completed, onSelect, onClose, closeRef }) {
@@ -84,7 +84,7 @@ function Opening() {
   const [answer, setAnswer] = useState('');
   return <section className="r5-opening">
     <figure className="r5-bridge-scene">
-      <img src="/root-five-bridge-district.png" alt="Ivy and Eli entering the Bridge District beneath the lit span" />
+      <img src="/root-five-bridge-hero-v2.jpg" alt="Ivy and Eli entering the Bridge District beneath the lit span" />
     </figure>
     <div className="r5-opening-copy"><p className="r5-eyebrow"><Route /> Root Five · The Bridge District</p><h1>Credit, Debt &amp; Future Income</h1><blockquote>{rootFiveOpening.coreQuestion}</blockquote></div>
     <div className="r5-opening-story"><div><p className="r5-eyebrow"><Sparkles /> Ivy, Eli &amp; Sage arrive</p><h2>Every bridge creates access—and a future claim.</h2><MarkdownContent text={rootFiveOpening.story} /></div><img src="/rootwise-sage-cutout.png" alt="Sage, the RootWise guide" /></div>
