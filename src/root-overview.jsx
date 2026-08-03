@@ -90,6 +90,71 @@ function RootFourOverview({ root, progress, action, groups }) {
   );
 }
 
+
+function RootFiveOverview({ root, progress, action, groups }) {
+  return (
+    <main className="root-five-overview">
+      <div className="r5o-backdrop" aria-hidden="true">
+        <img src="/root-five-bridge-hero-v2.jpg" alt="" />
+        <div />
+      </div>
+      <header className="r5o-header">
+        <a href="/grove"><ArrowLeft /> The Grove</a>
+        <a href="/" className="r5o-brand" aria-label="RootWise home"><Sprout /><span><strong>Root$Wise</strong><small>The eleven-Root journey</small></span></a>
+        <span>{root.label}</span>
+      </header>
+
+      <section className="r5o-hero" aria-labelledby="root-five-title">
+        <div className="r5o-copy">
+          <p className="r5o-kicker"><span>05</span> {root.label} · Published</p>
+          <h1 id="root-five-title">Credit, Debt <em>&amp;</em><br />Future Income</h1>
+          <strong>{root.purpose}</strong>
+          <p>{root.description}</p>
+          {root.note && <aside>{root.note}</aside>}
+          <div className="r5o-actions">
+            {action && <a className="r5o-primary" href={action.href}>{action.label} <ArrowRight /></a>}
+            <a href="/grove">Return to Grove</a>
+          </div>
+          <div className="r5o-route-markers" aria-hidden="true"><span>ACCESS</span><i>CLAIM</i><b>CONSEQUENCE</b></div>
+        </div>
+
+        <figure className="r5o-scene">
+          <img src="/root-five-bridge-hero-v2.jpg" alt="Ivy and Eli entering the illuminated Bridge District" />
+          <figcaption><span>THE BRIDGE DISTRICT</span><strong>Every bridge creates access—and a future claim.</strong></figcaption>
+        </figure>
+      </section>
+
+      <section className="r5o-capacity" aria-labelledby="root-five-capacity-title">
+        <div><p>Financial decision capacity</p><h2 id="root-five-capacity-title">{root.capacity}</h2>{root.coreQuestion && <blockquote>{root.coreQuestion}</blockquote>}</div>
+        <aside><span>ROOT FIVE / READ THE TERMS</span><strong>What becomes possible—and what becomes owed?</strong><small>Credit is access with a structure attached. Root Five makes the structure visible.</small></aside>
+      </section>
+
+      <section className="r5o-lessons" aria-labelledby="root-five-lessons-title">
+        <header><div><p>{root.lessonCount} published lessons</p><h2 id="root-five-lessons-title">Crossings through the Bridge District</h2></div><BookOpen /></header>
+        {groups.map((group, groupIndex) => (
+          <section className="r5o-lesson-group" key={group.label}>
+            <div className="r5o-season"><span>{String(groupIndex + 1).padStart(2, '0')}</span><h3>{group.label}</h3></div>
+            <ol>
+              {group.lessons.map((lesson) => {
+                const complete = progress.completedIds.includes(lesson.id);
+                const current = progress.started && !progress.complete && lesson.order === progress.activeOrder;
+                return <li className={complete ? 'is-complete' : current ? 'is-current' : ''} key={lesson.id}>
+                  <a href={lesson.route} aria-current={current ? 'step' : undefined}>
+                    <span>{complete ? <Check /> : lesson.number || String(lesson.order).padStart(2, '0')}</span>
+                    <strong>{lesson.title}</strong>
+                    <small>{complete ? 'Complete' : current ? 'Current crossing' : 'Open crossing'}</small>
+                    <ArrowRight />
+                  </a>
+                </li>;
+              })}
+            </ol>
+          </section>
+        ))}
+      </section>
+    </main>
+  );
+}
+
 export default function RootOverview({ root }) {
   const progress = useMemo(() => readRootProgress(root), [root]);
   const action = rootActionForProgress(root, progress);
@@ -98,6 +163,7 @@ export default function RootOverview({ root }) {
   const isRootTwo = root.slug === 'two';
 
   if (root.slug === 'four') return <RootFourOverview root={root} progress={progress} action={action} groups={groups} />;
+  if (root.slug === 'five') return <RootFiveOverview root={root} progress={progress} action={action} groups={groups} />;
 
   return (
     <main className={`root-overview ${isRootTwo ? 'root-overview-two' : ''}`} style={accentStyle}>
