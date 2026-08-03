@@ -1,0 +1,28 @@
+/* Mobile landing composition correction.
+   The approved landing artwork already contains its own headline, supporting copy,
+   and Sage quote. On narrow screens, the desktop overlays duplicated that copy and
+   collided with the artwork. Keep the desktop enhancement, but let the artwork
+   stand on its own on phones and compact tablets. */
+@media (max-width: 950px) {
+  .landing-hero-copy,
+  .landing-sage-quote {
+    display: none !important;
+  }
+
+  .landing-page .approved-hero {
+    overflow: visible;
+  }
+
+  .landing-page .approved-hero > .approved-landing-artwork {
+    display: block;
+    width: 100% !important;
+    max-width: none;
+    height: auto;
+    transform: none !important;
+  }
+
+  .landing-legal-brand small,
+  .landing-legal-footer > small {
+    line-height: 1.35;
+  }
+}
