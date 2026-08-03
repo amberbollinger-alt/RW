@@ -83,6 +83,9 @@ function LessonNav({ activeIndex, visited, completed, onSelect, onClose, closeRe
 function Opening() {
   const [answer, setAnswer] = useState('');
   return <section className="r5-opening">
+    <figure className="r5-bridge-scene">
+      <img src="/root-five-bridge-district.png" alt="Ivy and Eli entering the Bridge District beneath the lit span" />
+    </figure>
     <div className="r5-opening-copy"><p className="r5-eyebrow"><Route /> Root Five · The Bridge District</p><h1>Credit, Debt &amp; Future Income</h1><blockquote>{rootFiveOpening.coreQuestion}</blockquote></div>
     <div className="r5-opening-story"><div><p className="r5-eyebrow"><Sparkles /> Ivy, Eli &amp; Sage arrive</p><h2>Every bridge creates access—and a future claim.</h2><MarkdownContent text={rootFiveOpening.story} /></div><img src="/rootwise-sage-cutout.png" alt="Sage, the RootWise guide" /></div>
     <fieldset className="r5-opening-choice"><legend>What do you notice first at the bridge entrance?</legend><p>There is no graded answer. This simply makes your first instinct visible before the terms are revealed.</p><div>{['The access it creates', 'The future payment it requires', 'The terms I cannot see yet', 'The reason the traveler needs it'].map((option) => <button type="button" className={answer === option ? 'is-selected' : ''} onClick={() => setAnswer(option)} key={option}>{answer === option ? <Check /> : <ArrowRight />}{option}</button>)}</div>{answer && <p className="r5-opening-response">Sage: “Hold that instinct. Root Five will keep it in the frame while the rest of the bridge becomes visible.”</p>}</fieldset>
