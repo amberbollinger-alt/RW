@@ -20,6 +20,7 @@ import { destinationForPage, routeFromPath } from './root-routing';
 import SageVoice from './sage-voice';
 import { MoneyDictionary, ToolDetail, ToolsCenter } from './tools-center';
 import './styles.css';
+import './roots-vivid-shared.css';
 
 const STORAGE_KEY = 'rootwise_sprint_003_profile';
 

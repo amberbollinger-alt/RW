@@ -1,0 +1,276 @@
+/* Shared scene-first visual language for Roots One–Four.
+   Content, state, navigation, and lesson semantics remain in each Root's own component. */
+:is(.r1-experience, .root-two-exchange, .root-three-city, .root-four-valley) {
+  --vivid-navy: #081824;
+  --vivid-ink: #162735;
+  --vivid-paper: rgba(250, 247, 237, .82);
+  --vivid-paper-soft: rgba(250, 247, 237, .64);
+  --vivid-line: rgba(255, 255, 255, .48);
+  --vivid-lime: #b7e33f;
+  --vivid-amber: #f0c174;
+  --vivid-cyan: #62d6d1;
+  --vivid-copper: #c7774e;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+}
+
+.r1-experience,
+.root-two-exchange,
+.root-three-city,
+.root-four-valley { isolation: isolate; }
+
+.r1-experience .r1-topbar,
+.root-two-exchange .r2-topbar,
+.root-three-city .r3-topbar,
+.root-four-valley .r4-topbar {
+  background: rgba(5, 16, 25, .88);
+  border-bottom-color: rgba(255, 255, 255, .26);
+  backdrop-filter: blur(18px) saturate(1.18);
+}
+
+.r1-experience .r1-completion-bar,
+.root-two-exchange .r2-progress,
+.root-three-city .r3-progress,
+.root-four-valley .r4-progress { background: rgba(2, 10, 16, .58); }
+
+.r1-experience .r1-completion-bar i,
+.root-two-exchange .r2-progress i,
+.root-three-city .r3-progress i,
+.root-four-valley .r4-progress i {
+  background: linear-gradient(90deg, var(--vivid-copper), var(--vivid-amber), var(--vivid-lime));
+}
+
+.r1-experience .r1-backdrop::after,
+.root-two-exchange .r2-backdrop > div,
+.root-three-city .r3-backdrop > div,
+.root-four-valley .r4-landscape-shade {
+  background:
+    linear-gradient(90deg, rgba(3, 12, 20, .38), rgba(4, 13, 22, .08) 46%, rgba(3, 12, 20, .34)),
+    linear-gradient(180deg, rgba(6, 17, 27, .03) 28%, rgba(5, 13, 20, .48));
+}
+
+.r1-experience .r1-shell,
+.root-two-exchange .r2-shell,
+.root-three-city .r3-shell,
+.root-four-valley .r4-shell {
+  max-width: 1320px;
+  gap: 24px;
+  padding: 26px;
+}
+
+.r1-experience .r1-sidebar,
+.root-two-exchange .r2-nav,
+.root-three-city .r3-nav,
+.root-four-valley .r4-chapter-nav {
+  border: 1px solid var(--vivid-line);
+  border-radius: 22px;
+  background: rgba(248, 246, 237, .78);
+  color: var(--vivid-ink);
+  box-shadow: 0 22px 70px rgba(1, 12, 20, .32);
+  backdrop-filter: blur(20px) saturate(1.12);
+}
+
+.r1-experience .r1-sidebar nav button,
+.root-two-exchange .r2-nav nav button,
+.root-three-city .r3-nav nav button,
+.root-four-valley .r4-chapter-nav nav button { color: var(--vivid-ink); }
+
+.r1-experience .r1-sidebar nav button.is-active,
+.root-two-exchange .r2-nav nav button.is-active,
+.root-three-city .r3-nav nav button.is-active,
+.root-four-valley .r4-chapter-nav nav button.is-active {
+  background: linear-gradient(135deg, rgba(10, 39, 57, .96), rgba(35, 77, 87, .94));
+  color: #fff;
+}
+
+.r1-experience .r1-sidebar nav button.is-active .r1-nav-number,
+.root-two-exchange .r2-nav nav button.is-active > span,
+.root-three-city .r3-nav nav button.is-active > span,
+.root-four-valley .r4-chapter-nav nav button.is-active > span:first-child {
+  background: var(--vivid-amber);
+  color: var(--vivid-navy);
+}
+
+.r1-experience .r1-lesson > section,
+.r1-experience .r1-lesson > header,
+.r1-experience .r1-lesson > footer,
+.root-two-exchange .r2-opening,
+.root-two-exchange .r2-lesson-title,
+.root-two-exchange .r2-card,
+.root-two-exchange .r2-next,
+.root-three-city .r3-opening,
+.root-three-city .r3-lesson-title,
+.root-three-city .r3-card,
+.root-three-city .r3-next,
+.root-four-valley .r4-opening,
+.root-four-valley .r4-promise,
+.root-four-valley .r4-card,
+.root-four-valley .r4-next,
+.root-four-valley .r4-learner-statement {
+  border: 1px solid var(--vivid-line);
+  border-radius: 23px;
+  background: var(--vivid-paper);
+  color: var(--vivid-ink);
+  box-shadow: 0 22px 70px rgba(1, 12, 20, .28);
+  backdrop-filter: blur(18px) saturate(1.12);
+}
+
+.r1-experience .r1-lesson > section,
+.r1-experience .r1-lesson > header,
+.r1-experience .r1-lesson > footer { border-color: var(--vivid-line); }
+
+.r1-experience .r1-lesson h1,
+.r1-experience .r1-lesson h2,
+.root-two-exchange .r2-card h2,
+.root-two-exchange .r2-lesson-title h1,
+.root-three-city .r3-card h2,
+.root-three-city .r3-lesson-title h1,
+.root-four-valley .r4-card h2,
+.root-four-valley .r4-promise h1 { color: var(--vivid-navy); }
+
+.r1-experience .r1-eyebrow,
+.root-two-exchange .r2-eyebrow,
+.root-three-city .r3-eyebrow,
+.root-four-valley .r4-eyebrow { color: #8a5d32; }
+
+.r1-experience .r1-opening,
+.root-two-exchange .r2-opening,
+.root-three-city .r3-opening { overflow: hidden; }
+
+.r1-experience .r1-opening-art,
+.root-two-exchange .r2-opening-hero,
+.root-three-city .r3-current-scene {
+  min-height: clamp(410px, 48vw, 600px);
+  border-bottom: 1px solid rgba(183, 227, 63, .42);
+}
+
+.r1-experience .r1-opening-art img,
+.root-three-city .r3-current-scene img {
+  filter: saturate(1.08) contrast(1.04) brightness(.9);
+}
+
+.root-two-exchange .r2-opening-hero {
+  background-image: linear-gradient(180deg, rgba(3, 17, 20, .04), rgba(3, 17, 20, .72)), url('/root-two-exchange-district.png');
+}
+
+.r1-experience .r1-opening-copy,
+.root-two-exchange .r2-opening-copy,
+.root-three-city .r3-opening-copy,
+.root-four-valley .r4-opening-copy {
+  background: linear-gradient(135deg, rgba(6, 24, 38, .94), rgba(26, 57, 77, .86));
+  color: #fff;
+}
+
+.r1-experience .r1-opening-copy h1,
+.root-two-exchange .r2-opening-copy h1,
+.root-three-city .r3-opening-copy h1,
+.root-four-valley .r4-opening-copy h1 { color: #fff; }
+
+.r1-experience .r1-opening-copy .r1-eyebrow,
+.root-two-exchange .r2-opening-copy .r2-eyebrow,
+.root-three-city .r3-opening-copy .r3-eyebrow,
+.root-four-valley .r4-opening-copy .r4-eyebrow { color: var(--vivid-amber); }
+
+.r1-experience .r1-promise-strip,
+.r1-experience .r1-opening-question,
+.r1-experience .r1-layer,
+.r1-experience .r1-scan-card,
+.r1-experience .r1-knowledge,
+.r1-experience .r1-decision-drill,
+.r1-experience .r1-private,
+.r1-experience .r1-source-desk,
+.r1-experience .r1-connection,
+.root-two-exchange .r2-card > section,
+.root-three-city .r3-card > section,
+.root-four-valley .r4-card > section {
+  background: var(--vivid-paper-soft);
+  border-color: rgba(22, 39, 53, .16);
+}
+
+.r1-experience .r1-option-list button,
+.r1-experience .r1-choice-grid button,
+.root-two-exchange .r2-options button,
+.root-two-exchange .r2-opening-question button,
+.root-three-city .r3-options button,
+.root-three-city .r3-opening-choice button,
+.root-four-valley .r4-options button,
+.root-four-valley .r4-pressure button {
+  border-color: rgba(22, 39, 53, .2);
+  background: rgba(255, 255, 255, .72);
+  color: var(--vivid-ink);
+}
+
+.r1-experience .r1-option-list button.is-selected,
+.r1-experience .r1-choice-grid button.is-selected,
+.root-two-exchange .r2-options button.is-selected,
+.root-two-exchange .r2-opening-question button.is-selected,
+.root-three-city .r3-options button.is-selected,
+.root-three-city .r3-opening-choice button.is-selected,
+.root-four-valley .r4-options button.is-selected,
+.root-four-valley .r4-pressure button.is-selected {
+  border-color: var(--vivid-copper);
+  background: linear-gradient(135deg, #a95e42, #cc814c);
+  color: #fff;
+}
+
+.r1-experience .r1-growth,
+.root-three-city .r3-growth,
+.root-four-valley .r4-root-growth {
+  border-left-color: var(--vivid-lime);
+  background: linear-gradient(135deg, rgba(8, 32, 45, .9), rgba(24, 67, 72, .83));
+  color: #fff;
+}
+
+.r1-experience .r1-growth h2,
+.root-three-city .r3-growth h2,
+.root-four-valley .r4-root-growth h2 { color: #fff; }
+
+.r1-experience .r1-transition,
+.root-two-exchange .r2-next,
+.root-three-city .r3-next,
+.root-four-valley .r4-next {
+  background: rgba(7, 28, 43, .86);
+  color: #fff;
+}
+
+.r1-experience .r1-footer button,
+.root-two-exchange .r2-footer button,
+.root-three-city .r3-footer button,
+.root-four-valley .r4-footer button {
+  border-color: rgba(255, 255, 255, .52);
+  background: rgba(250, 247, 237, .86);
+  color: var(--vivid-navy);
+  backdrop-filter: blur(12px);
+}
+
+.r1-experience .r1-footer .r1-primary,
+.root-two-exchange .r2-footer button:nth-child(2),
+.root-three-city .r3-footer button:nth-child(2),
+.root-four-valley .r4-footer button:nth-child(2) {
+  background: rgba(13, 46, 65, .96);
+  color: #fff;
+}
+
+.r1-experience .r1-sage-toggle,
+.root-two-exchange .r2-sage-toggle,
+.root-three-city .r3-sage-toggle,
+.root-four-valley .r4-sage-toggle {
+  background: rgba(13, 46, 65, .96);
+  border-color: rgba(255, 255, 255, .48);
+}
+
+@media (max-width: 930px) {
+  .r1-experience .r1-shell,
+  .root-two-exchange .r2-shell,
+  .root-three-city .r3-shell,
+  .root-four-valley .r4-shell { padding: 18px; }
+}
+
+@media (max-width: 680px) {
+  .r1-experience .r1-shell,
+  .root-two-exchange .r2-shell,
+  .root-three-city .r3-shell,
+  .root-four-valley .r4-shell { padding: 12px; }
+  .r1-experience .r1-opening-art,
+  .root-two-exchange .r2-opening-hero,
+  .root-three-city .r3-current-scene { min-height: 390px; }
+}
