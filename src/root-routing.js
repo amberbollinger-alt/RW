@@ -10,6 +10,7 @@ export function routeFromPath(pathname, hash = '') {
   const rootMatch = path.match(/^roots\/([^/]+)$/);
   if (rootMatch) return `root-overview:${rootMatch[1]}`;
   if (path === 'grove') return 'dashboard';
+  if (path === 'crossing') return 'crossing';
   const hashRoute = String(hash || '').replace(/^#\/?/, '');
   if (hashRoute === 'my-journey') return 'legacy-my-journey';
   if (hashRoute === 'tools') return 'legacy-tools';
@@ -21,6 +22,7 @@ export function destinationForPage(page) {
   if (value.startsWith('/')) return value;
   if (value === 'home') return '/';
   if (value === 'dashboard') return '/grove';
+  if (value === 'crossing') return '/crossing';
   if (value === 'tools') return '/tools';
   if (value.startsWith('roots/')) return `/${value}`;
   return `/#/${value}`;
