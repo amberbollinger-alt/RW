@@ -7,6 +7,7 @@ import rootFourMasterLessons from './root-four-master-data.json';
 import { rootFiveLessons, rootFiveOpening } from './root-five-data';
 import { rootSixLessons, rootSixOpening } from './root-six-data';
 import { rootSevenLessons, rootSevenOpening } from './root-seven-data';
+import { rootEightLessons, rootEightOpening } from './root-eight-data';
 
 const rootTwoLessons = rootTwoDistricts.flatMap((district) => district.lessons.map((lesson) => ({
   id: lesson.slug,
@@ -30,6 +31,7 @@ const lessonSources = {
   five: rootFiveLessons.map((lesson) => ({ id: lesson.key, order: lesson.number, number: lesson.displayNumber, title: lesson.title, group: `Part ${lesson.part.number} · ${lesson.part.title}`, published: true })),
   six: rootSixLessons.map((lesson) => ({ id: lesson.key, order: lesson.number, number: lesson.displayNumber, title: lesson.title, group: `Part ${lesson.part.number} · ${lesson.part.title}`, published: true })),
   seven: rootSevenLessons.map((lesson) => ({ id: lesson.key, order: lesson.number, number: lesson.displayNumber, title: lesson.title, group: `Part ${lesson.part.number} · ${lesson.part.title}`, published: true })),
+  eight: rootEightLessons.map((lesson) => ({ id: lesson.key, order: lesson.number, number: lesson.displayNumber, title: lesson.title, group: `Part ${lesson.part.number} · ${lesson.part.title}`, published: true })),
 };
 
 const progressKeys = {
@@ -40,6 +42,7 @@ const progressKeys = {
   five: ['rootwise_root_five_bridge_progress_v1'],
   six: ['rootwise_root_six_harbor_progress_v1'],
   seven: ['rootwise_root_seven_opportunity_progress_v1'],
+  eight: ['rootwise_root_eight_ownership_progress_v1'],
 };
 
 const registry = createRootRegistry(ROOT_CATALOG, lessonSources, {
@@ -48,6 +51,7 @@ const registry = createRootRegistry(ROOT_CATALOG, lessonSources, {
   five: rootFiveOpening.coreQuestion,
   six: rootSixOpening.coreQuestion,
   seven: rootSevenOpening.coreQuestion,
+  eight: rootEightOpening.coreQuestion,
 });
 
 export const rootRegistry = Object.freeze(registry.map((root) => Object.freeze({
