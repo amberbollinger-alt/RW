@@ -260,11 +260,11 @@ function Home() {
       <footer className="landing-legal-footer">
         <div className="landing-legal-brand"><ApprovedArtwork variant="tree" /><span><strong>Root$Wise</strong><small>Grow financial wisdom at the root.</small></span></div>
         <div className="landing-legal-links" aria-label="Legal information">
-          <a href="/#/privacy">Privacy Policy</a>
-          <a href="/#/terms">Terms of Use</a>
-          <a href="/#/accessibility">Accessibility</a>
-          <a href="/#/faq">FAQ</a>
-          <a href="/#/contact">Contact Us</a>
+          <a href={destinationForPage('privacy')}>Privacy Policy</a>
+          <a href={destinationForPage('terms')}>Terms of Use</a>
+          <a href={destinationForPage('accessibility')}>Accessibility</a>
+          <a href={destinationForPage('faq')}>FAQ</a>
+          <a href={destinationForPage('contact')}>Contact Us</a>
         </div>
         <small>© 2026 Root$Wise. All rights reserved.</small>
       </footer>
