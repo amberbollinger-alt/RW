@@ -21,6 +21,7 @@ const ROOT_OVERVIEW_ART = {
   five: '/root-five-bridge-hero-v2.jpg',
   six: '/root-six-harbor-district.png',
   seven: '/root-seven-opportunity-junction.png',
+  eight: '/root-eight-ownership-exchange.jpg',
 };
 
 function RootFourOverview({ root, progress, action, groups }) {

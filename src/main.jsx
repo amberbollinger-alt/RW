@@ -14,6 +14,7 @@ import RootFourValley from './root-four-valley';
 import RootFiveBridge from './root-five-bridge';
 import RootSixHarbor from './root-six-harbor';
 import RootSevenJunction from './root-seven-junction';
+import RootEightExchange from './root-eight-exchange';
 import RootOverview from './root-overview';
 import { getLessonById, getLessonBySlug, getRootBySlug, rootRegistry } from './root-registry';
 import { destinationForPage, routeFromPath } from './root-routing';
@@ -144,6 +145,7 @@ function RootLessonExperience({ root, lesson }) {
   if (root.id === 5) return <RootFiveBridge key={lesson.id} {...shared} />;
   if (root.id === 6) return <RootSixHarbor key={lesson.id} {...shared} />;
   if (root.id === 7) return <RootSevenJunction key={lesson.id} {...shared} />;
+  if (root.id === 8) return <RootEightExchange key={lesson.id} {...shared} />;
   return <RootOverview root={root} />;
 }
 
