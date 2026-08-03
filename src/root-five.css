@@ -16,3 +16,55 @@
 @media(max-width:680px){.r5-sage-toggle{bottom:82px}}
 @media(prefers-reduced-motion:reduce){.root-five-bridge *{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 
+/* Root Five Bridge District identity: vivid illustrated world, not an empty gray backdrop. */
+.root-five-bridge{
+  --r5-night:#020b12;
+  --r5-blue:#082638;
+  --r5-ink:#edf4f1;
+  --r5-gold:#f4a522;
+  --r5-amber:#ffbf3f;
+  --r5-cyan:#36d6e7;
+  --r5-magenta:#d73c82;
+  --r5-green:#a7d625;
+  --r5-line:rgba(167,214,37,.24);
+  background:#020b12;
+}
+.r5-backdrop{inset:77px 0 0;opacity:.98}
+.r5-backdrop img{object-position:center center;filter:saturate(1.18) contrast(1.08) brightness(.78)}
+.r5-backdrop>div{background:linear-gradient(90deg,rgba(1,8,13,.84),rgba(3,11,19,.32) 48%,rgba(2,8,14,.7)),linear-gradient(180deg,rgba(2,8,14,.05),rgba(1,7,12,.74))}
+.r5-topbar{background:rgba(2,10,17,.96);border-bottom-color:rgba(167,214,37,.3)}
+.r5-brand>svg{color:var(--r5-green)}
+.r5-progress{background:#01070c}.r5-progress i{background:linear-gradient(90deg,var(--r5-magenta),var(--r5-amber),var(--r5-green))}
+.r5-shell{max-width:1320px;grid-template-columns:minmax(260px,300px) minmax(0,930px);gap:25px;padding:30px 26px 50px}
+.r5-nav{border-color:rgba(167,214,37,.34);border-radius:18px;background:rgba(3,16,26,.94);box-shadow:0 24px 78px rgba(0,0,0,.58);color:var(--r5-ink)}
+.r5-nav header{border-bottom-color:var(--r5-line)}
+.r5-nav h2{color:#f5faf7}.r5-nav header p,.r5-eyebrow{color:#b9e83d}
+.r5-nav nav h3{border-bottom-color:var(--r5-line);color:#f4f8f4}.r5-nav nav h3 span{color:#ffbf3f}
+.r5-nav nav button{color:#eef6f2}.r5-nav nav button>span{background:rgba(167,214,37,.13);color:#d8ff65}
+.r5-nav nav button.is-active{background:linear-gradient(90deg,rgba(167,214,37,.98),rgba(116,160,15,.93));color:#07110e;box-shadow:0 0 22px rgba(167,214,37,.16)}
+.r5-nav nav button.is-active>span{background:#07100c;color:#d8ff65}.r5-nav footer{border-top-color:var(--r5-line);color:#f0f7f2}.r5-nav footer i{background:#17303c}.r5-nav footer b{background:linear-gradient(90deg,var(--r5-magenta),var(--r5-green))}
+.r5-lesson{gap:20px}
+.r5-opening,.r5-lesson-title,.r5-card,.r5-next{border-color:rgba(167,214,37,.32);border-radius:18px;background:rgba(3,17,27,.91);color:var(--r5-ink);box-shadow:0 24px 78px rgba(0,0,0,.54)}
+.r5-bridge-scene{height:clamp(410px,48vw,590px);border-bottom-color:rgba(167,214,37,.42);background:#020811}
+.r5-bridge-scene::before{position:absolute;z-index:1;inset:0;background:linear-gradient(90deg,rgba(2,9,16,.76),rgba(2,9,16,.18) 48%,rgba(2,9,16,.04)),linear-gradient(180deg,rgba(2,8,14,.04) 45%,rgba(2,8,14,.8));content:'';pointer-events:none}
+.r5-bridge-scene::after{z-index:2;height:18%;background:linear-gradient(transparent,rgba(2,8,17,.92))}
+.r5-bridge-scene img{object-position:center center;filter:saturate(1.15) contrast(1.07) brightness(.94)}
+.r5-opening-copy{padding:38px 42px;background:linear-gradient(135deg,rgba(2,12,21,.98),rgba(25,8,39,.92));border-bottom:1px solid rgba(215,60,130,.25)}
+.r5-opening-copy .r5-eyebrow{color:#cfff49}.r5-opening-copy h1{max-width:780px;color:#f7fbf7;font-size:clamp(48px,7vw,82px);letter-spacing:-.045em;text-shadow:0 3px 0 rgba(0,0,0,.32)}
+.r5-opening-copy blockquote{border-left-color:var(--r5-cyan);color:#f1f7f5}
+.r5-opening-story{background:linear-gradient(135deg,rgba(2,17,28,.82),rgba(7,12,23,.96));border-bottom:1px solid var(--r5-line)}
+.r5-opening-story h2,.r5-card h2,.r5-lesson-title h1,.r5-levels h3{color:#b9e83d}.r5-opening-story>img{filter:saturate(1.08) drop-shadow(0 12px 20px rgba(0,0,0,.42))}
+.r5-opening-choice,.r5-promise{border-color:var(--r5-line);background:rgba(3,14,23,.72)}
+.r5-opening-choice legend{color:#f3faf6}.r5-opening-choice>p,.r5-lesson-title>span,.r5-sage-open small{color:#b8c9c8}
+.r5-opening-choice button,.r5-options button{border-color:rgba(167,214,37,.27);background:rgba(10,31,43,.92);color:#f2f7f5}.r5-opening-choice button.is-selected,.r5-options button.is-selected{border-color:#caff48;background:var(--r5-green);color:#07100c}
+.r5-opening-response{border-left-color:var(--r5-magenta);background:rgba(215,60,130,.16);color:#f4f7f6}.r5-promise summary{color:#cfff49}
+.r5-sage-open blockquote{color:#f6f8f7}.r5-sage-open button{border-color:#b9e83d;background:var(--r5-green);color:#07100c}.r5-story{border-left-color:var(--r5-magenta)}
+.r5-levels article{border-color:rgba(167,214,37,.22);background:rgba(9,29,40,.86)}.r5-levels article>span{background:var(--r5-green);color:#07100c}.r5-level-label{color:#ff71b1!important}
+.r5-feedback{background:rgba(215,60,130,.16);color:#f4eef2}.r5-feedback.is-correct{background:rgba(167,214,37,.16);color:#e8ffd0}
+.r5-private textarea,.r5-sage textarea,.r5-workbook textarea{border-color:rgba(167,214,37,.35);background:#071823;color:#f5faf7}.r5-private button,.r5-workbook button{border-color:var(--r5-green);background:var(--r5-green);color:#07100c}.r5-private aside,.r5-workbook aside{background:rgba(215,60,130,.12)}
+.r5-sources{border-left-color:var(--r5-amber)}.r5-jurisdiction{background:rgba(244,165,34,.14);color:#ffe3ad}.r5-sources a{border-color:rgba(167,214,37,.24);background:rgba(8,29,41,.88);color:#d9ff68}
+.r5-next{background:linear-gradient(100deg,rgba(12,33,43,.96),rgba(43,8,39,.93))}.r5-next>svg{color:#ff71b1}.r5-next .r5-eyebrow{color:#cfff49}
+.r5-footer button{border-color:rgba(167,214,37,.35);background:rgba(5,23,34,.94);color:#e6f5ed}.r5-footer button:nth-child(2){background:var(--r5-green);color:#07100c}.r5-footer button.is-complete{background:#547813;color:#fff}
+.r5-sage-toggle{border-color:#cfff49;background:var(--r5-green);color:#07100c}.r5-sage{border-left-color:rgba(167,214,37,.38);background:rgba(3,15,24,.99);color:#eef5f1}.r5-sage>header{background:linear-gradient(100deg,#0d2b39,#3b1135)}
+.r5-sage-messages>div{background:#102c39}.r5-sage-messages>div.user{background:#3a2437}.r5-sage-messages>div.is-unavailable{border-color:#f7a64a;background:#3c2519}.r5-quick button{border-color:rgba(167,214,37,.35);background:#0a2431;color:#d8ff69}.r5-sage form,.r5-sage>footer{border-color:var(--r5-line);background:#061923;color:#b9c9c5}
+@media(max-width:680px){.r5-shell{padding:12px}.r5-opening-copy{padding:28px 20px}.r5-opening-copy h1{font-size:46px}.r5-bridge-scene{height:clamp(330px,78vw,470px)}.r5-backdrop img{object-position:55% center}}
