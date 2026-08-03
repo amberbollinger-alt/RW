@@ -240,6 +240,25 @@
 
 @media(prefers-reduced-motion:reduce) { .root-overview * { scroll-behavior: auto !important; transition-duration: .001ms !important; } }
 
+/* The final Roots return to the living Grove: sunlight through trees, not a futuristic district. */
+.root-overview-nine,.root-overview-ten,.root-overview-eleven { --root-accent: #b9e83d; --root-magenta: #ef6aa0; --root-amber: #ffc45a; --root-cyan: #63d6d0; background: #06140d; }
+.root-overview-ten { --root-accent: #d5df62; --root-magenta: #ff7f86; --root-amber: #ffc266; }
+.root-overview-eleven { --root-accent: #d5f04a; --root-magenta: #ef5fc4; --root-amber: #ffb83d; }
+.root-overview-nine .root-overview-backdrop img,.root-overview-ten .root-overview-backdrop img,.root-overview-eleven .root-overview-backdrop img { object-position: center 42%; filter: saturate(1.16) contrast(1.05) brightness(.64); }
+.root-overview-nine .root-overview-backdrop > div,.root-overview-ten .root-overview-backdrop > div,.root-overview-eleven .root-overview-backdrop > div { background: radial-gradient(circle at 64% 12%, rgba(255,220,133,.52), transparent 24rem), linear-gradient(90deg, rgba(2,13,8,.86), rgba(3,17,11,.3) 49%, rgba(2,10,7,.72)), linear-gradient(180deg, rgba(2,10,7,.1), rgba(2,10,7,.82) 85%, #06140d 100%); }
+.root-overview-nine .root-overview-header,.root-overview-ten .root-overview-header,.root-overview-eleven .root-overview-header { background: rgba(3,13,9,.9); border-bottom-color: color-mix(in srgb, var(--root-accent) 32%, transparent); }
+.root-overview-nine .root-overview-brand > svg,.root-overview-ten .root-overview-brand > svg,.root-overview-eleven .root-overview-brand > svg { color: #071008; background: var(--root-accent); }
+.root-overview-nine .root-overview-hero,.root-overview-ten .root-overview-hero,.root-overview-eleven .root-overview-hero { min-height: 680px; }
+.root-overview-nine .root-overview-copy > strong,.root-overview-eleven .root-overview-copy > strong { color: #eaffaa; }
+.root-overview-ten .root-overview-copy > strong { color: #ffe0c2; }
+.root-overview-nine .root-overview-copy aside,.root-overview-ten .root-overview-copy aside,.root-overview-eleven .root-overview-copy aside,.root-overview-nine .root-overview-progress,.root-overview-ten .root-overview-progress,.root-overview-eleven .root-overview-progress,.root-overview-nine .root-lesson-group a,.root-overview-ten .root-lesson-group a,.root-overview-eleven .root-lesson-group a { border-color: color-mix(in srgb, var(--root-accent) 35%, transparent); background: rgba(3,20,12,.76); backdrop-filter: blur(12px); }
+.root-overview-nine .root-overview-progress > div i,.root-overview-ten .root-overview-progress > div i,.root-overview-eleven .root-overview-progress > div i { background: linear-gradient(90deg,var(--root-magenta),var(--root-amber),var(--root-accent)); }
+.root-overview-nine .root-overview-capacity,.root-overview-ten .root-overview-capacity,.root-overview-eleven .root-overview-capacity { background: rgba(3,20,12,.7); backdrop-filter: blur(10px); }
+.root-overview-nine .root-overview-capacity blockquote,.root-overview-ten .root-overview-capacity blockquote,.root-overview-eleven .root-overview-capacity blockquote { color: #e6f2d7; }
+.root-overview-nine .root-overview-actions .root-overview-primary,.root-overview-ten .root-overview-actions .root-overview-primary,.root-overview-eleven .root-overview-actions .root-overview-primary { border-color: var(--root-accent); color: #071008; background: var(--root-accent); }
+.root-overview-nine .root-lesson-group a:hover,.root-overview-ten .root-lesson-group a:hover,.root-overview-eleven .root-lesson-group a:hover,.root-overview-nine .root-lesson-group .is-current a,.root-overview-ten .root-lesson-group .is-current a,.root-overview-eleven .root-lesson-group .is-current a { border-color: var(--root-accent); background: color-mix(in srgb, var(--root-accent) 14%, rgba(255,255,255,.035)); }
+@media(max-width:780px){.root-overview-nine .root-overview-hero,.root-overview-ten .root-overview-hero,.root-overview-eleven .root-overview-hero{min-height:0}}
+
 
 /* Root Five entry composition: the Bridge District is the page, not a backdrop behind a template. */
 .root-five-overview{
