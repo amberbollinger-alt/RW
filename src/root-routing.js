@@ -29,5 +29,3 @@ export function destinationForPage(page) {
   if (value.startsWith('roots/')) return `/${value}`;
   return `/#/${value}`;
 }
-
-// Keep direct footer destinations explicit for reliable production routing.
