@@ -14,6 +14,7 @@ import RootFourValley from './root-four-valley';
 import RootFiveBridge from './root-five-bridge';
 import RootSixHarbor from './root-six-harbor';
 import RootSevenJunction from './root-seven-junction';
+import Crossing from './crossing';
 import RootEightExchange from './root-eight-exchange';
 import RootOverview from './root-overview';
 import { getLessonById, getLessonBySlug, getRootBySlug, rootRegistry } from './root-registry';
@@ -170,13 +171,14 @@ function App() {
   const [routeKind, rootSlug, lessonSlug] = route.split(':');
   const currentRoot = routeKind === 'root-overview' || routeKind === 'root-lesson' ? getRootBySlug(rootSlug) : null;
   const currentLesson = routeKind === 'root-lesson' && currentRoot ? getLessonBySlug(currentRoot, lessonSlug) : null;
-  const knownRoutes = ['home', 'journey', 'profile', 'assessment', 'heart', 'dashboard', 'learn', 'tools', 'tool-dictionary', 'schools', 'privacy', 'terms', 'accessibility', 'faq', 'contact', 'legacy-my-journey', 'legacy-tools'];
+  const knownRoutes = ['home', 'journey', 'profile', 'assessment', 'heart', 'dashboard', 'crossing', 'learn', 'tools', 'tool-dictionary', 'schools', 'privacy', 'terms', 'accessibility', 'faq', 'contact', 'legacy-my-journey', 'legacy-tools'];
   const routeMissing = !knownRoutes.includes(route) && !currentRoot && routeKind !== 'tool';
   React.useEffect(() => {
     const titles = {
       home: 'Root$Wise',
       heart: 'Before We Enter the City · Root$Wise',
       dashboard: 'Your Grove · Root$Wise',
+      crossing: 'The Crossing · Root$Wise',
       learn: 'The Eleven Roots · Root$Wise',
       assessment: 'Financial Roots Assessment · Root$Wise',
       tools: 'Tools · Root$Wise',
@@ -207,6 +209,7 @@ function App() {
       {route === 'assessment' && <AssessmentFlow profile={profile} updateProfile={updateProfile} />}
       {route === 'heart' && <Grove profile={null} view="welcome" />}
       {route === 'dashboard' && <Dashboard profile={profile} />}
+      {route === 'crossing' && <Crossing go={go} />}
       {route === 'learn' && <Learn />}
       {route === 'tools' && <ToolsCenter />}
       {route === 'tool-dictionary' && <MoneyDictionary />}
