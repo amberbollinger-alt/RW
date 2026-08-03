@@ -116,7 +116,7 @@ export const ROOT_CATALOG = [
     purpose: 'Understand ownership, investing, and financial freedom.',
     description: 'Explore assets, risk, return, diversification, time, compounding, market participation, property, alternative ownership, income-producing assets, and financial independence.',
     capacity: 'Evaluate the movement from consumption toward ownership with risk, time, return, and purpose in view.',
-    status: 'in-development',
+    status: 'published',
     accent: '#ad8ac3',
   },
   {
@@ -127,7 +127,7 @@ export const ROOT_CATALOG = [
     purpose: 'Understand family, legacy, and generational wealth.',
     description: 'Explore shared responsibility, household decisions, dependents, caregiving, estate concepts, beneficiaries, inheritance, family communication, generational patterns, and asset transfer.',
     capacity: 'Make shared and long-range financial choices with roles, relationships, authority, care, and transfer responsibilities visible.',
-    status: 'in-development',
+    status: 'published',
     accent: '#d18183',
   },
   {
@@ -138,7 +138,7 @@ export const ROOT_CATALOG = [
     purpose: 'Open the doorway to entrepreneurship.',
     description: 'Explore value creation, problem solving, products and services, employment and ownership, independent work, business systems, risk, responsibility, scalability, non-owner wealth creation, and alternative investing.',
     capacity: 'Recognize entrepreneurship as one possible form of value creation while preserving corporate, professional, licensed, scientific, and non-owner paths to wealth.',
-    status: 'in-development',
+    status: 'published',
     accent: '#d4a04f',
     note: 'Root Eleven is the doorway into the separate Business Hub. It is not the full Business Hub curriculum.',
   },
