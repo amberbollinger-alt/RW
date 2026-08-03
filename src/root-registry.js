@@ -8,6 +8,11 @@ import { rootFiveLessons, rootFiveOpening } from './root-five-data';
 import { rootSixLessons, rootSixOpening } from './root-six-data';
 import { rootSevenLessons, rootSevenOpening } from './root-seven-data';
 import { rootEightLessons, rootEightOpening } from './root-eight-data';
+import {
+  rootNineCurriculum, rootNineOpening, rootNineProgressKey,
+  rootTenCurriculum, rootTenOpening, rootTenProgressKey,
+  rootElevenCurriculum, rootElevenOpening, rootElevenProgressKey,
+} from './root-final-data';
 
 const rootTwoLessons = rootTwoDistricts.flatMap((district) => district.lessons.map((lesson) => ({
   id: lesson.slug,
@@ -32,6 +37,9 @@ const lessonSources = {
   six: rootSixLessons.map((lesson) => ({ id: lesson.key, order: lesson.number, number: lesson.displayNumber, title: lesson.title, group: `Part ${lesson.part.number} · ${lesson.part.title}`, published: true })),
   seven: rootSevenLessons.map((lesson) => ({ id: lesson.key, order: lesson.number, number: lesson.displayNumber, title: lesson.title, group: `Part ${lesson.part.number} · ${lesson.part.title}`, published: true })),
   eight: rootEightLessons.map((lesson) => ({ id: lesson.key, order: lesson.number, number: lesson.displayNumber, title: lesson.title, group: `Part ${lesson.part.number} · ${lesson.part.title}`, published: true })),
+  nine: rootNineCurriculum.map((lesson) => ({ id: lesson.key, order: lesson.number, number: lesson.displayNumber, title: lesson.title, group: `Part ${lesson.part.number} · ${lesson.part.title}`, published: true })),
+  ten: rootTenCurriculum.map((lesson) => ({ id: lesson.key, order: lesson.number, number: lesson.displayNumber, title: lesson.title, group: `Part ${lesson.part.number} · ${lesson.part.title}`, published: true })),
+  eleven: rootElevenCurriculum.map((lesson) => ({ id: lesson.key, order: lesson.number, number: lesson.displayNumber, title: lesson.title, group: `Part ${lesson.part.number} · ${lesson.part.title}`, published: true })),
 };
 
 const progressKeys = {
@@ -43,6 +51,9 @@ const progressKeys = {
   six: ['rootwise_root_six_harbor_progress_v1'],
   seven: ['rootwise_root_seven_opportunity_progress_v1'],
   eight: ['rootwise_root_eight_ownership_progress_v1'],
+  nine: [rootNineProgressKey],
+  ten: [rootTenProgressKey],
+  eleven: [rootElevenProgressKey],
 };
 
 const registry = createRootRegistry(ROOT_CATALOG, lessonSources, {
@@ -52,6 +63,9 @@ const registry = createRootRegistry(ROOT_CATALOG, lessonSources, {
   six: rootSixOpening.coreQuestion,
   seven: rootSevenOpening.coreQuestion,
   eight: rootEightOpening.coreQuestion,
+  nine: rootNineOpening.coreQuestion,
+  ten: rootTenOpening.coreQuestion,
+  eleven: rootElevenOpening.coreQuestion,
 });
 
 export const rootRegistry = Object.freeze(registry.map((root) => Object.freeze({

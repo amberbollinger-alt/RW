@@ -22,6 +22,9 @@ const ROOT_OVERVIEW_ART = {
   six: '/root-six-harbor-district.png',
   seven: '/root-seven-opportunity-junction.png',
   eight: '/root-eight-ownership-exchange.jpg',
+  nine: '/ivy-eli-oak.png',
+  ten: '/ivy-eli-oak.png',
+  eleven: '/ivy-eli-oak.png',
 };
 
 function RootFourOverview({ root, progress, action, groups }) {
