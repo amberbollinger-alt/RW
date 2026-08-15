@@ -224,7 +224,7 @@ export function KidsKornerGrove({ go }) {
           <h2 id="kk-mission-gate-title">The School Fair</h2>
           <strong>You’ve got 10 tokens and way too many fun things to choose from. Ready?</strong>
           <p>The fair is open. Penny will show you the choices, but she will not make the decision for you.</p>
-          <button className="kk-button kk-start" type="button" onClick={() => go('/kids-korner/mission-one')}>Enter the fair <ArrowRight aria-hidden="true" /></button>
+          <button className="kk-button kk-start" type="button" onClick={() => { window.location.href = '/kids-korner/mission-one'; }}>Enter the fair <ArrowRight aria-hidden="true" /></button>
         </div>
         <div className="kk-token-stack" aria-label="Ten adventure tokens"><span>10</span><small>tokens</small></div>
       </section>
