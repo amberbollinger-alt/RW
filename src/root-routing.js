@@ -5,7 +5,7 @@ export function routeFromPath(pathname, hash = '') {
   if (path === 'tools') return 'tools';
   if (path === 'kids-korner') return 'kids-korner';
   if (path === 'kids-korner/grove') return 'kids-korner-grove';
-  if (path === 'kids-korner/mission-one') return 'kids-korner-mission-one';
+  if (path === 'kids-korner/mission-one') return 'kids-korner-grove';
   if (path === 'tools/dictionary') return 'tool-dictionary';
   const toolMatch = path.match(/^tools\/([^/]+)$/);
   if (toolMatch) return `tool:${toolMatch[1]}`;
