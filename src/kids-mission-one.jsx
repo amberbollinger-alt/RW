@@ -81,11 +81,13 @@ export default function KidsMissionOne({ go }) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const returnToGrove = () => { window.location.href = '/kids-korner/grove'; };
+
   return (
     <main className="kids-korner kids-mission-one">
       <div className="km-fair-world" aria-hidden="true"><i /><i /><i /><i /><i /></div>
       <header className="km-topbar">
-        <button type="button" className="km-back" onClick={() => go('/kids-korner/grove')}><ArrowLeft aria-hidden="true" /> Back to the Grove</button>
+        <button type="button" className="km-back" onClick={returnToGrove}><ArrowLeft aria-hidden="true" /> Back to the Grove</button>
         <div className="km-wordmark"><Star aria-hidden="true" /><span>Kids <strong>Korner</strong></span></div>
         <GrownUpExit go={go} />
       </header>
@@ -171,7 +173,7 @@ export default function KidsMissionOne({ go }) {
 
             <div className="km-actions">
               <button className="km-primary km-secondary" type="button" onClick={reset}><RotateCcw aria-hidden="true" /> TRY A DIFFERENT CHOICE</button>
-              <button className="km-primary" type="button" onClick={() => go('/kids-korner/grove')} disabled={!reflection}>FINISH MISSION <ArrowRight aria-hidden="true" /></button>
+              <button className="km-primary" type="button" onClick={returnToGrove} disabled={!reflection}>FINISH MISSION <ArrowRight aria-hidden="true" /></button>
             </div>
           </section>
         )}
