@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { ArrowLeft, ArrowRight, BadgeCheck, Heart, RotateCcw, ShieldCheck, Sparkles, Star } from 'lucide-react';
 import './kids-korner.css';
+import './kids-korner-v2.css';
 
 const KIDS_PROGRESS_KEY = 'rootwise_kids_korner_intro_v1';
 const MISSION_ONE_KEY = 'rootwise_kids_korner_mission_one_v1';
