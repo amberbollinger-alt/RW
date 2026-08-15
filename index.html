@@ -10,6 +10,13 @@
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <script type="module">
+      if (window.location.pathname.startsWith('/kids-korner')) {
+        document.title = 'Kids Korner · Root$Wise';
+        import('/src/kids-main.jsx');
+      } else {
+        import('/src/main.jsx');
+      }
+    </script>
   </body>
 </html>
