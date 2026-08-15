@@ -14,6 +14,7 @@
     "validate:root-one": "node scripts/validate-root-one-progress.mjs",
     "validate:root-two": "node scripts/validate-root-two-revamp.mjs",
     "validate:root-three": "node scripts/validate-root-three-remaster.mjs",
+    "validate:kids": "node scripts/validate-kids-korner.mjs",
     "validate:tools": "node scripts/validate-tools.mjs"
   },
   "dependencies": {

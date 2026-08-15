@@ -3,6 +3,8 @@ export function routeFromPath(pathname, hash = '') {
   if (['privacy', 'terms', 'accessibility', 'faq', 'contact'].includes(path)) return path;
   if (path === 'my-journey') return 'legacy-my-journey';
   if (path === 'tools') return 'tools';
+  if (path === 'kids-korner') return 'kids-korner';
+  if (path === 'kids-korner/grove') return 'kids-korner-grove';
   if (path === 'tools/dictionary') return 'tool-dictionary';
   const toolMatch = path.match(/^tools\/([^/]+)$/);
   if (toolMatch) return `tool:${toolMatch[1]}`;
@@ -26,6 +28,8 @@ export function destinationForPage(page) {
   if (value === 'dashboard') return '/grove';
   if (value === 'crossing') return '/crossing';
   if (value === 'tools') return '/tools';
+  if (value === 'kids-korner') return '/kids-korner';
+  if (value === 'kids-korner-grove') return '/kids-korner/grove';
   if (value.startsWith('roots/')) return `/${value}`;
   return `/#/${value}`;
 }

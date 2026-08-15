@@ -108,9 +108,9 @@ export default function Crossing({ go }) {
           <p>You did not arrive here as a finished person. Neither did the tree. You now have more choice about what you return to, what you build next, and what you are ready to question.</p>
         </div>
         <div className="crossing-next-actions">
-          <button type="button" className="crossing-branch crossing-kids" disabled aria-label="Kids Corner, coming soon">
-            <span className="crossing-branch-title">Kids Corner</span>
-            <small>Coming soon</small>
+          <button type="button" className="crossing-branch crossing-kids" onClick={() => go('/kids-korner')} aria-label="Enter Kids Korner with Penny">
+            <span className="crossing-branch-title">Kids Korner</span>
+            <small>Enter with Penny</small>
           </button>
           <button type="button" className="crossing-branch crossing-business" disabled aria-label="Business Hub, coming soon">
             <span className="crossing-branch-title">Business Hub</span>
