@@ -7,6 +7,7 @@ const styles = fs.readFileSync(path.join(root, 'src/kids-korner.css'), 'utf8');
 const routing = fs.readFileSync(path.join(root, 'src/root-routing.js'), 'utf8');
 const main = fs.readFileSync(path.join(root, 'src/main.jsx'), 'utf8');
 const crossing = fs.readFileSync(path.join(root, 'src/crossing.jsx'), 'utf8');
+const grove = fs.readFileSync(path.join(root, 'src/grove.jsx'), 'utf8');
 
 const checks = [
   ['Penny intro route', routing.includes("path === 'kids-korner'")],
@@ -19,6 +20,7 @@ const checks = [
   ['closed child navigation', component.includes('Grown-Up Exit') && !component.includes('Business Hub') && !component.includes('Assessment')],
   ['Sage hidden in child routes', main.includes("!route.startsWith('kids-korner')")],
   ['Crossing entry activated', crossing.includes("go('/kids-korner')") && crossing.includes('Enter with Penny')],
+  ['Main Grove entry visible', grove.includes('className="grove-kids-korner-link"') && grove.includes('href="/kids-korner"')],
   ['Business Hub unchanged', crossing.includes('Business Hub, coming soon') && crossing.includes('crossing-business') && crossing.includes('disabled')],
   ['reduced motion', styles.includes('@media (prefers-reduced-motion: reduce)')],
   ['Penny asset', fs.existsSync(path.join(root, 'public/kids-korner/penny-hero.png'))],
