@@ -61,7 +61,9 @@ export default function KidsMissionOne({ go }) {
     setLocked(true);
     try {
       localStorage.setItem(MISSION_KEY, JSON.stringify({ selected, spent, saved: remaining, completedChoice: true }));
-    } catch {}
+    } catch {
+      // The mission stays playable when browser storage is unavailable.
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -70,7 +72,9 @@ export default function KidsMissionOne({ go }) {
     try {
       const prior = JSON.parse(localStorage.getItem(MISSION_KEY) || '{}');
       localStorage.setItem(MISSION_KEY, JSON.stringify({ ...prior, reflection: value, completed: true }));
-    } catch {}
+    } catch {
+      // The reflection remains visible for this visit if storage is unavailable.
+    }
   };
 
   const reset = () => {

@@ -1,4 +1,4 @@
-import { ArrowRight, BookOpen, Calculator, Check, Construction, Sprout } from 'lucide-react';
+import { ArrowRight, BookOpen, Calculator, Check, Construction, Sparkles, Sprout } from 'lucide-react';
 import { useMemo } from 'react';
 import { ApprovedArtwork } from './approved-artwork';
 import { rootOneIntroduction } from './root-one-roots-data';
@@ -15,7 +15,10 @@ function GroveHeader({ label, action }) {
         <Sprout /><span><strong>Root$Wise</strong><small>{label}</small></span>
       </a>
       <p>{label === 'The Grove' ? 'Before We Enter the City' : 'Your learning journey'}</p>
-      <a href={action.href}>{action.icon}{action.label}</a>
+      <nav className="grove-header-actions" aria-label="Grove destinations">
+        <a className="grove-kids-korner-link" href="/kids-korner"><Sparkles /> Kids Korner</a>
+        <a href={action.href}>{action.icon}{action.label}</a>
+      </nav>
     </header>
   );
 }
