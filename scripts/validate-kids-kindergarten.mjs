@@ -10,6 +10,7 @@ const routing = read('src/root-routing.js');
 const main = read('src/main.jsx');
 const intro = read('src/kids-korner.jsx');
 const legacyMission = read('src/kids-mission-one.jsx');
+const speechApi = read('api/speech.js');
 
 const slugs = ['me-and-choices', 'value-and-helping', 'choice-and-tradeoffs', 'saving-and-waiting', 'promises-and-trust', 'growth-and-care', 'stewardship-and-sharing'];
 const phases = ['story', 'play', 'challenge'];
@@ -38,6 +39,7 @@ const checks = [
   ['separate local progress key', data.includes("rootwise_kids_kindergarten_progress_v1")],
   ['existing 10-token Mission One intact', legacyMission.includes('10 tokens') && legacyMission.includes("rootwise_kids_mission_one_v1")],
   ['read-aloud controls exist', component.includes('SpeechSynthesisUtterance') && component.includes('ReadAloud')],
+  ['Penny uses separate bright female voice persona', component.includes("persona: 'penny'") && component.includes('preferredPennyDeviceVoice') && speechApi.includes('OPENAI_KIDS_TTS_VOICE') && speechApi.includes('bright and inviting young female guide')],
   ['reduced-motion support', styles.includes('@media(prefers-reduced-motion:reduce)')],
   ['sensory-calm support', component.includes('sensoryCalm') && styles.includes('.is-calm')],
   ['required assets exist', fs.existsSync(path.join(root, 'public/kids-korner/penny-hero.png')) && fs.existsSync(path.join(root, 'public/kids-korner/kids-grove.png'))],

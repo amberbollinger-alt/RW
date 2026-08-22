@@ -4,6 +4,9 @@ const RATE_LIMIT_MAX_REQUESTS = 10;
 const OPENAI_TIMEOUT_MS = 25_000;
 const requestWindows = new Map();
 
+const SAGE_INSTRUCTIONS = 'You are Sage speaking directly to one learner in first person. Never describe Sage as a third person or sound like a narrator reading about yourself. Use I, me, my, and mine naturally. Speak as a warm, grounded adult woman in her mature middle years and a trusted financial-learning mentor. Use a noticeably lower, full contralto register: deep, calm, steady, and clearly feminine, never masculine, frail, or elderly. Slow the entire delivery considerably. Let each sentence land before continuing, and never compress words to finish a paragraph quickly. Treat every paragraph break as a genuine reflective silence of about two seconds. Use shorter but still audible pauses between sentences. Apply restrained emotional inflection from meaning: soften and warm your tone when reassuring the learner, become gently concerned around pressure or loss, brighten slightly around possibility and regained choice, and use quiet firmness for important distinctions or cautions. Emphasize only the few words that carry the thought. Allow uncertainty, compassion, seriousness, and hope to be heard naturally where appropriate. Keep the performance intimate and conversational, as if sitting beside one learner. Do not sound cheerful by default, melodramatic, theatrical, breathless, sales-like, robotic, or judgmental.';
+const PENNY_INSTRUCTIONS = 'Speak as Penny, a bright and inviting young female guide welcoming one child into her world. Sound warm, lively, curious, and encouraging, with a clear naturally feminine voice. Keep the energy playful and confident without becoming squeaky, babyish, breathless, exaggerated, or cartoonish. Use an easy conversational pace, smile gently through moments of discovery, and let important choice words land clearly. Penny is the child’s adventurous buddy, not a teacher presenting a lesson and not an adult narrator. Make every line feel safe, personal, and fun to follow.';
+
 function cleanText(value) {
   return typeof value === 'string'
     ? value.replace(/\r\n/g, '\n').replace(/[ \t]+/g, ' ').replace(/\n{3,}/g, '\n\n').trim().slice(0, MAX_TEXT_LENGTH)
@@ -34,7 +37,9 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed.' });
   if (isRateLimited(req)) return res.status(429).json({ error: 'Sage needs a brief pause before speaking again.' });
 
-  const text = cleanText(parseBody(req.body).text);
+  const body = parseBody(req.body);
+  const persona = body.persona === 'penny' ? 'penny' : 'sage';
+  const text = cleanText(body.text);
   if (!text) return res.status(400).json({ error: 'No narration text was provided.' });
   if (!process.env.OPENAI_API_KEY) return res.status(503).json({ error: 'Sage voice is not configured yet.' });
 
@@ -46,9 +51,11 @@ export default async function handler(req, res) {
       headers: { Authorization: `Bearer ${process.env.OPENAI_API_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: process.env.OPENAI_TTS_MODEL || 'gpt-4o-mini-tts',
-        voice: process.env.OPENAI_TTS_VOICE || 'coral',
+        voice: persona === 'penny'
+          ? process.env.OPENAI_KIDS_TTS_VOICE || 'coral'
+          : process.env.OPENAI_TTS_VOICE || 'coral',
         input: text,
-        instructions: 'You are Sage speaking directly to one learner in first person. Never describe Sage as a third person or sound like a narrator reading about yourself. Use I, me, my, and mine naturally. Speak as a warm, grounded adult woman in her mature middle years and a trusted financial-learning mentor. Use a noticeably lower, full contralto register: deep, calm, steady, and clearly feminine, never masculine, frail, or elderly. Slow the entire delivery considerably. Let each sentence land before continuing, and never compress words to finish a paragraph quickly. Treat every paragraph break as a genuine reflective silence of about two seconds. Use shorter but still audible pauses between sentences. Apply restrained emotional inflection from meaning: soften and warm your tone when reassuring the learner, become gently concerned around pressure or loss, brighten slightly around possibility and regained choice, and use quiet firmness for important distinctions or cautions. Emphasize only the few words that carry the thought. Allow uncertainty, compassion, seriousness, and hope to be heard naturally where appropriate. Keep the performance intimate and conversational, as if sitting beside one learner. Do not sound cheerful by default, melodramatic, theatrical, breathless, sales-like, robotic, or judgmental.',
+        instructions: persona === 'penny' ? PENNY_INSTRUCTIONS : SAGE_INSTRUCTIONS,
         response_format: 'mp3',
       }),
       signal: controller.signal,

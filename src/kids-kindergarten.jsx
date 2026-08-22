@@ -48,36 +48,121 @@ function GrownUpExit({ go }) {
   return <button className="kg-grownup-exit" type="button" aria-label="Grown-Up Exit" onClick={() => go('/crossing')}><DoorOpen aria-hidden="true" /><span>Grown-Up Exit</span></button>;
 }
 
-function ReadAloud({ text, label = 'Read this aloud' }) {
-  const [reading, setReading] = useState(false);
-  const utteranceRef = useRef(null);
+function preferredPennyDeviceVoice() {
+  if (!('speechSynthesis' in window)) return null;
+  const voices = window.speechSynthesis.getVoices();
+  const preferredNames = [
+    /Microsoft (Aria|Jenny|Ava)/i,
+    /Samantha/i,
+    /Google US English/i,
+    /Microsoft Zira/i,
+    /\b(Victoria|Karen|Tessa|Moira|Fiona)\b/i,
+  ];
+  for (const pattern of preferredNames) {
+    const match = voices.find((voice) => /^en[-_]/i.test(voice.lang) && pattern.test(voice.name));
+    if (match) return match;
+  }
+  return voices.find((voice) => /^en[-_]/i.test(voice.lang) && /female|woman/i.test(voice.name))
+    || voices.find((voice) => /^en[-_]/i.test(voice.lang))
+    || voices[0]
+    || null;
+}
 
-  useEffect(() => () => {
-    if (utteranceRef.current && 'speechSynthesis' in window) window.speechSynthesis.cancel();
+function ReadAloud({ text, label = 'Read this aloud' }) {
+  const [status, setStatus] = useState('idle');
+  const audioRef = useRef(null);
+  const utteranceRef = useRef(null);
+  const voiceRef = useRef(null);
+  const urlRef = useRef('');
+  const playbackTokenRef = useRef(0);
+
+  useEffect(() => {
+    const loadVoice = () => { voiceRef.current = preferredPennyDeviceVoice(); };
+    loadVoice();
+    window.speechSynthesis?.addEventListener?.('voiceschanged', loadVoice);
+    return () => {
+      playbackTokenRef.current += 1;
+      audioRef.current?.pause();
+      if (urlRef.current) URL.revokeObjectURL(urlRef.current);
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      window.speechSynthesis?.removeEventListener?.('voiceschanged', loadVoice);
+    };
   }, []);
 
-  const toggle = () => {
-    if (!('speechSynthesis' in window)) return;
-    if (reading) {
-      window.speechSynthesis.cancel();
-      setReading(false);
+  const stop = () => {
+    playbackTokenRef.current += 1;
+    audioRef.current?.pause();
+    audioRef.current = null;
+    if (urlRef.current) URL.revokeObjectURL(urlRef.current);
+    urlRef.current = '';
+    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    utteranceRef.current = null;
+    setStatus('idle');
+  };
+
+  const speakWithDeviceVoice = (token) => {
+    if (token !== playbackTokenRef.current || !('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') {
+      setStatus('idle');
       return;
     }
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(String(text));
-    utterance.rate = 0.88;
-    utterance.pitch = 1.03;
-    utterance.onend = () => setReading(false);
-    utterance.onerror = () => setReading(false);
+    const voice = voiceRef.current || preferredPennyDeviceVoice();
+    if (voice) utterance.voice = voice;
+    utterance.lang = voice?.lang || 'en-US';
+    utterance.rate = 0.96;
+    utterance.pitch = 1.12;
+    utterance.volume = 1;
+    utterance.onstart = () => { if (token === playbackTokenRef.current) setStatus('playing'); };
+    utterance.onend = () => { if (token === playbackTokenRef.current) setStatus('idle'); };
+    utterance.onerror = () => { if (token === playbackTokenRef.current) setStatus('idle'); };
     utteranceRef.current = utterance;
-    setReading(true);
     window.speechSynthesis.speak(utterance);
   };
 
+  const start = async () => {
+    const token = playbackTokenRef.current + 1;
+    playbackTokenRef.current = token;
+    setStatus('loading');
+    try {
+      const response = await fetch('/api/speech', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'audio/mpeg' },
+        body: JSON.stringify({ text: String(text), persona: 'penny' }),
+      });
+      const contentType = response.headers.get('content-type') || '';
+      if (!response.ok || !contentType.toLowerCase().startsWith('audio/')) throw new Error('unavailable');
+      if (token !== playbackTokenRef.current) return;
+      const url = URL.createObjectURL(await response.blob());
+      urlRef.current = url;
+      const audio = new Audio(url);
+      audioRef.current = audio;
+      let fallbackStarted = false;
+      const fallback = () => {
+        if (fallbackStarted || token !== playbackTokenRef.current) return;
+        fallbackStarted = true;
+        audio.pause();
+        audioRef.current = null;
+        if (urlRef.current) URL.revokeObjectURL(urlRef.current);
+        urlRef.current = '';
+        speakWithDeviceVoice(token);
+      };
+      audio.onplay = () => { if (token === playbackTokenRef.current) setStatus('playing'); };
+      audio.onended = () => { if (token === playbackTokenRef.current) stop(); };
+      audio.onerror = fallback;
+      try { await audio.play(); } catch { fallback(); }
+    } catch {
+      speakWithDeviceVoice(token);
+    }
+  };
+
+  const reading = status !== 'idle';
+  const toggle = () => reading ? stop() : start();
+
   return (
-    <button className={`kg-read-aloud ${reading ? 'is-reading' : ''}`} type="button" onClick={toggle} aria-pressed={reading} aria-label={reading ? 'Pause read aloud' : label}>
+    <button className={`kg-read-aloud ${reading ? 'is-reading' : ''}`} type="button" onClick={toggle} aria-pressed={reading} aria-label={reading ? 'Stop Penny read aloud' : label}>
       {reading ? <Pause aria-hidden="true" /> : <Volume2 aria-hidden="true" />}
-      <span>{reading ? 'Pause' : 'Hear it'}</span>
+      <span>{status === 'loading' ? 'Getting Penny…' : reading ? 'Stop' : 'Hear Penny'}</span>
     </button>
   );
 }
