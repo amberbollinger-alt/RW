@@ -11,6 +11,49 @@ import './kids-kindergarten.css';
 
 const PENNY_ART = '/kids-korner/penny-hero.png';
 const GROVE_ART = '/kids-korner/kids-grove.png';
+const phaseDirections = {
+  story: 'Look at the coin picture and clues. Tap the answer that matches.',
+  play: 'Count aloud with Penny. Then tap the count or coin that reaches the value.',
+  challenge: 'Check the coin and the cent number. Tap the match, then choose what helped you solve it.',
+};
+
+const coinFacts = {
+  penny: { name: 'Penny', value: 1 },
+  nickel: { name: 'Nickel', value: 5 },
+  dime: { name: 'Dime', value: 10 },
+  quarter: { name: 'Quarter', value: 25 },
+};
+
+function CoinFace({ coin }) {
+  const fact = coinFacts[coin];
+  if (!fact) return null;
+  return <span className={`kg-coin is-${coin}`} aria-hidden="true"><small>{fact.name}</small><strong>{fact.value}¢</strong></span>;
+}
+
+function CountTrack({ values }) {
+  return <span className="kg-count-track" aria-hidden="true">{values.map((value) => <i key={value}>{value}</i>)}</span>;
+}
+
+function ChoiceVisual({ item }) {
+  if (item.pair) return <span className="kg-coin-pair" aria-hidden="true"><CoinFace coin={item.pair[0]} /><b>=</b><span className="kg-value-card">{item.pair[1]}¢</span></span>;
+  if (item.coin) return <CoinFace coin={item.coin} />;
+  if (item.value) return <span className="kg-value-card" aria-hidden="true">{item.value}¢</span>;
+  if (item.count) return <CountTrack values={item.count} />;
+  return <span aria-hidden="true">{item.icon}</span>;
+}
+
+function LessonVisual({ lesson }) {
+  const countValues = [];
+  if (lesson.value && lesson.countBy) {
+    for (let value = lesson.countBy; value <= lesson.value; value += lesson.countBy) countValues.push(value);
+  }
+  return <div className="kg-money-model" aria-label={`Money model showing ${lesson.value} cents`}>
+    {lesson.price && <div className="kg-price-tag"><small>Price</small><strong>{lesson.price}¢</strong></div>}
+    {lesson.coin && <CoinFace coin={lesson.coin} />}
+    {lesson.group && <div className="kg-coin-group">{lesson.group.map((coin, index) => <CoinFace coin={coin} key={`${coin}-${index}`} />)}</div>}
+    {countValues.length > 0 && <div className="kg-count-model"><small>Count to the value</small><CountTrack values={countValues} /></div>}
+  </div>;
+}
 
 const blankProgress = {
   orientation: { complete: false, choices: [], reflection: '' },
@@ -323,16 +366,24 @@ function MissionScreen({ go, progress, updateProgress, root, phase }) {
           <p>Root {root.id} · {root.setting}</p>
           <span>{phaseLabels[phase]} · Mission {details.id}</span>
           <h1 id="kg-mission-title">{details.title}</h1>
-          <ReadAloud text={`${root.setting}. ${phaseLabels[phase]}. ${details.title}. ${details.story.join(' ')} ${details.instruction}`} />
+          <ReadAloud text={`${root.setting}. ${phaseLabels[phase]}. ${details.title}. ${details.story.join(' ')} Your activity: ${details.instruction} ${phaseDirections[phase]} This matters with money because ${root.moneyConnection}`} />
         </header>
         <figure className="kg-mission-penny"><img src={PENNY_ART} alt={`Penny exploring ${root.setting} with you`} /><figcaption><span className="kg-thinking-fingers" aria-hidden="true"><i /><i /><i /><i /><i /></span><p>{details.story[0]}<br /><strong>{details.story[1]}</strong></p></figcaption></figure>
         <section className="kg-play-space" aria-label={details.accessibilityLabel}>
-          <h2>{details.instruction}</h2>
-          <ReadAloud text={details.instruction} label="Hear the instruction" />
-          <div className="kg-object-choices">{details.choices.map((item) => <div className="kg-object-choice" key={item.id}><button type="button" className={choice === item.id ? 'is-selected' : ''} aria-pressed={choice === item.id} onClick={() => setChoice(item.id)}><span aria-hidden="true">{item.icon}</span><strong>{item.label}</strong></button><ReadAloud text={item.label} label={`Hear ${item.label}`} /></div>)}</div>
-          {selected && <div className="kg-visible-result" aria-live="polite"><span aria-hidden="true">{selected.icon}</span><p>{selected.effect}</p><ReadAloud text={`${selected.effect} ${details.feedback}`} label="Hear what changed" /></div>}
+          <div className="kg-activity-title"><small>{phaseLabels[phase]} activity</small><h2>{details.instruction}</h2><ReadAloud text={`${details.instruction} ${phaseDirections[phase]}`} label="Hear the instruction" /></div>
+          <LessonVisual lesson={details.lesson} />
+          <div className="kg-activity-brief">
+            <div><small>The situation</small><p>{details.story.join(' ')}</p></div>
+            <div><small>What to do</small><p>{phaseDirections[phase]}</p></div>
+            <div className="is-money"><small>Why this matters with money</small><p>{root.moneyConnection}</p><ReadAloud text={`Why this matters with money. ${root.moneyConnection}`} label="Hear the money connection" /></div>
+          </div>
+          <div className="kg-choice-prompt"><strong>Step 1 · Choose one</strong><span>Tap a choice below. The activity will show what changes.</span></div>
+          <div className="kg-object-choices">{details.choices.map((item) => <div className="kg-object-choice" key={item.id}><button type="button" className={choice === item.id ? 'is-selected' : ''} aria-pressed={choice === item.id} onClick={() => setChoice(item.id)}><ChoiceVisual item={item} /><strong>{item.label}</strong></button><ReadAloud text={item.label} label={`Hear ${item.label}`} /></div>)}</div>
+          {selected && <div className="kg-visible-result" aria-live="polite"><ChoiceVisual item={selected} /><div><small>What Penny sees</small><p>{selected.effect}</p></div><ReadAloud text={`${selected.effect} ${details.feedback}`} label="Hear what Penny sees" /></div>}
           {selected && <div className="kg-penny-notices"><img src={PENNY_ART} alt="" /><p><small>Penny notices</small>{details.feedback}</p></div>}
-          {selected && isChallenge && <div className="kg-reflections"><h3>What did you notice?</h3>{details.reflection.map((item) => <div className="kg-reflection-option" key={item}><button type="button" className={reflection === item ? 'is-selected' : ''} onClick={() => setReflection(item)}>{item}</button><ReadAloud text={item} label={`Hear ${item}`} /></div>)}</div>}
+          {selected && isChallenge && <div className="kg-reflections"><h3>Step 2 · What did you notice?</h3>{details.reflection.map((item) => <div className="kg-reflection-option" key={item}><button type="button" className={reflection === item ? 'is-selected' : ''} onClick={() => setReflection(item)}>{item}</button><ReadAloud text={item} label={`Hear ${item}`} /></div>)}</div>}
+          {!choice && <p className="kg-next-help">Choose one answer above to unlock the next part.</p>}
+          {choice && isChallenge && !reflection && <p className="kg-next-help">Now choose what you noticed in Step 2.</p>}
           <div className="kg-mission-actions"><button type="button" className="kg-secondary" disabled={!choice} onClick={() => { setChoice(''); setReflection(''); }}><RotateCcw aria-hidden="true" /> Try another way</button><button type="button" className="kg-primary" disabled={!choice || (isChallenge && !reflection)} onClick={finish}>{isChallenge ? 'Grow this Root' : 'Next part'} <ArrowRight aria-hidden="true" /></button></div>
         </section>
         <PhaseDots root={root} progress={progress} />
@@ -359,11 +410,11 @@ function Capstone({ go, progress, updateProgress }) {
     updateProgress({ ...progress, capstone: { station: next, complete: false } });
     setStation(next); setChoice('');
   };
-  return <main className={`kids-kindergarten kg-capstone ${progress.preferences.sensoryCalm ? 'is-calm' : ''}`}><KindergartenHeader go={go} progress={progress} updateProgress={updateProgress} /><section className="kg-capstone-stage"><header><p>Kindergarten Capstone · Station {station + 1} of 7</p><h1>PENNY’S BIG GROVE DAY</h1><p>One little choice at a time. No score. No rush.</p><ReadAloud text={`Penny’s Big Grove Day. Station ${station + 1} of seven. ${current.prompt}`} /></header><div className="kg-capstone-roots" aria-label={`${station + 1} of 7 stations`} >{kindergartenRoots.map((root, index) => <span key={root.id} className={index < station ? 'is-complete' : index === station ? 'is-current' : ''}>{root.icon}</span>)}</div><figure><img src={PENNY_ART} alt="Penny beside the seven-station Grove path" /><figcaption><small>{current.icon} {current.title}</small><strong>{current.prompt}</strong></figcaption></figure><div className="kg-object-choices">{current.choices.map((item) => <div className="kg-object-choice" key={item.id}><button type="button" className={choice === item.id ? 'is-selected' : ''} onClick={() => setChoice(item.id)}><span>{item.icon}</span><strong>{item.label}</strong></button><ReadAloud text={item.label} /></div>)}</div>{choice && <div className="kg-visible-result"><p>{current.choices.find((item) => item.id === choice)?.effect}</p></div>}<button className="kg-primary" type="button" disabled={!choice} onClick={chooseNext}>{station === 6 ? 'Light all seven Roots' : 'Next station'} <ArrowRight aria-hidden="true" /></button></section></main>;
+  return <main className={`kids-kindergarten kg-capstone ${progress.preferences.sensoryCalm ? 'is-calm' : ''}`}><KindergartenHeader go={go} progress={progress} updateProgress={updateProgress} /><section className="kg-capstone-stage"><header><p>Kindergarten Capstone · Station {station + 1} of 7</p><h1>PENNY’S BIG COIN DAY</h1><p>Look, count, and match. No score. No rush.</p><ReadAloud text={`Penny’s Big Coin Day. Station ${station + 1} of seven. ${current.prompt}`} /></header><div className="kg-capstone-roots" aria-label={`${station + 1} of 7 stations`} >{kindergartenRoots.map((root, index) => <span key={root.id} className={index < station ? 'is-complete' : index === station ? 'is-current' : ''}>{root.icon}</span>)}</div><figure><img src={PENNY_ART} alt="Penny beside the seven-station coin path" /><figcaption><small>{current.icon} {current.title}</small><strong>{current.prompt}</strong></figcaption></figure><div className="kg-object-choices">{current.choices.map((item) => <div className="kg-object-choice" key={item.id}><button type="button" className={choice === item.id ? 'is-selected' : ''} onClick={() => setChoice(item.id)}><ChoiceVisual item={item} /><strong>{item.label}</strong></button><ReadAloud text={item.label} /></div>)}</div>{choice && <div className="kg-visible-result"><p>{current.choices.find((item) => item.id === choice)?.effect}</p></div>}<button className="kg-primary" type="button" disabled={!choice} onClick={chooseNext}>{station === 6 ? 'Light all seven Roots' : 'Next station'} <ArrowRight aria-hidden="true" /></button></section></main>;
 }
 
 function Complete({ go, progress, updateProgress }) {
-  return <main className={`kids-kindergarten kg-complete ${progress.preferences.sensoryCalm ? 'is-calm' : ''}`}><KindergartenHeader go={go} progress={progress} updateProgress={updateProgress} /><section><div className="kg-complete-tree" aria-hidden="true"><span>🌳</span>{kindergartenRoots.map((root, index) => <i key={root.id} style={/** @type {import('react').CSSProperties & Record<'--i', number>} */ ({ '--i': index })}>{root.icon}</i>)}</div><figure><img src={PENNY_ART} alt="Penny celebrating the seven glowing Kindergarten Roots" /></figure><div className="kg-complete-copy"><p>Seven strong little Roots</p><h1>YOUR KINDERGARTEN<br /><span>GROVE IS GROWING!</span></h1><strong>You practiced noticing, choosing, helping, waiting, returning, caring, and sharing.</strong><p>You are not finished learning. You have grown seven strong little Roots—and now you know how to look at a choice before it carries you away.</p><blockquote>“Curiosity did all that.<br />Well, curiosity and you.”</blockquote><ReadAloud text="Your Kindergarten Grove is growing! You practiced noticing, choosing, helping, waiting, returning, caring, and sharing. Curiosity did all that. Well, curiosity and you." /></div><nav aria-label="Kindergarten completion choices"><a href="/kids-korner/kindergarten/orientation"><RotateCcw aria-hidden="true" /> Replay School Fair</a><a href="/kids-korner/kindergarten"><Star aria-hidden="true" /> Visit any Root</a><a href="/kids-korner/kindergarten/capstone"><Play aria-hidden="true" /> Replay capstone</a><button type="button" onClick={() => go('/kids-korner/kindergarten')}>Return to Sprout Grove</button></nav><div className="kg-grade-one-future"><Lock aria-hidden="true" /><span><small>Grade 1 Grove</small><strong>A new path is growing</strong></span></div></section></main>;
+  return <main className={`kids-kindergarten kg-complete ${progress.preferences.sensoryCalm ? 'is-calm' : ''}`}><KindergartenHeader go={go} progress={progress} updateProgress={updateProgress} /><section><div className="kg-complete-tree" aria-hidden="true"><span>🌳</span>{kindergartenRoots.map((root, index) => <i key={root.id} style={/** @type {import('react').CSSProperties & Record<'--i', number>} */ ({ '--i': index })}>{root.icon}</i>)}</div><figure><img src={PENNY_ART} alt="Penny celebrating the seven glowing Kindergarten Roots" /></figure><div className="kg-complete-copy"><p>Seven strong little Roots</p><h1>YOUR KINDERGARTEN<br /><span>GROVE IS GROWING!</span></h1><strong>You learned the penny, nickel, dime, and quarter—and counted their values.</strong><p>You matched coin pictures to cent numbers, counted coin groups, and chose coins for simple prices. Those are real building blocks for understanding money.</p><blockquote>“Curiosity did all that.<br />Well, curiosity and you.”</blockquote><ReadAloud text="Your Kindergarten Grove is growing! You learned the penny, nickel, dime, and quarter. You matched their values, counted coin groups, and chose coins for simple prices. Curiosity did all that. Well, curiosity and you." /></div><nav aria-label="Kindergarten completion choices"><a href="/kids-korner/kindergarten/orientation"><RotateCcw aria-hidden="true" /> Replay School Fair</a><a href="/kids-korner/kindergarten"><Star aria-hidden="true" /> Visit any Root</a><a href="/kids-korner/kindergarten/capstone"><Play aria-hidden="true" /> Replay capstone</a><button type="button" onClick={() => go('/kids-korner/kindergarten')}>Return to Sprout Grove</button></nav><div className="kg-grade-one-future"><Lock aria-hidden="true" /><span><small>Grade 1 Grove</small><strong>A new path is growing</strong></span></div></section></main>;
 }
 
 function PhaseOrderRedirect({ go, path }) {
