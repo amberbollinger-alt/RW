@@ -299,3 +299,72 @@
     forced-color-adjust: auto;
   }
 }
+
+
+/* Final small-label contrast pass from the production audit. */
+.r1-experience .r1-nav-number {
+  color: var(--rw-readable-dark) !important;
+}
+
+:is(
+  .root-two-exchange .r2-nav,
+  .root-three-city .r3-nav,
+  .root-four-valley .r4-chapter-nav,
+  .root-five-bridge .r5-nav,
+  .root-six-harbor .r6-nav,
+  .root-seven-junction .r7-nav,
+  .root-eight-exchange .r8-nav
+) nav button.is-active > span {
+  background: var(--rw-readable-dark) !important;
+  color: var(--rw-readable-accent) !important;
+}
+
+.root-two-exchange .r2-avatar {
+  color: var(--rw-readable-dark) !important;
+}
+
+:is(
+  .root-two-exchange .r2-levels,
+  .root-three-city .r3-levels,
+  .root-four-valley .r4-levels,
+  .root-five-bridge .r5-levels,
+  .root-six-harbor .r6-levels,
+  .root-seven-junction .r7-levels,
+  .root-eight-exchange .r8-levels
+) article > span {
+  color: var(--rw-readable-dark) !important;
+}
+
+:is(
+  .root-two-exchange .r2-support,
+  .root-three-city .r3-support,
+  .root-four-valley .r4-support,
+  .root-five-bridge .r5-support,
+  .root-six-harbor .r6-support,
+  .root-seven-junction .r7-support,
+  .root-eight-exchange .r8-support
+) h2 {
+  color: var(--rw-readable-text) !important;
+}
+
+:is(
+  .r1-sage-toggle, .r2-sage-toggle, .r3-sage-toggle, .r4-sage-toggle,
+  .r5-sage-toggle, .r6-sage-toggle, .r7-sage-toggle, .r8-sage-toggle
+) {
+  border-color: var(--rw-readable-line) !important;
+  background: #0d2e41 !important;
+  color: var(--rw-readable-text) !important;
+}
+
+:is(
+  .r1-tree-reward, .r2-tree-reward, .r3-tree-reward, .r4-tree-reward,
+  .r5-tree-reward, .r6-tree-reward, .r7-tree-reward, .r8-tree-reward
+) > span {
+  background: var(--rw-readable-warm) !important;
+  color: var(--rw-readable-dark) !important;
+}
+
+.root-four-valley .r4-content-note button {
+  background: #713827 !important;
+  color: #fff !important;
+}
