@@ -2,9 +2,9 @@
    Content, state, navigation, and lesson semantics remain in each Root's own component. */
 :is(.r1-experience, .root-two-exchange, .root-three-city, .root-four-valley) {
   --vivid-navy: #081824;
-  --vivid-ink: #162735;
-  --vivid-paper: rgba(250, 247, 237, .82);
-  --vivid-paper-soft: rgba(250, 247, 237, .64);
+  --vivid-ink: #f4f0e8;
+  --vivid-paper: rgba(5, 18, 27, .76);
+  --vivid-paper-soft: rgba(9, 27, 37, .58);
   --vivid-line: rgba(255, 255, 255, .48);
   --vivid-lime: #b7e33f;
   --vivid-amber: #f0c174;
@@ -63,8 +63,8 @@
 .root-four-valley .r4-chapter-nav {
   border: 1px solid var(--vivid-line);
   border-radius: 22px;
-  background: rgba(248, 246, 237, .78);
-  color: var(--vivid-ink);
+  background: rgba(5, 18, 27, .74);
+  color: #f7f4ec;
   box-shadow: 0 22px 70px rgba(1, 12, 20, .32);
   backdrop-filter: blur(20px) saturate(1.12);
 }
@@ -273,4 +273,104 @@
   .r1-experience .r1-opening-art,
   .root-two-exchange .r2-opening-hero,
   .root-three-city .r3-current-scene { min-height: 390px; }
+}
+
+
+/* Readability correction: scenic depth stays visible through dark glass.
+   Never place pale copy on pale panels or flatten Root artwork behind opaque cards. */
+.r1-experience .r1-sidebar,
+.root-two-exchange .r2-nav,
+.root-three-city .r3-nav,
+.root-four-valley .r4-chapter-nav {
+  background: rgba(4, 17, 25, .72);
+  color: #f7f4ec;
+  border-color: rgba(255, 255, 255, .3);
+  backdrop-filter: blur(14px) saturate(1.12);
+}
+
+.r1-experience .r1-sidebar nav button,
+.root-two-exchange .r2-nav nav button,
+.root-three-city .r3-nav nav button,
+.root-four-valley .r4-chapter-nav nav button {
+  color: #e9edf0;
+}
+
+.r1-experience .r1-sidebar small,
+.root-two-exchange .r2-nav small,
+.root-three-city .r3-nav small,
+.root-four-valley .r4-chapter-nav small {
+  color: #bdc7cc;
+}
+
+.r1-experience .r1-sidebar h2,
+.root-two-exchange .r2-nav h2,
+.root-three-city .r3-nav h2,
+.root-four-valley .r4-chapter-nav h2 {
+  color: #fff;
+}
+
+.r1-experience .r1-lesson > section,
+.r1-experience .r1-lesson > header,
+.r1-experience .r1-lesson > footer,
+.root-two-exchange .r2-opening,
+.root-two-exchange .r2-lesson-title,
+.root-two-exchange .r2-card,
+.root-two-exchange .r2-next,
+.root-three-city .r3-opening,
+.root-three-city .r3-lesson-title,
+.root-three-city .r3-card,
+.root-three-city .r3-next,
+.root-four-valley .r4-opening,
+.root-four-valley .r4-promise,
+.root-four-valley .r4-card,
+.root-four-valley .r4-next,
+.root-four-valley .r4-learner-statement {
+  background: rgba(5, 18, 27, .74);
+  color: #edf1f2;
+  border-color: rgba(255, 255, 255, .28);
+  backdrop-filter: blur(14px) saturate(1.1);
+}
+
+.r1-experience .r1-lesson h1,
+.r1-experience .r1-lesson h2,
+.r1-experience .r1-lesson h3,
+.root-two-exchange .r2-card h2,
+.root-two-exchange .r2-card h3,
+.root-two-exchange .r2-lesson-title h1,
+.root-three-city .r3-card h2,
+.root-three-city .r3-card h3,
+.root-three-city .r3-lesson-title h1,
+.root-four-valley .r4-card h2,
+.root-four-valley .r4-card h3,
+.root-four-valley .r4-promise h1 {
+  color: #fff;
+}
+
+.r1-experience .r1-promise-strip,
+.r1-experience .r1-opening-question,
+.r1-experience .r1-layer,
+.r1-experience .r1-scan-card,
+.r1-experience .r1-knowledge,
+.r1-experience .r1-decision-drill,
+.r1-experience .r1-private,
+.r1-experience .r1-source-desk,
+.r1-experience .r1-connection,
+.root-two-exchange .r2-card > section,
+.root-three-city .r3-card > section,
+.root-four-valley .r4-card > section {
+  background: rgba(9, 27, 37, .48);
+  border-color: rgba(255, 255, 255, .18);
+}
+
+.r1-experience .r1-option-list button,
+.r1-experience .r1-choice-grid button,
+.root-two-exchange .r2-options button,
+.root-two-exchange .r2-opening-question button,
+.root-three-city .r3-options button,
+.root-three-city .r3-opening-choice button,
+.root-four-valley .r4-options button,
+.root-four-valley .r4-pressure button {
+  border-color: rgba(255, 255, 255, .24);
+  background: rgba(7, 25, 35, .62);
+  color: #eef2f2;
 }
