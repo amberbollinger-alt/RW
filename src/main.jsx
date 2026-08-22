@@ -19,6 +19,7 @@ import RootFinalExperience from './root-final';
 import Crossing from './crossing';
 import { KidsKornerGrove, KidsKornerIntro } from './kids-korner';
 import RootOverview from './root-overview';
+import TrialExperience from './trial-experience';
 import { getLessonById, getLessonBySlug, getRootBySlug, rootRegistry } from './root-registry';
 import { destinationForPage, routeFromPath } from './root-routing';
 import SageVoice from './sage-voice';
@@ -174,7 +175,7 @@ function App() {
   const [routeKind, rootSlug, lessonSlug] = route.split(':');
   const currentRoot = routeKind === 'root-overview' || routeKind === 'root-lesson' ? getRootBySlug(rootSlug) : null;
   const currentLesson = routeKind === 'root-lesson' && currentRoot ? getLessonBySlug(currentRoot, lessonSlug) : null;
-  const knownRoutes = ['home', 'journey', 'profile', 'assessment', 'heart', 'dashboard', 'crossing', 'kids-korner', 'kids-korner-grove', 'learn', 'tools', 'tool-dictionary', 'schools', 'privacy', 'terms', 'accessibility', 'faq', 'contact', 'legacy-my-journey', 'legacy-tools'];
+  const knownRoutes = ['home', 'journey', 'profile', 'assessment', 'heart', 'dashboard', 'crossing', 'trial', 'kids-korner', 'kids-korner-grove', 'learn', 'tools', 'tool-dictionary', 'schools', 'privacy', 'terms', 'accessibility', 'faq', 'contact', 'legacy-my-journey', 'legacy-tools'];
   const routeMissing = !knownRoutes.includes(route) && !currentRoot && routeKind !== 'tool';
   React.useEffect(() => {
     const titles = {
@@ -182,6 +183,7 @@ function App() {
       heart: 'Before We Enter the City · Root$Wise',
       dashboard: 'Your Grove · Root$Wise',
       crossing: 'The Crossing · Root$Wise',
+      trial: 'Free Trial · Root$Wise',
       'kids-korner': 'Meet Penny · Kids Korner',
       'kids-korner-grove': 'Kids Korner Grove · Root$Wise',
       learn: 'The Eleven Roots · Root$Wise',
@@ -215,6 +217,7 @@ function App() {
       {route === 'heart' && <Grove profile={null} view="welcome" />}
       {route === 'dashboard' && <Dashboard profile={profile} />}
       {route === 'crossing' && <Crossing go={go} />}
+      {route === 'trial' && <TrialExperience go={go} />}
       {route === 'kids-korner' && <KidsKornerIntro go={go} />}
       {route === 'kids-korner-grove' && <KidsKornerGrove go={go} />}
       {route === 'learn' && <Learn />}
@@ -253,7 +256,7 @@ function Home() {
             RootWise teaches what money is, what it does, the concepts behind it,
             and how to apply that knowledge to the choices you make in real life.
           </p>
-          <button type="button" className="landing-primary-cta" onClick={() => go('heart')}>
+          <button type="button" className="landing-primary-cta" onClick={() => go('trial')}>
             Begin Your Journey <ArrowRight size={17} aria-hidden="true" />
           </button>
         </div>
