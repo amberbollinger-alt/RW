@@ -421,3 +421,11 @@
   background: var(--rw-readable-warm) !important;
   color: var(--rw-readable-dark) !important;
 }
+
+
+/* Last audited learning-layer number markers. */
+.root-two-exchange .r2-lesson .r2-layers article > span,
+.root-four-valley .r4-lesson .r4-understanding-level > span {
+  background: var(--rw-readable-warm) !important;
+  color: var(--rw-readable-dark) !important;
+}
