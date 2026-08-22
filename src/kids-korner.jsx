@@ -5,6 +5,7 @@ import {
   TentTree, Ticket, Trees,
 } from 'lucide-react';
 import KidsMissionOne from './kids-mission-one';
+import { KIDS_GRADE_KEY, KINDERGARTEN_PROGRESS_KEY } from './kids-kindergarten-data';
 import './kids-korner.css';
 
 const PENNY_ART = '/kids-korner/penny-hero.png';
@@ -36,16 +37,16 @@ function MissionTicket({ compact = false }) {
     <article className={`kk-mission-ticket ${compact ? 'is-compact' : ''}`}>
       <div className="kk-ticket-stub" aria-hidden="true"><Ticket /><span>01</span></div>
       <div>
-        <p>Mission One</p>
-        <h3>The School Fair</h3>
-        <span>You’ve got 10 tokens and way too many fun things to choose from. Ready?</span>
+        <p>Kindergarten · Mission Zero</p>
+        <h3>Penny’s School Fair</h3>
+        <span>Five tickets. Three fun things. The child still gets to choose.</span>
       </div>
       <div className="kk-ticket-icons" aria-hidden="true"><TentTree /><Gamepad2 /><Gift /></div>
     </article>
   );
 }
 
-function AdultWelcome({ onContinue, go }) {
+function AdultWelcome({ onContinue, go, selectedGrade, onSelectGrade, sensoryCalm, onSensoryCalm }) {
   return (
     <main className="kids-korner kk-intro kk-adult-stage">
       <div className="kk-adult-sky" aria-hidden="true"><i /><i /><i /></div>
@@ -68,8 +69,17 @@ function AdultWelcome({ onContinue, go }) {
             <article><BadgeCheck aria-hidden="true" /><div><strong>Curiosity is the point</strong><span>No pressure to share personal details or get everything right.</span></div></article>
           </div>
 
+          <section className="kk-grade-placement" aria-labelledby="kk-grade-title">
+            <div><p>Grown-up step</p><h2 id="kk-grade-title">Choose the learner’s Grade Grove</h2><span>The child will not see a grade switch inside their Grove.</span></div>
+            <div className="kk-grade-options">
+              <button type="button" className={selectedGrade === 'kindergarten' ? 'is-selected' : ''} aria-pressed={selectedGrade === 'kindergarten'} onClick={() => onSelectGrade('kindergarten')}><strong>Kindergarten</strong><small>Ready</small></button>
+              {[1, 2, 3, 4, 5, 6].map((grade) => <div key={grade} aria-label={`Grade ${grade} Grove, growing`}><strong>Grade {grade}</strong><small>Growing</small></div>)}
+            </div>
+            <label className="kk-sensory-setting"><input type="checkbox" checked={sensoryCalm} onChange={(event) => onSensoryCalm(event.target.checked)} /><span><strong>Sensory-calm mode</strong><small>Turns off decorative motion in Kindergarten.</small></span></label>
+          </section>
+
           <blockquote>“You can stay and watch if you want. Grown-ups are world-class hoverers.”</blockquote>
-          <button className="kk-button kk-handoff" type="button" onClick={onContinue}>
+          <button className="kk-button kk-handoff" type="button" disabled={selectedGrade !== 'kindergarten'} onClick={onContinue}>
             Okay Penny, they’re yours <ArrowRight aria-hidden="true" />
           </button>
         </div>
@@ -118,8 +128,8 @@ function KidReveal({ go, onRestart, onEnterGrove }) {
 
       <section className="kk-teaser-band" aria-labelledby="kk-mission-title">
         <div className="kk-fair-doodles" aria-hidden="true"><TentTree /><Gamepad2 /><Gift /><Ticket /></div>
-        <div><p>Coming up first</p><h2 id="kk-mission-title">Mission One: The School Fair</h2></div>
-        <p>You’ve got 10 tokens and way too many fun things to choose from. Ready?</p>
+        <div><p>Kindergarten starts here</p><h2 id="kk-mission-title">Mission Zero: Penny’s School Fair</h2></div>
+        <p>Five tickets. Three fun things. You still get to choose.</p>
       </section>
     </main>
   );
@@ -127,16 +137,33 @@ function KidReveal({ go, onRestart, onEnterGrove }) {
 
 export function KidsKornerIntro({ go }) {
   const [audience, setAudience] = useState('grownups');
+  const [selectedGrade, setSelectedGrade] = useState(() => {
+    try { return localStorage.getItem(KIDS_GRADE_KEY) || ''; } catch { return ''; }
+  });
+  const [sensoryCalm, setSensoryCalm] = useState(() => {
+    try { return Boolean(JSON.parse(localStorage.getItem(KINDERGARTEN_PROGRESS_KEY) || '{}')?.preferences?.sensoryCalm); } catch { return false; }
+  });
+  const selectGrade = (grade) => {
+    setSelectedGrade(grade);
+    try { localStorage.setItem(KIDS_GRADE_KEY, grade); } catch { /* The handoff still works for this visit. */ }
+  };
+  const changeSensoryCalm = (enabled) => {
+    setSensoryCalm(enabled);
+    try {
+      const saved = JSON.parse(localStorage.getItem(KINDERGARTEN_PROGRESS_KEY) || '{}');
+      localStorage.setItem(KINDERGARTEN_PROGRESS_KEY, JSON.stringify({ ...saved, preferences: { ...(saved.preferences || {}), sensoryCalm: enabled } }));
+    } catch { /* The setting still works for this visit. */ }
+  };
   const showKids = () => {
     window.scrollTo({ top: 0, behavior: 'auto' });
     setAudience('kids');
   };
   const enterGrove = () => {
     window.scrollTo({ top: 0, behavior: 'auto' });
-    go('/kids-korner/grove');
+    go('/kids-korner/kindergarten/orientation');
   };
   return audience === 'grownups'
-    ? <AdultWelcome go={go} onContinue={showKids} />
+    ? <AdultWelcome go={go} onContinue={showKids} selectedGrade={selectedGrade} onSelectGrade={selectGrade} sensoryCalm={sensoryCalm} onSensoryCalm={changeSensoryCalm} />
     : <KidReveal go={go} onEnterGrove={enterGrove} onRestart={() => { window.scrollTo({ top: 0, behavior: 'auto' }); setAudience('grownups'); }} />;
 }
 

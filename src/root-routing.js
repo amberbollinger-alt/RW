@@ -6,6 +6,8 @@ export function routeFromPath(pathname, hash = '') {
   if (path === 'kids-korner') return 'kids-korner';
   if (path === 'kids-korner/grove') return 'kids-korner-grove';
   if (path === 'kids-korner/mission-one') return 'kids-korner-grove';
+  if (path === 'kids-korner/kindergarten') return 'kids-kindergarten';
+  if (path.startsWith('kids-korner/kindergarten/')) return `kids-kindergarten:${path.slice('kids-korner/kindergarten/'.length)}`;
   if (path === 'tools/dictionary') return 'tool-dictionary';
   const toolMatch = path.match(/^tools\/([^/]+)$/);
   if (toolMatch) return `tool:${toolMatch[1]}`;
@@ -32,6 +34,8 @@ export function destinationForPage(page) {
   if (value === 'kids-korner') return '/kids-korner';
   if (value === 'kids-korner-grove') return '/kids-korner/grove';
   if (value === 'kids-korner-mission-one') return '/kids-korner/mission-one';
+  if (value === 'kids-kindergarten') return '/kids-korner/kindergarten';
+  if (value.startsWith('kids-kindergarten:')) return `/kids-korner/kindergarten/${value.slice('kids-kindergarten:'.length)}`;
   if (value.startsWith('roots/')) return `/${value}`;
   return `/#/${value}`;
 }

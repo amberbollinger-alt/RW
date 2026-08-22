@@ -21,7 +21,7 @@ const checks = [
   ['curiosity rule', component.includes('You don’t have to get everything right.') && component.includes('You do have to be curious.')],
   ['Grove launches mission', component.includes("window.location.href = '/kids-korner/mission-one'") && component.includes('Enter the fair')],
   ['closed child navigation', component.includes('Grown-Up Exit') && !component.includes('Business Hub') && !component.includes('Assessment')],
-  ['Sage hidden in child routes', main.includes("!route.startsWith('kids-korner')")],
+  ['Sage hidden in child routes', main.includes('!isKidsRoute') && main.includes("route.startsWith('kids-kindergarten')")],
   ['Crossing entry activated', crossing.includes("go('/kids-korner')") && crossing.includes('Enter with Penny')],
   ['Main Grove entry visible', grove.includes('className="grove-kids-korner-link"') && grove.includes('href="/kids-korner"')],
   ['Business Hub unchanged', crossing.includes('Business Hub, coming soon') && crossing.includes('crossing-business') && crossing.includes('disabled')],

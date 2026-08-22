@@ -18,6 +18,7 @@ import RootEightExchange from './root-eight-exchange';
 import RootFinalExperience from './root-final';
 import Crossing from './crossing';
 import { KidsKornerGrove, KidsKornerIntro } from './kids-korner';
+import KidsKindergarten from './kids-kindergarten';
 import RootOverview from './root-overview';
 import { getLessonById, getLessonBySlug, getRootBySlug, rootRegistry } from './root-registry';
 import { destinationForPage, routeFromPath } from './root-routing';
@@ -175,7 +176,8 @@ function App() {
   const currentRoot = routeKind === 'root-overview' || routeKind === 'root-lesson' ? getRootBySlug(rootSlug) : null;
   const currentLesson = routeKind === 'root-lesson' && currentRoot ? getLessonBySlug(currentRoot, lessonSlug) : null;
   const knownRoutes = ['home', 'journey', 'profile', 'assessment', 'heart', 'dashboard', 'crossing', 'kids-korner', 'kids-korner-grove', 'learn', 'tools', 'tool-dictionary', 'schools', 'privacy', 'terms', 'accessibility', 'faq', 'contact', 'legacy-my-journey', 'legacy-tools'];
-  const routeMissing = !knownRoutes.includes(route) && !currentRoot && routeKind !== 'tool';
+  const isKidsRoute = route.startsWith('kids-korner') || route.startsWith('kids-kindergarten');
+  const routeMissing = !knownRoutes.includes(route) && !currentRoot && routeKind !== 'tool' && !isKidsRoute;
   React.useEffect(() => {
     const titles = {
       home: 'Root$Wise',
@@ -198,7 +200,9 @@ function App() {
     };
     document.title = currentRoot
       ? `${currentLesson?.title || currentRoot.displayTitle} · Root$Wise`
-      : titles[route] || 'Root$Wise';
+      : route.startsWith('kids-kindergarten')
+        ? 'Kindergarten Grove · Kids Korner'
+        : titles[route] || 'Root$Wise';
   }, [route, currentRoot, currentLesson]);
   const updateProfile = (next) => { const merged = { ...(profile || {}), ...next }; setProfile(merged); saveProfile(merged); };
   const groveNarration = route === 'heart'
@@ -217,6 +221,7 @@ function App() {
       {route === 'crossing' && <Crossing go={go} />}
       {route === 'kids-korner' && <KidsKornerIntro go={go} />}
       {route === 'kids-korner-grove' && <KidsKornerGrove go={go} />}
+      {route.startsWith('kids-kindergarten') && <KidsKindergarten route={route} go={go} />}
       {route === 'learn' && <Learn />}
       {route === 'tools' && <ToolsCenter />}
       {route === 'tool-dictionary' && <MoneyDictionary />}
@@ -232,7 +237,7 @@ function App() {
       {routeKind === 'root-lesson' && currentRoot?.id === 5 && currentLesson && <ContextualDefinition lesson={currentLesson} />}
       {routeKind === 'root-lesson' && currentRoot && !currentLesson && <RootOverview root={currentRoot} />}
       {routeMissing && <RouteNotFound />}
-      {!route.startsWith('kids-korner') && <SageVoice key={route} pageText={groveNarration} />}
+      {!isKidsRoute && <SageVoice key={route} pageText={groveNarration} />}
     </>
   );
 }
