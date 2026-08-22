@@ -368,3 +368,9 @@
   background: #713827 !important;
   color: #fff !important;
 }
+
+
+/* Specificity lock for the Root One active lesson number. */
+.r1-experience .r1-sidebar .r1-nav-number {
+  color: var(--rw-readable-dark) !important;
+}
