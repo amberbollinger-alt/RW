@@ -46,6 +46,8 @@ const checks = [
   ['coin counting reaches 1 5 10 and 25', data.includes('Count One Cent') && data.includes('Count to Five') && data.includes('Count to Ten') && data.includes('Count by Fives to 25')],
   ['visual coin matching is interactive', data.includes('Coin Match Meadow') && (data.match(/pair:/g) || []).length >= 12 && component.includes('kg-coin-pair')],
   ['shared mission contrast applies to every Root', styles.includes('.kg-mission-heading{') && !styles.includes('.kg-mission.is-mirror .kg-mission-heading') && styles.includes('background:rgba(255,255,255,.96)')],
+  ['shared high-contrast type contract covers every Root', styles.includes('Shared readability contract') && styles.includes('.kg-activity-brief p, .kg-choice-prompt span, .kg-visible-result p') && styles.includes('.kg-object-choice>button:first-child { color: #12384b; background: #fff; }')],
+  ['disabled controls remain readable', styles.includes('button:disabled, .kids-kindergarten [aria-disabled="true"] { cursor: not-allowed; opacity: 1; }') && styles.includes('button:disabled { border-color: #82959a; color: #314c55; background: #e5ecea;')],
   ['reduced-motion support', styles.includes('@media(prefers-reduced-motion:reduce)')],
   ['sensory-calm support', component.includes('sensoryCalm') && styles.includes('.is-calm')],
   ['required assets exist', fs.existsSync(path.join(root, 'public/kids-korner/penny-hero.png')) && fs.existsSync(path.join(root, 'public/kids-korner/kids-grove.png'))],
