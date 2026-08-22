@@ -374,3 +374,50 @@
 .r1-experience .r1-sidebar .r1-nav-number {
   color: var(--rw-readable-dark) !important;
 }
+
+
+/* Production specificity pass for numbered markers and wrapped nav labels. */
+.r1-experience .r1-sidebar nav button:not(.is-active) .r1-nav-number {
+  background: #0a2330 !important;
+  color: var(--rw-readable-accent) !important;
+}
+
+.root-four-valley .r4-chapter-nav nav button.is-active > span:not(:first-child) {
+  background: transparent !important;
+  color: var(--rw-readable-dark) !important;
+}
+
+.root-four-valley .r4-chapter-nav nav button.is-active > span:not(:first-child) * {
+  color: var(--rw-readable-dark) !important;
+}
+
+.root-two-exchange .r2-lesson .r2-avatar {
+  background: var(--rw-readable-warm) !important;
+  color: var(--rw-readable-dark) !important;
+}
+
+:is(
+  .root-two-exchange .r2-lesson .r2-levels,
+  .root-three-city .r3-lesson .r3-levels,
+  .root-four-valley .r4-lesson .r4-levels,
+  .root-five-bridge .r5-lesson .r5-levels,
+  .root-six-harbor .r6-lesson .r6-levels,
+  .root-seven-junction .r7-lesson .r7-levels,
+  .root-eight-exchange .r8-lesson .r8-levels
+) article > span {
+  background: var(--rw-readable-warm) !important;
+  color: var(--rw-readable-dark) !important;
+}
+
+:is(
+  .root-two-exchange .r2-lesson .r2-tree-reward,
+  .root-three-city .r3-lesson .r3-tree-reward,
+  .root-four-valley .r4-lesson .r4-tree-reward,
+  .root-five-bridge .r5-lesson .r5-tree-reward,
+  .root-six-harbor .r6-lesson .r6-tree-reward,
+  .root-seven-junction .r7-lesson .r7-tree-reward,
+  .root-eight-exchange .r8-lesson .r8-tree-reward
+) > span {
+  background: var(--rw-readable-warm) !important;
+  color: var(--rw-readable-dark) !important;
+}
