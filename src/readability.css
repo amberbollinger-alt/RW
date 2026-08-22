@@ -1,0 +1,301 @@
+/*
+ * Final readability guardrail.
+ *
+ * Every adult Root has its own atmosphere, but foreground copy must never
+ * inherit the dark ink from an older light-card design after a panel changes
+ * to dark glass. This file is imported last and deliberately owns contrast.
+ */
+
+:is(
+  .r1-experience,
+  .root-two-exchange,
+  .root-three-city,
+  .root-four-valley,
+  .root-five-bridge,
+  .root-six-harbor,
+  .root-seven-junction,
+  .root-eight-exchange
+) {
+  --rw-readable-panel: rgba(3, 17, 27, .96);
+  --rw-readable-surface: rgba(8, 31, 43, .96);
+  --rw-readable-text: #f4f8f6;
+  --rw-readable-muted: #d0dcda;
+  --rw-readable-accent: #d8ff65;
+  --rw-readable-warm: #ffd27d;
+  --rw-readable-dark: #07110e;
+  --rw-readable-line: rgba(216, 255, 101, .34);
+}
+
+/* Navigation is a solid reading surface, not a pale veil over artwork. */
+:is(
+  .r1-experience .r1-sidebar,
+  .root-two-exchange .r2-nav,
+  .root-three-city .r3-nav,
+  .root-four-valley .r4-chapter-nav,
+  .root-five-bridge .r5-nav,
+  .root-six-harbor .r6-nav,
+  .root-seven-junction .r7-nav,
+  .root-eight-exchange .r8-nav
+) {
+  border-color: var(--rw-readable-line) !important;
+  background: var(--rw-readable-panel) !important;
+  color: var(--rw-readable-text) !important;
+  backdrop-filter: blur(16px) saturate(1.12) !important;
+}
+
+:is(
+  .r1-experience .r1-sidebar,
+  .root-two-exchange .r2-nav,
+  .root-three-city .r3-nav,
+  .root-four-valley .r4-chapter-nav,
+  .root-five-bridge .r5-nav,
+  .root-six-harbor .r6-nav,
+  .root-seven-junction .r7-nav,
+  .root-eight-exchange .r8-nav
+) :is(h2, h3, p, strong, small, span, footer, button) {
+  color: var(--rw-readable-text) !important;
+}
+
+:is(
+  .r1-experience .r1-sidebar,
+  .root-two-exchange .r2-nav,
+  .root-three-city .r3-nav,
+  .root-four-valley .r4-chapter-nav,
+  .root-five-bridge .r5-nav,
+  .root-six-harbor .r6-nav,
+  .root-seven-junction .r7-nav,
+  .root-eight-exchange .r8-nav
+) :is(small, footer) {
+  color: var(--rw-readable-muted) !important;
+}
+
+:is(
+  .r1-experience .r1-sidebar,
+  .root-two-exchange .r2-nav,
+  .root-three-city .r3-nav,
+  .root-four-valley .r4-chapter-nav,
+  .root-five-bridge .r5-nav,
+  .root-six-harbor .r6-nav,
+  .root-seven-junction .r7-nav,
+  .root-eight-exchange .r8-nav
+) nav button:not(.is-active) {
+  background: rgba(10, 35, 47, .68) !important;
+}
+
+:is(
+  .r1-experience .r1-sidebar,
+  .root-two-exchange .r2-nav,
+  .root-three-city .r3-nav,
+  .root-four-valley .r4-chapter-nav,
+  .root-five-bridge .r5-nav,
+  .root-six-harbor .r6-nav,
+  .root-seven-junction .r7-nav,
+  .root-eight-exchange .r8-nav
+) nav button.is-active {
+  border-color: var(--rw-readable-accent) !important;
+  background: linear-gradient(135deg, #b8e43e, #f0c777) !important;
+  color: var(--rw-readable-dark) !important;
+}
+
+:is(
+  .r1-experience .r1-sidebar,
+  .root-two-exchange .r2-nav,
+  .root-three-city .r3-nav,
+  .root-four-valley .r4-chapter-nav,
+  .root-five-bridge .r5-nav,
+  .root-six-harbor .r6-nav,
+  .root-seven-junction .r7-nav,
+  .root-eight-exchange .r8-nav
+) nav button.is-active :is(strong, small) {
+  color: var(--rw-readable-dark) !important;
+}
+
+/* Root One through Four shared lesson surfaces. */
+:is(.r1-experience, .root-two-exchange, .root-three-city, .root-four-valley)
+  :is(
+    .r1-opening, .r1-lesson-header, .r1-story-panel, .r1-layers, .r1-scan,
+    .r1-knowledge, .r1-decision-drill, .r1-private-panel, .r1-source-desk,
+    .r1-connection, .r1-growth, .r1-transition,
+    .r2-opening, .r2-lesson-title, .r2-card, .r2-next,
+    .r3-opening, .r3-lesson-title, .r3-card, .r3-next,
+    .r4-opening, .r4-promise, .r4-card, .r4-next, .r4-learner-statement
+  ) {
+  border-color: var(--rw-readable-line) !important;
+  background: var(--rw-readable-panel) !important;
+  color: var(--rw-readable-text) !important;
+}
+
+:is(.r1-experience .r1-lesson, .root-two-exchange .r2-lesson, .root-three-city .r3-lesson, .root-four-valley .r4-lesson)
+  :is(h1, h2, h3, h4, p, li, dt, dd, blockquote, strong, em, label, legend, summary, small, span) {
+  color: var(--rw-readable-text) !important;
+}
+
+/* Root Five through Eight already use dark panels; this prevents old dark-ink
+   declarations from surviving inside those panels. */
+:is(.root-five-bridge .r5-lesson, .root-six-harbor .r6-lesson, .root-seven-junction .r7-lesson, .root-eight-exchange .r8-lesson)
+  :is(h1, h2, h3, h4, p, li, dt, dd, blockquote, strong, em, label, legend, summary, small, span) {
+  color: var(--rw-readable-text) !important;
+}
+
+:is(
+  .root-five-bridge .r5-opening,
+  .root-five-bridge .r5-lesson-title,
+  .root-five-bridge .r5-card,
+  .root-five-bridge .r5-next,
+  .root-six-harbor .r6-opening,
+  .root-six-harbor .r6-lesson-title,
+  .root-six-harbor .r6-card,
+  .root-six-harbor .r6-next,
+  .root-seven-junction .r7-opening,
+  .root-seven-junction .r7-lesson-title,
+  .root-seven-junction .r7-card,
+  .root-seven-junction .r7-next,
+  .root-eight-exchange .r8-opening,
+  .root-eight-exchange .r8-lesson-title,
+  .root-eight-exchange .r8-card,
+  .root-eight-exchange .r8-next
+) {
+  border-color: var(--rw-readable-line) !important;
+  background: var(--rw-readable-panel) !important;
+  color: var(--rw-readable-text) !important;
+}
+
+/* Interactive reading surfaces remain dark enough for white copy. */
+:is(
+  .r1-experience .r1-lesson,
+  .root-two-exchange .r2-lesson,
+  .root-three-city .r3-lesson,
+  .root-four-valley .r4-lesson,
+  .root-five-bridge .r5-lesson,
+  .root-six-harbor .r6-lesson,
+  .root-seven-junction .r7-lesson,
+  .root-eight-exchange .r8-lesson
+) :is(button, textarea, input, select) {
+  border-color: var(--rw-readable-line) !important;
+  background: var(--rw-readable-surface) !important;
+  color: var(--rw-readable-text) !important;
+}
+
+:is(
+  .r1-experience .r1-lesson,
+  .root-two-exchange .r2-lesson,
+  .root-three-city .r3-lesson,
+  .root-four-valley .r4-lesson,
+  .root-five-bridge .r5-lesson,
+  .root-six-harbor .r6-lesson,
+  .root-seven-junction .r7-lesson,
+  .root-eight-exchange .r8-lesson
+) :is(textarea, input)::placeholder {
+  color: #b8c7c5 !important;
+  opacity: 1 !important;
+}
+
+:is(
+  .r1-experience .r1-lesson,
+  .root-two-exchange .r2-lesson,
+  .root-three-city .r3-lesson,
+  .root-four-valley .r4-lesson,
+  .root-five-bridge .r5-lesson,
+  .root-six-harbor .r6-lesson,
+  .root-seven-junction .r7-lesson,
+  .root-eight-exchange .r8-lesson
+) :is(button.is-selected, button[aria-pressed="true"]) {
+  border-color: var(--rw-readable-accent) !important;
+  background: linear-gradient(135deg, #b8e43e, #f0c777) !important;
+  color: var(--rw-readable-dark) !important;
+}
+
+:is(
+  .r1-experience .r1-lesson,
+  .root-two-exchange .r2-lesson,
+  .root-three-city .r3-lesson,
+  .root-four-valley .r4-lesson,
+  .root-five-bridge .r5-lesson,
+  .root-six-harbor .r6-lesson,
+  .root-seven-junction .r7-lesson,
+  .root-eight-exchange .r8-lesson
+) :is(button.is-selected, button[aria-pressed="true"]) * {
+  color: var(--rw-readable-dark) !important;
+}
+
+/* Accent labels are brighter than body copy but never faint. */
+:is(
+  .r1-eyebrow, .r2-eyebrow, .r3-eyebrow, .r4-eyebrow,
+  .r5-eyebrow, .r6-eyebrow, .r7-eyebrow, .r8-eyebrow,
+  .r1-level-label, .r2-level-label, .r3-level-label, .r4-level-label,
+  .r5-level-label, .r6-level-label, .r7-level-label, .r8-level-label
+) {
+  color: var(--rw-readable-accent) !important;
+}
+
+/* Nested cards, feedback, source links, and privacy notices must not become
+   translucent light patches with inherited white text. */
+:is(
+  .r1-experience .r1-lesson,
+  .root-two-exchange .r2-lesson,
+  .root-three-city .r3-lesson,
+  .root-four-valley .r4-lesson,
+  .root-five-bridge .r5-lesson,
+  .root-six-harbor .r6-lesson,
+  .root-seven-junction .r7-lesson,
+  .root-eight-exchange .r8-lesson
+) :is(article, aside, [class*="feedback"], [class*="result"], [class*="jurisdiction"], [class*="accuracy"]) {
+  border-color: var(--rw-readable-line) !important;
+  background: rgba(10, 35, 47, .94) !important;
+  color: var(--rw-readable-text) !important;
+}
+
+:is(
+  .r1-experience .r1-lesson,
+  .root-two-exchange .r2-lesson,
+  .root-three-city .r3-lesson,
+  .root-four-valley .r4-lesson,
+  .root-five-bridge .r5-lesson,
+  .root-six-harbor .r6-lesson,
+  .root-seven-junction .r7-lesson,
+  .root-eight-exchange .r8-lesson
+) a {
+  color: var(--rw-readable-accent) !important;
+  text-decoration-color: currentColor;
+}
+
+/* Disabled means unavailable, not invisible. */
+:is(
+  .r1-experience,
+  .root-two-exchange,
+  .root-three-city,
+  .root-four-valley,
+  .root-five-bridge,
+  .root-six-harbor,
+  .root-seven-junction,
+  .root-eight-exchange,
+  .root-final
+) :disabled {
+  opacity: .72 !important;
+}
+
+/* Roots Nine through Eleven were already high contrast; preserve that system
+   while making its smallest supporting copy and disabled labels fully legible. */
+.root-final :is(.rf-muted, .rf-card > p, .rf-private > p, .rf-sources > p, .rf-nav footer, .rf-nav nav h3) {
+  color: #d1ddd2 !important;
+}
+
+.root-final :is(.rf-story p, .rf-opening-story p, .rf-level-grid p, .rf-card > p, .rf-next p) {
+  color: #e0e9df !important;
+}
+
+@media (forced-colors: active) {
+  :is(
+    .r1-experience,
+    .root-two-exchange,
+    .root-three-city,
+    .root-four-valley,
+    .root-five-bridge,
+    .root-six-harbor,
+    .root-seven-junction,
+    .root-eight-exchange,
+    .root-final
+  ) * {
+    forced-color-adjust: auto;
+  }
+}
