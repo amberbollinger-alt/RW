@@ -4,6 +4,7 @@ import {
   Gamepad2, Gift, Heart, Lock, Map, ShieldCheck, Sparkles, Star,
   TentTree, Ticket, Trees,
 } from 'lucide-react';
+import KidsMissionOne from './kids-mission-one';
 import './kids-korner.css';
 
 const PENNY_ART = '/kids-korner/penny-hero.png';
@@ -157,9 +158,13 @@ function KidsNavigation({ go }) {
 }
 
 export function KidsKornerGrove({ go }) {
+  const isMissionOne = window.location.pathname.replace(/\/+$/, '') === '/kids-korner/mission-one';
+
   useEffect(() => {
     if (!window.location.hash) window.scrollTo({ top: 0, behavior: 'auto' });
   }, []);
+
+  if (isMissionOne) return <KidsMissionOne go={go} />;
 
   return (
     <main className="kids-korner kk-grove-page">
@@ -218,7 +223,8 @@ export function KidsKornerGrove({ go }) {
           <p><Flag aria-hidden="true" /> Mission One</p>
           <h2 id="kk-mission-gate-title">The School Fair</h2>
           <strong>You’ve got 10 tokens and way too many fun things to choose from. Ready?</strong>
-          <p>The full fair is coming next. For now, the gate is here—and this is where your first adventure will begin.</p>
+          <p>The fair is open. Penny will show you the choices, but she will not make the decision for you.</p>
+          <button className="kk-button kk-start" type="button" onClick={() => { window.location.href = '/kids-korner/mission-one'; }}>Enter the fair <ArrowRight aria-hidden="true" /></button>
         </div>
         <div className="kk-token-stack" aria-label="Ten adventure tokens"><span>10</span><small>tokens</small></div>
       </section>
