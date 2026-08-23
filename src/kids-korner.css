@@ -229,6 +229,23 @@
 .kk-reassurance div { display: grid; gap: 3px; }
 .kk-reassurance strong { color: #24435b; }
 .kk-reassurance span { color: #526b7f; font-size: .86rem; line-height: 1.4; }
+.kk-grade-placement { margin: 0 0 22px; border: 2px solid rgba(114,76,164,.2); border-radius: 24px 12px 24px 12px; padding: 18px; background: rgba(247,244,255,.82); }
+.kk-grade-placement > div:first-child > p { margin: 0 0 3px; color: #9a367d; font-size: .62rem; font-weight: 950; letter-spacing: .13em; text-transform: uppercase; }
+.kk-grade-placement h2 { margin: 0 0 3px; color: #294b5f; font-size: 1.25rem; }
+.kk-grade-placement > div:first-child > span { color: #5b7080; font-size: .75rem; font-weight: 750; }
+.kk-grade-options { display: grid; grid-template-columns: repeat(7,minmax(0,1fr)); gap: 6px; margin-top: 13px; }
+.kk-grade-options > button, .kk-grade-options > div { display: grid; min-height: 58px; place-content: center; border: 2px solid #d9e7ea; border-radius: 14px 8px 14px 8px; padding: 7px; color: #58717d; background: rgba(255,255,255,.72); text-align: center; }
+.kk-grade-options > button { cursor: pointer; }
+.kk-grade-options > button.is-selected { border-color: #75cf88; color: #285d3c; background: #e5ffe7; box-shadow: 0 5px 0 #83c68e; }
+.kk-grade-options strong { font-size: .67rem; }
+.kk-grade-options small { margin-top: 2px; color: #9c568e; font-size: .52rem; font-weight: 950; letter-spacing: .08em; text-transform: uppercase; }
+.kk-grade-options > div { filter: saturate(.4); opacity: .72; }
+.kk-sensory-setting { display: flex; align-items: center; gap: 10px; margin-top: 12px; color: #345669; cursor: pointer; }
+.kk-sensory-setting input { width: 22px; height: 22px; accent-color: #7451bd; }
+.kk-sensory-setting span { display: grid; }
+.kk-sensory-setting strong { font-size: .78rem; }
+.kk-sensory-setting small { font-size: .67rem; }
+.kk-handoff:disabled { cursor: not-allowed; filter: grayscale(.55); opacity: .58; transform: none; }
 .kk-adult-copy blockquote {
   margin: 22px 0;
   border-left: 5px solid var(--kk-yellow);
@@ -644,6 +661,7 @@
   .kk-penny figcaption { right: 6%; bottom: 8%; }
   .kk-adult-copy, .kk-kid-copy { border-radius: 28px 28px 28px 10px; padding: 26px 21px 30px; }
   .kk-adult-copy h1 { font-size: clamp(2.65rem, 12vw, 4rem); }
+  .kk-grade-options { grid-template-columns: repeat(4,1fr); }
   .kk-adult-ticket { right: 14px; bottom: 20px; width: calc(100% - 28px); }
   .kk-mission-ticket { grid-template-columns: 63px minmax(0, 1fr); gap: 12px; padding-right: 12px; }
   .kk-ticket-icons { display: none; }

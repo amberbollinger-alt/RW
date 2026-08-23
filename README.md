@@ -1,5 +1,9 @@
 # RootWise — Adult Financial Decision Journey
 
+## Project blueprints
+
+- [Kids Korner K–6 Curriculum Blueprint](docs/KIDS_KORNER_K6_CURRICULUM_BLUEPRINT.md) — the controlling grade progression, seven child Roots, Penny boundaries, School Fair variants, and age-appropriate game rules.
+
 Root One lives in its existing teaching area at `/roots/one`. The Grove introduces the RootWise method, and the Root continues through the eight original connected lessons.
 
 ## Root One includes
