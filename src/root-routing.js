@@ -1,6 +1,6 @@
 export function routeFromPath(pathname, hash = '') {
   const path = String(pathname || '').replace(/^\/+|\/+$/g, '');
-  if (['privacy', 'terms', 'accessibility', 'faq', 'contact'].includes(path)) return path;
+  if (['privacy', 'terms', 'accessibility', 'faq', 'contact', 'trial'].includes(path)) return path;
   if (path === 'my-journey') return 'legacy-my-journey';
   if (path === 'tools') return 'tools';
   if (path === 'kids-korner') return 'kids-korner';
@@ -24,7 +24,7 @@ export function destinationForPage(page) {
   const value = String(page || 'home');
   if (value.startsWith('/')) return value;
   if (value === 'home') return '/';
-  if (['privacy', 'terms', 'accessibility', 'faq', 'contact'].includes(value)) return `/${value}`;
+  if (['privacy', 'terms', 'accessibility', 'faq', 'contact', 'trial'].includes(value)) return `/${value}`;
   if (value === 'dashboard') return '/grove';
   if (value === 'crossing') return '/crossing';
   if (value === 'tools') return '/tools';
